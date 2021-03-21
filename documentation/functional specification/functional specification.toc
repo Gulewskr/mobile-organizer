@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}English}{2}%
+\contentsline {subsection}{\numberline {1.1}General information}{2}%
+\contentsline {subsection}{\numberline {1.2}Functionality}{2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Tasks}{2}%
+\contentsline {paragraph}{deadline}{2}%
+\contentsline {subsubsection}{\numberline {1.2.2}Calendar}{2}%
+\contentsline {paragraph}{Adding tasks}{2}%
+\contentsline {paragraph}{Adding events}{2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Notifications}{2}%
+\contentsline {subsubsection}{\numberline {1.2.4}Notes}{2}%
+\contentsline {subsubsection}{\numberline {1.2.5}Profile}{3}%
+\contentsline {subsubsection}{\numberline {1.2.6}Personalization}{3}%
+\contentsline {section}{\numberline {2}Polski}{3}%
+\contentsline {subsection}{\numberline {2.1}Ogólne informacje}{3}%
+\contentsline {subsection}{\numberline {2.2}Funkcjonalności}{3}%
+\contentsline {subsubsection}{\numberline {2.2.1}Zadania}{3}%
+\contentsline {paragraph}{deadline}{3}%
+\contentsline {subsubsection}{\numberline {2.2.2}Kalendarz}{3}%
+\contentsline {paragraph}{dodawanie zadań}{3}%
+\contentsline {paragraph}{dodawanie wydarzeń}{4}%
+\contentsline {subsubsection}{\numberline {2.2.3}Powiadomienia}{4}%
+\contentsline {subsubsection}{\numberline {2.2.4}Notatki}{4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Profil}{4}%
+\contentsline {subsubsection}{\numberline {2.2.6}Personalizacja}{4}%
