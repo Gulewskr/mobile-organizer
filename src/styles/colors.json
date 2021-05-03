@@ -1,0 +1,123 @@
+[
+    {
+        "key": "yellow",
+        "colorHeader1":"#EEAF01",
+        "colorHeader2":"#F3E05E",
+        "colorButton1":"#EEAF01",
+        "colorButton2":"#EEAF01",
+        "colorContainer":"#F3E05E",
+        "colorBackground":"#FFEEA4",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#000000"
+    },{
+        "key": "pink",
+        "colorHeader1":"#822659",
+        "colorHeader2":"#B34180",
+        "colorButton1":"#822659",
+        "colorButton2":"#822659",
+        "colorContainer":"#E36BAE",
+        "colorBackground":"#F8A1D1",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#000000"
+    },{
+        "key": "grey",
+        "colorHeader1":"#495464",
+        "colorHeader2":"#BBBFCA",
+        "colorButton1":"#495464",
+        "colorButton2":"#495464",
+        "colorContainer":"#BBBFCA",
+        "colorBackground":"#E8E8E8",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#000000"
+    },{
+        "key": "yellow-white",
+        "colorHeader1":"#FCD200",
+        "colorHeader2":"#393E46",
+        "colorButton1":"#FCD200",
+        "colorButton2":"#FCD200",
+        "colorContainer":"#FFFFFF",
+        "colorBackground":"#EEEEEE",
+        "colorText1":"#222831",
+        "colorText2":"#000000"
+    },{
+        "key": "red-white",
+        "colorHeader1":"#B50048",
+        "colorHeader2":"#393E46",
+        "colorButton1":"#B50048",
+        "colorButton2":"#B50048",
+        "colorContainer":"#FFFFFF",
+        "colorBackground":"#EEEEEE",
+        "colorText1":"#222831",
+        "colorText2":"#000000"
+    },{
+        "key": "blue-white",
+        "colorHeader1":"#00ADB5",
+        "colorHeader2":"#393E46",
+        "colorButton1":"#00ADB5",
+        "colorButton2":"#00ADB5",
+        "colorContainer":"#FFFFFF",
+        "colorBackground":"#EEEEEE",
+        "colorText1":"#222831",
+        "colorText2":"#000000"
+    },{
+        "key": "blue",
+        "colorHeader1":"#000000",
+        "colorHeader2":"#000000",
+        "colorButton1":"#6FA3F1",
+        "colorButton2":"#05097B",
+        "colorContainer":"#6FA3F1",
+        "colorBackground":"#05097B",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#FFFFFF"
+    },{
+        "key": "purple",
+        "colorHeader1":"#000000",
+        "colorHeader2":"#000000",
+        "colorButton1":"#BC6FF1",
+        "colorButton2":"#64168D",
+        "colorContainer":"#BC6FF1",
+        "colorBackground":"#64168D",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#FFFFFF"
+    },{
+        "key": "orange",
+        "colorHeader1":"#000000",
+        "colorHeader2":"#000000",
+        "colorButton1":"#F9A856",
+        "colorButton2":"#FF8000",
+        "colorContainer":"#F9A856",
+        "colorBackground":"#FF8000",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#000000"
+    },{
+        "key": "red-dark",
+        "colorHeader1":"#810000",
+        "colorHeader2":"#810000",
+        "colorButton1":"#CE1212",
+        "colorButton2":"#CE1212",
+        "colorContainer":"#40394A",
+        "colorBackground":"#1C1427",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#FFFFFF"
+    },{
+        "key": "green-dark",
+        "colorHeader1":"#00BF4C",
+        "colorHeader2":"#00BF4C",
+        "colorButton1":"#79E25B",
+        "colorButton2":"#79E25B",
+        "colorContainer":"#40394A",
+        "colorBackground":"#1C1427",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#FFFFFF"
+    },{
+        "key": "blue-dark",
+        "colorHeader1":"#2E279D",
+        "colorHeader2":"#2E279D",
+        "colorButton1":"#4D80E4",
+        "colorButton2":"#4D80E4",
+        "colorContainer":"#40394A",
+        "colorBackground":"#1C1427",
+        "colorText1":"#FFFFFF",
+        "colorText2":"#FFFFFF"
+    }
+]

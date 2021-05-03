@@ -4,6 +4,7 @@ export const icons = {
     task: require('../icons/gui/tasks.png'),
     profile: require('../icons/gui/profile.png'),
     settings: require('../icons/gui/settings.png'),
+    settingsWheel: require('../icons/gui/settingsWhite.png'),
     marker: require('../icons/gui/marker.png'),
     backArrow: require('../icons/gui/return.png'),
 }

@@ -13,15 +13,17 @@ import Profile from './routes/Profile';
 import Settings from './routes/Settings';
 
 import styles from './styles/styles';
+import ThemeContextProvider from './styles/colors';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerShown: false
-        }}>
+    <ThemeContextProvider>
+      <NavigationContainer screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Tasks" component={Tasks} />
           <Stack.Screen name="Callendar" component={Callendar} />
@@ -31,6 +33,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
         <StatusBar style="auto" />
-      </NavigationContainer>
+     </NavigationContainer>
+    </ThemeContextProvider>
   );
 };

@@ -1,0 +1,46 @@
+[
+    {
+        "name": "zadanie 1",
+        "deadline": true,
+        "data":{
+            "year": 2021,
+            "month": "mar",
+            "day": 25
+        },
+        "specified": true,
+        "more":{
+            "1": { 
+                "name": "zadanie 1a",
+                "deadline": true,
+                "data":{
+                    "year": 2021,
+                    "month": "mar",
+                    "day": 25
+                },
+                "specified": false,
+                "more": ""
+            },
+            "2": {
+                "name": "zadanie 1b",
+                "deadline": true,
+                "data":{
+                    "year": 2021,
+                    "month": "mar",
+                    "day": 25
+                },
+                "specified": false,
+                "more": ""
+            }
+        }
+    },{
+        "name": "zadanie 2",
+        "deadline": false,
+        "data":{
+            "year": "",
+            "month": "",
+            "day": ""
+        },
+        "specified": false,
+        "more": ""
+    }
+]

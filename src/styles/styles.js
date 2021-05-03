@@ -1,39 +1,30 @@
 import { StyleSheet } from 'react-native';
 
-const color = {
-    y1: '#FFEEA4',
-    y2: '#EEAF01'
-}
-
 const styles = StyleSheet.create({
     container: {
       flex: 1,
       width: "100%",
-      backgroundColor: '#FFEEA4',
       alignItems: 'center',
       justifyContent: 'flex-start',
     },
     navbar: {
         width: "100%",
         height: "16%",
-        backgroundColor: "#EEAF01",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignSelf: "center",
         flexDirection: "row",
     },
     navbar2: {
-        paddingTop: "6%",
-        backgroundColor: "#F3E05E"
+        paddingTop: 35,
     },
     navbar_text_Container:{
         width: "50%",
+        textAlignVertical: "center",
         marginTop: "2%"
     },
     navbar_icon_continer:{
         width: "20%",
-        marginLeft: "5%",
         aspectRatio: 1,
-        alignItems: "center",
         justifyContent: "center",
         flexDirection: "row"
     },
@@ -48,9 +39,9 @@ const styles = StyleSheet.create({
     navbar_text:{
         color: '#FFFFFF',
         fontWeight: 'bold',
-        fontSize: 40,
         marginLeft: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontSize: 28
     },
     navbar_text2:{
         fontSize: 32,
@@ -95,7 +86,6 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
     },
     menuButton_text:{
-        color: '#FFFFFF',
         fontSize: 30,
         fontWeight: 'bold',
         position: "relative",

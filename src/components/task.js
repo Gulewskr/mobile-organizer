@@ -1,21 +1,17 @@
 import React from 'react';
 import {View, Text, TouchableOpacity } from 'react-native';
-import styles from '../styles/styles.js';
+
+import styles from '../styles/styles';
+import { withTheme } from '../styles/colors';
 
 const Task = (props) => {
     return (
-        <View  style = {styles.menuButton} >
+        <View>
             <View>
                 <Text>
                     {props.nazwa}
                 </Text>
-                { props.haveDeadline &&
-                    <View>
-                        <Text>Deadline</Text>
-                        <Text>{props.deadline}</Text>
-                    </View>
-                }
-                { props.extended &&
+                { (props.deadline != undefined) &&
                     <View>
                         <Text>Deadline</Text>
                         <Text>{props.deadline}</Text>
@@ -28,4 +24,5 @@ const Task = (props) => {
     );
 };
 
+export {Task};
 export default Task;

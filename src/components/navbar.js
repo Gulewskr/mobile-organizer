@@ -1,31 +1,54 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import styles from '../styles/styles.js';
+
 import {icons} from './icons.js';
 
-const NavbarMenu = () => {
+import styles from '../styles/styles';
+import { useTheme } from '../styles/colors';
+
+const NavbarMenu = (props) => {
+    const { themeID } = useTheme();
     return (
-        <View style = {styles.navbar}>
+        <View style = {[styles.navbar, {backgroundColor: themeID.colorHeader1}]}>
              <Text style = {styles.navbar_text}>MOBILE-ORGANIZER</Text>
         </View>
     );
 };
 
 const NavbarBack = (props) => {
+    const { themeID } = useTheme();
     return (
-        <View style = {[styles.navbar, styles.navbar2]}>
+        <View style = {[styles.navbar, styles.navbar2,  {backgroundColor: themeID.colorHeader2}]}>
          <TouchableOpacity style = {styles.navbar_icon_continer} onPress={() => props.navigate.navigate("Profile") }>
           <Image style = {styles.navbar_icon} source={icons.profile} />
          </TouchableOpacity>
          <View style = {styles.navbar_text_Container}>
          <Text style = {[styles.navbar_text, styles.navbar_text2]}>{props.napis}</Text>
          </View>
-         <TouchableOpacity style = {styles.navbar_button} onPress={() => props.navigate.goBack() } >
+         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} onPress={() => props.navigate.goBack() } >
             <Image style = {styles.navbar_button_icon} source={icons.backArrow} />
          </TouchableOpacity>
         </View>
     );
 };
 
-export {NavbarBack, NavbarMenu};
+const NavbarProfile = (props) => {
+    const { themeID } = useTheme();
+    return (
+        <View style = {[styles.navbar, styles.navbar2,  {backgroundColor: themeID.colorHeader2}]}>
+         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} onPress={() => props.navigate.navigate("Settings") } >
+            <Image style = {styles.navbar_button_icon} source={icons.settingsWheel} />
+         </TouchableOpacity>
+         <View style = {styles.navbar_text_Container}>
+         <Text style = {[styles.navbar_text, styles.navbar_text2]}>{props.napis}</Text>
+         </View>
+         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} onPress={() => props.navigate.goBack() } >
+            <Image style = {styles.navbar_button_icon} source={icons.backArrow} />
+         </TouchableOpacity>
+        </View>
+    );
+};
+
+
+export { NavbarProfile, NavbarBack, NavbarMenu };
 export default NavbarMenu;
