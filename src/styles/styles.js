@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         flexDirection: "row",
+        borderBottomWidth: 1
     },
     navbar2: {
         paddingTop: 35,

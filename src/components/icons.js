@@ -7,4 +7,7 @@ export const icons = {
     settingsWheel: require('../icons/gui/settingsWhite.png'),
     marker: require('../icons/gui/marker.png'),
     backArrow: require('../icons/gui/return.png'),
+    arrowRight: require('../icons/gui/arrowRight.png'),
+    arrowLeft: require('../icons/gui/arrowLeft.png'),
+    dots: require('../icons/gui/dots.png'),
 }

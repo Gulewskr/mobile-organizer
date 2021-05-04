@@ -8,8 +8,9 @@
             "day": 25
         },
         "specified": true,
-        "more":{
-            "1": { 
+        "ended": false,
+        "more":[
+            { 
                 "name": "zadanie 1a",
                 "deadline": true,
                 "data":{
@@ -18,9 +19,10 @@
                     "day": 25
                 },
                 "specified": false,
-                "more": ""
+                "more": "",
+                "ended": false
             },
-            "2": {
+            {
                 "name": "zadanie 1b",
                 "deadline": true,
                 "data":{
@@ -29,9 +31,10 @@
                     "day": 25
                 },
                 "specified": false,
-                "more": ""
+                "more": "",
+                "ended": false
             }
-        }
+        ]
     },{
         "name": "zadanie 2",
         "deadline": false,
