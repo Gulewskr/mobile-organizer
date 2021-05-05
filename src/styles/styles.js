@@ -93,6 +93,23 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         alignSelf: 'center'
     },
+    exitButton:{
+        position: "absolute",
+        right: 10,
+        zIndex: 5,
+        top: 10,
+        width: 50,
+        height: 50,
+        alignContent: "center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderRadius: 25
+    },
+    exitButtonIcon:{
+        width: "50%",
+        height: "50%",
+        alignSelf: "center",
+    }
   });
 
 export default styles

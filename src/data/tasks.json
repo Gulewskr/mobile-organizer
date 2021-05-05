@@ -45,5 +45,15 @@
         },
         "specified": false,
         "more": ""
+    },{
+        "name": "zadanie 3",
+        "deadline": false,
+        "data":{
+            "year": "",
+            "month": "",
+            "day": ""
+        },
+        "specified": false,
+        "more": ""
     }
 ]

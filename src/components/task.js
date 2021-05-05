@@ -44,14 +44,7 @@ const Task = (props) => {
                 <Image style={styles.icon} source={icons.arrowRight} />
             </TouchableOpacity>
         </View >
-    );
-
-    /*
-            <TouchableOpacity onPress = {() => setName("nazwa XDDDD")}>
-                <Text>zmien nazwe</Text>
-            </TouchableOpacity>
-            <Text>{progress}</Text>
-    */
+    )
 }
 
 function calculateProgres(tasks)

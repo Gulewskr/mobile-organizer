@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     },
     icon:{
         height: 30,
+        width: 30,
         aspectRatio: 1,
     },
     taskText:{
@@ -39,8 +40,31 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 40,
         color: "#129403",
-    }
-
+    },
+    optionContainer:{
+        zIndex: 5,
+        position: "absolute",
+        top: "30%",
+        width: "100%",
+    },
+    optionContainerInside:{
+        width: "100%",
+        borderWidth: 1,
+        borderRadius: 26,
+        padding: 20
+    },
+    optionsText:{
+        fontSize: 26,
+    },
+    optionButtons:{
+        width: "90%",
+        alignSelf: "center",
+        marginTop: 10,
+        padding: 10,
+        borderRadius: 20,
+        borderWidth: 1,
+        justifyContent: "center",
+    },
 });
 
 export default styles;

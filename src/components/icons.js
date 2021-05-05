@@ -10,4 +10,6 @@ export const icons = {
     arrowRight: require('../icons/gui/arrowRight.png'),
     arrowLeft: require('../icons/gui/arrowLeft.png'),
     dots: require('../icons/gui/dots.png'),
+    pen: require('../icons/gui/pen.png'),
+    cross: require('../icons/gui/cross.png'),
 }
