@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 30,
         aspectRatio: 1,
+        alignSelf: "center"
     },
     taskText:{
         fontSize: 20,
@@ -55,6 +56,16 @@ const styles = StyleSheet.create({
     },
     optionsText:{
         fontSize: 26,
+    },
+    optionsTextInputContainer:{
+        marginBottom: 15, 
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    optionsTextInput:{
+        maxWidth: "55%",
+        borderRadius: 5,
+        padding: 2
     },
     optionButtons:{
         width: "90%",

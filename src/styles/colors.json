@@ -8,7 +8,9 @@
         "colorContainer":"#F3E05E",
         "colorBackground":"#FFEEA4",
         "colorText1":"#FFFFFF",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "pink",
         "colorHeader1":"#822659",
@@ -18,7 +20,9 @@
         "colorContainer":"#E36BAE",
         "colorBackground":"#F8A1D1",
         "colorText1":"#FFFFFF",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "grey",
         "colorHeader1":"#495464",
@@ -28,7 +32,9 @@
         "colorContainer":"#BBBFCA",
         "colorBackground":"#E8E8E8",
         "colorText1":"#FFFFFF",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "yellow-white",
         "colorHeader1":"#FCD200",
@@ -38,7 +44,9 @@
         "colorContainer":"#FFFFFF",
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "red-white",
         "colorHeader1":"#B50048",
@@ -48,7 +56,9 @@
         "colorContainer":"#FFFFFF",
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "blue-white",
         "colorHeader1":"#00ADB5",
@@ -58,7 +68,9 @@
         "colorContainer":"#FFFFFF",
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "blue",
         "colorHeader1":"#000000",
@@ -68,7 +80,9 @@
         "colorContainer":"#6FA3F1",
         "colorBackground":"#05097B",
         "colorText1":"#FFFFFF",
-        "colorText2":"#FFFFFF"
+        "colorText2":"#FFFFFF",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "purple",
         "colorHeader1":"#000000",
@@ -78,7 +92,9 @@
         "colorContainer":"#BC6FF1",
         "colorBackground":"#64168D",
         "colorText1":"#FFFFFF",
-        "colorText2":"#FFFFFF"
+        "colorText2":"#FFFFFF",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "orange",
         "colorHeader1":"#000000",
@@ -88,7 +104,9 @@
         "colorContainer":"#F9A856",
         "colorBackground":"#FF8000",
         "colorText1":"#FFFFFF",
-        "colorText2":"#000000"
+        "colorText2":"#000000",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "red-dark",
         "colorHeader1":"#810000",
@@ -98,7 +116,9 @@
         "colorContainer":"#40394A",
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
-        "colorText2":"#FFFFFF"
+        "colorText2":"#FFFFFF",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "green-dark",
         "colorHeader1":"#00BF4C",
@@ -108,7 +128,9 @@
         "colorContainer":"#40394A",
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
-        "colorText2":"#FFFFFF"
+        "colorText2":"#FFFFFF",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     },{
         "key": "blue-dark",
         "colorHeader1":"#2E279D",
@@ -118,6 +140,8 @@
         "colorContainer":"#40394A",
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
-        "colorText2":"#FFFFFF"
+        "colorText2":"#FFFFFF",
+        "colorTextInput":"#000000",
+        "colorTextInputBackground":"#FFFFFF"
     }
 ]

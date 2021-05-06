@@ -6,16 +6,7 @@ import styles from '../styles/stylesTask';
 import { useTheme } from '../styles/colors';
 
 const Task = (props) => {
-    /*
-    const key = props.index;
-    const [name, setName] = useState(props.nazwa);
-    const [deadline, setDeadline] = useState(props.deadline);
-    const [day, setDay] = useState(props.day);
-    const [month, setMonth] = useState(props.month);
-    const [year, setYear] = useState(props.year);
-    const [specified, setSpecified] = useState(props.specified);
-    const [ended, setEnded] = useState(props.ended);
-    */
+    
     const more = props.more;
     const [progress, setProggres] = useState(calculateProgres(more));
 
@@ -33,10 +24,15 @@ const Task = (props) => {
                         <Text style={styles.deadlineText} >{props.day + " " + props.month + " " + props.year}</Text>
                     </View>
                 }
-                { props.specified != false &&
+                { props.specified ?
                     <View style={{flexDirection: "row"}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Ukończenie</Text>
                         <Text style={styles.proggresText} >{progress}</Text>
+                    </View>
+                    :
+                    props.ended == true &&
+                    <View style={{flexDirection: "row"}}>
+                        <Text style={[styles.taskText, {color: "#129403"}]}>Ukończono</Text>
                     </View>
                 }
             </View>
