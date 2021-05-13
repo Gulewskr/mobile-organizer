@@ -1,14 +1,15 @@
-import React, { useState, version } from 'react';
+import React, { useState } from 'react';
 import {View, Text, Image, TouchableOpacity } from 'react-native';
 
 import { icons } from '../components/icons';
 import styles from '../styles/stylesTask';
-import { useTheme } from '../styles/colors';
+import { useTheme } from '../data/colors';
 
 const Task = (props) => {
     
     const more = props.more;
     const [progress, setProggres] = useState(calculateProgres(more));
+    //const [progress, setProggres] = useState("0%");
 
     const { themeID } = useTheme();
 

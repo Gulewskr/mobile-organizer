@@ -5,7 +5,7 @@ import { icons } from '../components/icons';
 import {NavbarBack} from '../components/navbar';
 
 import styles from '../styles/styles';
-import {useTheme} from '../styles/colors.js';
+import {useTheme} from '../data/colors.js';
 
 export default Notes = ({navigation}) => {
   const { themeID } = useTheme();

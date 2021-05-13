@@ -6,7 +6,7 @@ import NavbarMenu from '../components/navbar';
 import MenuButton from '../components/menuButton';
 
 import styles from '../styles/styles';
-import {useTheme} from '../styles/colors.js';
+import {useTheme} from '../data/colors.js';
 
 const Home = ({navigation}) => {
   const { themeID } = useTheme();

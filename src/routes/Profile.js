@@ -5,7 +5,7 @@ import { icons } from '../components/icons';
 import {NavbarProfile} from '../components/navbar';
 
 import styles from '../styles/styles';
-import {useTheme} from '../styles/colors.js';
+import {useTheme} from '../data/colors.js';
 
 export default Profil = ({navigation}) => {
   const { themeID } = useTheme();

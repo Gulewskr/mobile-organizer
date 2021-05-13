@@ -4,7 +4,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {icons} from './icons.js';
 
 import styles from '../styles/styles';
-import { useTheme } from '../styles/colors';
+import { useTheme } from '../data/colors';
 
 const NavbarMenu = (props) => {
     const { themeID } = useTheme();

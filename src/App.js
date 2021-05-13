@@ -7,16 +7,17 @@ import { StatusBar } from 'expo-status-bar';
 
 import Home from './routes/Home';
 import Tasks from './routes/Tasks';
+import TaskSpec from './routes/TaskSpec';
 import Events from './routes/Events';
 import Callendar from './routes/Callendar';
 import Notes from './routes/Notes';
 import Profile from './routes/Profile';
 import Settings from './routes/Settings';
 
-import {DataContextProvider} from './DataContext';
+import {DataContextProvider} from './data/DataContext';
 
 import styles from './styles/styles';
-import ThemeContextProvider from './styles/colors';
+import ThemeContextProvider from './data/colors';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Tasks" component={Tasks} />
+            <Stack.Screen name="Task" component={TaskSpec} initialParams={{'task': 'shit'}}/>
             <Stack.Screen name="Callendar" component={Callendar} />
             <Stack.Screen name="Events" component={Events} />
             <Stack.Screen name="Notes" component={Notes} />

@@ -4,7 +4,7 @@ import {View, ScrollView} from 'react-native';
 import {NavbarBack} from '../components/navbar';
 
 import styles from '../styles/styles';
-import {useTheme} from '../styles/colors.js';
+import {useTheme} from '../data/colors.js';
 
 export default Events = ({navigation}) => {
   const { themeID } = useTheme();

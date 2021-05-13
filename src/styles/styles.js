@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     menuButton: {
         borderColor: "#000000",
         borderWidth: 2,
-        borderRadius: 26,
+        borderRadius: 15,
         width: "95%",
         alignSelf: "center",
         backgroundColor: '#F3E05E',
@@ -103,12 +103,44 @@ const styles = StyleSheet.create({
         alignContent: "center",
         justifyContent: "center",
         borderWidth: 1,
-        borderRadius: 25
+        borderRadius: 15
     },
     exitButtonIcon:{
         width: "50%",
         height: "50%",
         alignSelf: "center",
+    },
+    ConfirmButton:{
+        position: "absolute",
+        width: "100%",
+        top:"40%",
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 30,
+        paddingBottom: 30,
+        borderRadius: 10,
+        alignItems: 'center', 
+        alignSelf:"center",
+        justifyContent: "center"
+    },
+    ConfirmButtonText:{
+        fontSize: 24,
+        textAlign: "center"
+    },
+    ConfirmButtonButton:{
+        padding: 5,
+        width: "25%",
+        alignItems: "center",
+        borderRadius: 5,
+        borderWidth: 1,
+    },
+    fillRect:{
+        position: "absolute",
+        left: 0, 
+        right: 0, 
+        top: 0, 
+        bottom: 0,
+        zIndex: 2,
     }
   });
 

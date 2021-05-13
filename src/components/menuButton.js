@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../styles/styles.js';
-import { useTheme } from '../styles/colors';
+import { useTheme } from '../data/colors';
 
 const MenuButton = (props) => {
     const { themeID } = useTheme();

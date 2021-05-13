@@ -1,9 +1,9 @@
 import React, {createContext, useMemo, useState, useContext} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import events from './data/events.json';
-import notes from './data/notes.json';
-import tasks from './data/tasks.json';
+import events from './events.json';
+import notes from './notes.json';
+import tasks from './tasks.json';
 
 export const DataContext = React.createContext();
 
@@ -24,10 +24,21 @@ export function DataContextProvider({ children }){
       setTasksItems(itemsCopy);
     };
 
-    const changeName = (index, newName) => {
+    const changeName = (ids, newName) => {
+
+      const setNewName = (data, newName, ids, id) => {
+        if(ids != null && ids != undefined && id < ids.length - 1)
+        {
+          data[ids[id]].more = setNewName(data[ids[id]].more, newName, ids, id + 1);
+        }else{
+          data[ids[id]].name = newName;
+        }
+        return data;
+      }
+
       let itemsCopy = [... tasksItems];
-        itemsCopy[index].name =  newName;
-        setTasksItems(itemsCopy);
+      setNewName(itemsCopy, newName, ids, 0);
+      setTasksItems(itemsCopy);
     }
 
     const refreshTasks = () => {

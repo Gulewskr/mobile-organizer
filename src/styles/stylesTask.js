@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     taskContainer: {
         borderColor: "#000000",
-        borderRadius: 25,
+        borderRadius: 15,
         borderWidth: 1,
         width: "90%",
         marginTop: 20,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     iconContainer:{
         borderWidth: 1,
-        borderRadius: 45,
+        borderRadius: 15,
         marginLeft: "10%",
         alignSelf:"center",
         padding: 15
@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
         zIndex: 5,
         position: "absolute",
         top: "30%",
-        width: "100%",
+        width: "96%",
+        alignSelf:"center"
     },
     optionContainerInside:{
         width: "100%",
         borderWidth: 1,
-        borderRadius: 26,
+        borderRadius: 15,
+        zIndex: 3,
         padding: 20
     },
     optionsText:{
@@ -72,10 +74,22 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: 10,
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 10,
         borderWidth: 1,
         justifyContent: "center",
     },
+    headerText:{
+        fontSize: 26
+    },
+    headerContainer:{
+        width: 400,
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        flexDirection: "row",
+        borderBottomWidth: 1
+    }
 });
 
 export default styles;
