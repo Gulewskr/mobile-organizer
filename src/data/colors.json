@@ -14,6 +14,8 @@
         "colorBackground":"#FFEEA4",
         "colorText1":"#FFFFFF",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#000000",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -31,6 +33,8 @@
         "colorBackground":"#F8A1D1",
         "colorText1":"#FFFFFF",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -48,6 +52,8 @@
         "colorBackground":"#E8E8E8",
         "colorText1":"#FFFFFF",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -65,6 +71,8 @@
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -82,6 +90,8 @@
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -99,6 +109,8 @@
         "colorBackground":"#EEEEEE",
         "colorText1":"#222831",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -116,6 +128,8 @@
         "colorBackground":"#05097B",
         "colorText1":"#FFFFFF",
         "colorText2":"#FFFFFF",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -133,6 +147,8 @@
         "colorBackground":"#64168D",
         "colorText1":"#FFFFFF",
         "colorText2":"#FFFFFF",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -150,6 +166,8 @@
         "colorBackground":"#FF8000",
         "colorText1":"#FFFFFF",
         "colorText2":"#000000",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -167,6 +185,8 @@
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
         "colorText2":"#FFFFFF",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -184,6 +204,8 @@
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
         "colorText2":"#FFFFFF",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     },{
@@ -201,6 +223,8 @@
         "colorBackground":"#1C1427",
         "colorText1":"#FFFFFF",
         "colorText2":"#FFFFFF",
+        "textCellBack": "#FFFFFF",
+        "textCellText": "#FFFFFF",
         "colorTextInput":"#000000",
         "colorTextInputBackground":"#FFFFFF"
     }

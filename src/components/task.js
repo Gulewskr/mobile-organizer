@@ -5,6 +5,8 @@ import { icons } from '../components/icons';
 import styles from '../styles/stylesTask';
 import { useTheme } from '../data/colors';
 
+import {dataString} from '../data/calendar';
+
 const Task = (props) => {
     
     const more = props.more;
@@ -20,13 +22,13 @@ const Task = (props) => {
                     {props.nazwa}
                 </Text>
                 { props.deadline != false &&
-                    <View style={{flexDirection: "row"}}>
+                    <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Deadline</Text>
-                        <Text style={styles.deadlineText} >{props.day + " " + props.month + " " + props.year}</Text>
+                        <Text style={styles.deadlineText} >{ dataString(props.day, props.month, props.year) }</Text>
                     </View>
                 }
                 { props.specified ?
-                    <View style={{flexDirection: "row"}}>
+                    <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Ukończenie</Text>
                         <Text style={styles.proggresText} >{progress}</Text>
                     </View>

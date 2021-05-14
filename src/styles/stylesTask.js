@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     },
     deadlineText:{
         fontSize: 20,
-        marginLeft: 20,
         color: "#FE1010",
     },
     proggresText:{

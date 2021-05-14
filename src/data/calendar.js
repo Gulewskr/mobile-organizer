@@ -5,4 +5,9 @@ const nameOfMonths = ["Styczeń", "Luty", "Marzec", "Kwiecień",
 const nameOfDays = ["Pon","Wto","Śro","Czw","Pią","Sob","Nie"];
 const numberOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-export {nameOfMonths, nameOfDays, numberOfDays}
+const dataString = (day, month, year) => {
+    var data = String(day) + " " + nameOfMonths[month - 1] + " " + String(year);
+    return data;
+}
+
+export {nameOfMonths, nameOfDays, numberOfDays, dataString}

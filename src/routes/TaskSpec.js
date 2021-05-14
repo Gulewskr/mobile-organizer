@@ -3,7 +3,9 @@ import { View, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'reac
 import { Route } from '@react-navigation/native';
 
 import {DataContext} from '../data/DataContext';
+import {dataString} from '../data/calendar';
 
+import DeadlineChanger from '../components/deadlineChanger';
 import {NavbarBack} from '../components/navbar';
 import Task from '../components/task';
 
@@ -21,13 +23,17 @@ export default TaskSpec = ({navigation, route}) => {
   // Zmiana nazwy
   const [ taskName, onChangeName ] = useState( route.params.task.name );
   const [ editName,  allowEditName ] = useState(false);
-  
+
   const setNemHeadName = (changeOrReset) => {
     if(changeOrReset){
       changeName(ids, taskName);
     }
     else onChangeName(route.params.task.name);
   };
+
+  // Zmiana deadline
+  const [ dVisibility, setDVisibility ] = useState(false);
+
 
   var value = null;
   try{
@@ -66,8 +72,12 @@ export default TaskSpec = ({navigation, route}) => {
         }
         else onChangeName(route.params.task.more[taskID].name);
       };
+      /*{
+        dVisibility && <DeadlineChanger day={route.params.task.more[taskID].data.day} month={route.params.task.more[taskID].data.month} year={route.params.task.more[taskID].data.year} />
+      }*/
 
     return (
+      <>
       <View style={[styles2.optionContainerInside, {backgroundColor: themeID.colorContainer}]}>
         {/* Zmiana nazwy */}
         <View style={styles2.optionsTextInputContainer}>
@@ -92,7 +102,7 @@ export default TaskSpec = ({navigation, route}) => {
           <Image style={styles.exitButtonIcon} source={icons.cross} />
         </TouchableOpacity>
         {/* Edycja deadline */}
-        <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => save()}>
+        <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setDVisibility(true)}>
           <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
         </TouchableOpacity>
         {/* Przejście do szczegółów */}
@@ -100,6 +110,7 @@ export default TaskSpec = ({navigation, route}) => {
           <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
         </TouchableOpacity>
       </View>
+      </>
     );
     }catch (err){
       console.log(err);
@@ -130,9 +141,21 @@ export default TaskSpec = ({navigation, route}) => {
             }
           </View>
           <View style={[styles2.headerContainer, {backgroundColor: themeID.colorHeader3}]}>
-            <Text style={[styles2.headerText, {color: themeID.colorText1}]}>Deadline</Text>
+            <Text style={[styles2.headerText, {color: themeID.colorText1}]}>Deadline </Text>
+            {
+            route.params.task.deadline ?
+            <Text style={[styles2.deadlineText]}>{dataString(route.params.task.data.day, route.params.task.data.month, route.params.task.data.year)}</Text>
+            :
+            <Text style={[styles2.deadlineText]}>brak</Text>
+            }
+            <TouchableOpacity onPress={() => { setDVisibility(true) }}>
+              <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
+            </TouchableOpacity>
           </View>
         </View>
+        {
+          dVisibility && <DeadlineChanger day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={setDVisibility}/>
+        }
       {/* nagłówek - koniec */}
       <ScrollView style={{zIndex: 1, width: "100%"}}>
       {/* Wypisywanie listy podZadań: */}

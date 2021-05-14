@@ -9,6 +9,8 @@ export const icons = {
     backArrow: require('../icons/gui/return.png'),
     arrowRight: require('../icons/gui/arrowRight.png'),
     arrowLeft: require('../icons/gui/arrowLeft.png'),
+    arrowUp: require('../icons/gui/arrowUp.png'),
+    arrowDown: require('../icons/gui/arrowDown.png'),
     dots: require('../icons/gui/dots.png'),
     pen: require('../icons/gui/pen.png'),
     cross: require('../icons/gui/cross.png'),
