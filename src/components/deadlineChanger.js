@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 
 import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
+import {DataContext} from '../data/DataContext';
 import styles from '../styles/styleDeadlineChanger';
 import styles2 from '../styles/styles';
 import { useTheme } from '../data/colors';
@@ -9,6 +10,7 @@ import { icons } from '../components/icons';
 
 const DeadlineChanger = (props) => {
 
+    const { changeDate } = useContext(DataContext);
     const { themeID } = useTheme();
     const [ day, setDay ] = useState(props.day);
     const [ month, setMonth ] = useState(props.month);
@@ -81,19 +83,8 @@ const DeadlineChanger = (props) => {
 
     const saveValue = () => {
         //day, month, year
-        return 0; 
-    } 
-
-    const scrollableDays = () => {
-
-    }
-
-    const scrollableMonth = () => {
-        
-    }
-
-    const scrollableYear = () => {
-        
+        changeDate(props.ids, day, month + 1, year); 
+        props.close(false);
     }
 
     const ValueChanger = (props) => {
@@ -128,8 +119,8 @@ const DeadlineChanger = (props) => {
                 <ValueChanger value={nameOfMonths[month]}  next={nameOfMonths[nextMonth()]} prev={nameOfMonths[prevMonth()]} clickPrev={setPrevMonth} clickNext={setNextMonth}/>
                 <ValueChanger value={year}  next={year + 1} prev={year - 1} clickPrev={setPrevYear} clickNext={setNextYear}/>
             </View>
-            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]}>
-                <Text>Potwierdź</Text>
+            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => saveValue()}>
+                <Text style={{color: themeID.colorText1}}>Potwierdź</Text>
             </TouchableOpacity>
         </View>
     );

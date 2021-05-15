@@ -18,15 +18,46 @@ export function DataContextProvider({ children }){
         setTasksItems(itemsCopy);
     };
 
-    const removeTaskItem = (index) => { 
+    const getItemsTasks = (ids) => {
       let itemsCopy = [... tasksItems];
-      itemsCopy.splice(index, 1);
-      setTasksItems(itemsCopy);
-    };
+      let data = null;
+      if(ids != null && ids != undefined && ids.length > 0)
+      {
+        data = itemsCopy[ids[0]];
+      }else{
+        return itemsCopy;
+      }
+      
+      for(let i = 1; i < ids.length; i++)
+      {
+        data = data.more[ids[i]];
+      }
+      
+      return data;
+    }
 
+    //usunięcie zadania z listy
+    const removeTaskItem = (ids) => {
+      
+      var removeMore = (data, ids, id) => {
+        if(ids != null && ids != undefined && id < ids.length - 1)
+        {
+          data[ids[id]].more = removeMore(data[ids[id]].more, ids, id + 1);
+        }else{
+          data.splice(ids[id], 1);
+        }
+        return data;
+      }
+
+      let itemsCopy = [... tasksItems];
+      removeMore(itemsCopy, ids, 0);
+      setTasksItems(itemsCopy);
+    }
+
+    //zmiana nazwy zadania
     const changeName = (ids, newName) => {
 
-      const setNewName = (data, newName, ids, id) => {
+      var setNewName = (data, newName, ids, id) => {
         if(ids != null && ids != undefined && id < ids.length - 1)
         {
           data[ids[id]].more = setNewName(data[ids[id]].more, newName, ids, id + 1);
@@ -41,25 +72,46 @@ export function DataContextProvider({ children }){
       setTasksItems(itemsCopy);
     }
 
+    //zmiana daty deadline'u
+    const changeDate = (ids, day, month, year) => {
+
+      var setNewDate = (data, ids, day, month, year, id) => {
+        if(ids != null && ids != undefined && id < ids.length - 1)
+        {
+          data[ids[id]].more = setNewDate(data[ids[id]].more, ids, day, month, year, id + 1);
+        }else{
+          data[ids[id]].deadline = true;
+          data[ids[id]].data.day = day;
+          data[ids[id]].data.month = month;
+          data[ids[id]].data.year = year;
+        }
+        return data;
+      }
+
+      let itemsCopy = [... tasksItems];
+      setNewDate(itemsCopy, ids, day, month, year, 0);
+      setTasksItems(itemsCopy);
+    }
+
     const refreshTasks = () => {
       setTasksItems(tasksItems);
     }
 
-    const changeTaskLevel1 = (index) => {
-      let itemsCopy = [... tasksItems];
-      itemsCopy[index].ended = !itemsCopy[index].ended;
-      setTasksItems(itemsCopy);
-    }
+    //zmiana stanu zakończenia zadania
+    const changeTaskProgress = (ids) => {
+      
+      var changeProgress = (data, ids, id) => {
+        if(ids != null && ids != undefined && id < ids.length - 1)
+        {
+          data[ids[id]].more = changeProgress(data[ids[id]].more, ids, id + 1);
+        }else{
+          data[ids[id]].ended = !data[ids[id]].ended;
+        }
+        return data;
+      }
 
-    const changeTaskLevel2 = (index1, index2) => {
       let itemsCopy = [... tasksItems];
-      itemsCopy[index1].more[index2].ended = !itemsCopy[index1].more[index2].ended;
-      setTasksItems(itemsCopy);
-    }
-
-    const changeTaskLevel3 = (index1, index2, index3) => {
-      let itemsCopy = [... tasksItems];
-      itemsCopy[index1].more[index2].more[index3].ended = !itemsCopy[index1].more[index2].more[index3].ended;
+      changeProgress(itemsCopy, ids, 0);
       setTasksItems(itemsCopy);
     }
 
@@ -99,16 +151,13 @@ export function DataContextProvider({ children }){
       () => ({
         tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
         setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeTaskLevel1, changeTaskLevel2, changeTaskLevel3, changeName,
-        removeTaskItem
+        changeName, removeTaskItem, changeDate, changeTaskProgress, getItemsTasks
       }),
       [tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
         setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeTaskLevel1, changeTaskLevel2, changeTaskLevel3, changeName,
-        removeTaskItem
+        changeName, removeTaskItem, changeDate, changeTaskProgress, getItemsTasks
       ],
     );
-
 
     return (
       <DataContext.Provider value={value}>

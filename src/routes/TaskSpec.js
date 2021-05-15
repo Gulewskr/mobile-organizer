@@ -2,11 +2,12 @@ import React, {useState, useContext} from 'react';
 import { View, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 import { Route } from '@react-navigation/native';
 
-import {DataContext} from '../data/DataContext';
-import {dataString} from '../data/calendar';
+import { DataContext } from '../data/DataContext';
+import { dataString } from '../data/calendar';
 
 import DeadlineChanger from '../components/deadlineChanger';
-import {NavbarBack} from '../components/navbar';
+import { NavbarBack } from '../components/navbar';
+import TaskOptions from '../components/taskOptions';
 import Task from '../components/task';
 
 import styles from '../styles/styles';
@@ -20,6 +21,13 @@ export default TaskSpec = ({navigation, route}) => {
   const [oVisibility, setOVisibility] = useState(false);
   const [taskID, setTaskID] = useState(0);
   const ids = route.params.index;
+
+  const getOptionTaskIDS = () => {
+    var indeksy = [...ids];
+    indeksy.push(taskID);
+    return indeksy;
+  }
+
   // Zmiana nazwy
   const [ taskName, onChangeName ] = useState( route.params.task.name );
   const [ editName,  allowEditName ] = useState(false);
@@ -48,75 +56,6 @@ export default TaskSpec = ({navigation, route}) => {
   }catch(err){
     console.log(err);
   }
-
-  //
-  const Options = (props) => {
-    try{
-      if(route.params.task.more[taskID] === undefined) return null;
-    
-      // Zmiana nazwy
-      const [ taskName, onChangeName ] = useState( route.params.task.more[taskID].name );
-      const [ editName,  allowEditName ] = useState(false);
-    
-      const close = () => {
-        allowEditName(false);
-        setNemName(false);
-        setOVisibility(false);
-      };
-
-      const setNemName = (changeOrReset) => {
-        if(changeOrReset){
-          let indexs = [...ids];
-          indexs.push(taskID);
-          changeName(indexs, taskName);
-        }
-        else onChangeName(route.params.task.more[taskID].name);
-      };
-      /*{
-        dVisibility && <DeadlineChanger day={route.params.task.more[taskID].data.day} month={route.params.task.more[taskID].data.month} year={route.params.task.more[taskID].data.year} />
-      }*/
-
-    return (
-      <>
-      <View style={[styles2.optionContainerInside, {backgroundColor: themeID.colorContainer}]}>
-        {/* Zmiana nazwy */}
-        <View style={styles2.optionsTextInputContainer}>
-          <TextInput multiline={true} editable={editName} style={[styles2.optionsText, styles2.optionsTextInput, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
-          { editName ? 
-          <View style={{flexDirection: "row"}}>
-          <TouchableOpacity onPress={() => { allowEditName(false); setNemName(true) }}>
-            <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.save} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => { allowEditName(false); setNemName(false) }}>
-            <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.cross} />
-          </TouchableOpacity>
-          </View>
-          :
-          <TouchableOpacity onPress={() => { allowEditName(true) }}>
-            <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
-          </TouchableOpacity>
-          }
-        </View>
-        {/* Przycisk exit */}
-        <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => close()}>
-          <Image style={styles.exitButtonIcon} source={icons.cross} />
-        </TouchableOpacity>
-        {/* Edycja deadline */}
-        <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setDVisibility(true)}>
-          <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
-        </TouchableOpacity>
-        {/* Przejście do szczegółów */}
-        <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => navigation.push('Task', {'task': route.params.task.more[taskID], 'index': ids.push(taskID)})}>
-          <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
-        </TouchableOpacity>
-      </View>
-      </>
-    );
-    }catch (err){
-      console.log(err);
-    }
-    return null;
-  };
 
   return (
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
@@ -154,19 +93,19 @@ export default TaskSpec = ({navigation, route}) => {
           </View>
         </View>
         {
-          dVisibility && <DeadlineChanger day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={setDVisibility}/>
+          dVisibility && <DeadlineChanger ids={ids} day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={setDVisibility}/>
         }
       {/* nagłówek - koniec */}
       <ScrollView style={{zIndex: 1, width: "100%"}}>
-      {/* Wypisywanie listy podZadań: */}
-      {value}
-      {/* Koniec listy podZadań */}
+        {/* Wypisywanie listy podZadań: */}
+        {value}
+        {/* Koniec listy podZadań */}
       </ScrollView>
       { 
       oVisibility ?
       <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
         <View style={styles2.optionContainer}>
-          <Options key={taskID} />
+          <TaskOptions key={taskID} ids={getOptionTaskIDS()} show={setOVisibility} navigation={navigation} />
         </View>
       </TouchableOpacity>
       :

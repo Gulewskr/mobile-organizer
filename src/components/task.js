@@ -10,7 +10,6 @@ import {dataString} from '../data/calendar';
 const Task = (props) => {
     
     const more = props.more;
-    const [progress, setProggres] = useState(calculateProgres(more));
     //const [progress, setProggres] = useState("0%");
 
     const { themeID } = useTheme();
@@ -30,7 +29,7 @@ const Task = (props) => {
                 { props.specified ?
                     <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Ukończenie</Text>
-                        <Text style={styles.proggresText} >{progress}</Text>
+                        <Text style={styles.proggresText} >{calculateProgres(more)}</Text>
                     </View>
                     :
                     props.ended == true &&
@@ -43,7 +42,7 @@ const Task = (props) => {
                 <Image style={styles.icon} source={icons.arrowRight} />
             </TouchableOpacity>
         </View >
-    )
+    );
 }
 
 function calculateProgres(tasks)
