@@ -6,6 +6,7 @@ import {DataContext} from '../data/DataContext';
 import {NavbarBack} from '../components/navbar';
 import TaskOptions from '../components/taskOptions';
 import Task from '../components/task';
+import AddTaskMenu from '../components/addingTask';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -16,6 +17,9 @@ export default Tasks = ({navigation}) => {
   const { themeID } = useTheme();
   
   const [oVisibility, setOVisibility] = useState(false);
+  const [addMenu, setAddMenu] = useState(false);
+  const [sortMenu, setSortMenu] = useState(false);
+  const [removeMenu, setRemoveMenu] = useState(false);
   const [taskID, setTaskID] = useState(0);
 
   const { tasksItems } = useContext(DataContext);
@@ -36,6 +40,10 @@ export default Tasks = ({navigation}) => {
   return (
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
       <NavbarBack napis={'Zadania'} navigate={navigation} />
+      { removeMenu ?
+      null
+      :
+      <>
       <ScrollView style={{zIndex: 1, width: "100%"}}>
       {/* Wypisywanie listy zadań: */}
       {value}
@@ -45,11 +53,32 @@ export default Tasks = ({navigation}) => {
       oVisibility ?
       <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
         <View style={styles2.optionContainer}>
-          <TaskOptions key={taskID} ids={[taskID]} show={setOVisibility} navigation={navigation} />
+          <TaskOptions key={taskID} ids={[taskID]} show={()=>setOVisibility(false)} navigation={navigation} />
         </View>
       </TouchableOpacity>
       :
       null
+      }
+      {addMenu ?
+      <AddTaskMenu addTask={tasksItems} close={() => setAddMenu(false)}/>
+      :
+      null
+      }
+      {sortMenu ?
+      null
+      :
+      null
+      }
+      <TouchableOpacity style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> setAddMenu(true)}>
+        <Image source={icons.plus} style={styles2.buttonIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}>
+        <Image source={icons.sort} style={styles2.buttonIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}>
+        <Image source={icons.trash} style={styles2.buttonIcon} />
+      </TouchableOpacity>
+      </>
       }
     </View>
   );   

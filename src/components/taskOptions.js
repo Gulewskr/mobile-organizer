@@ -36,7 +36,7 @@ const TaskOptions = (props) => {
     
         const close = () => {
             setNewName(false);
-            props.show(false);
+            props.close();
         };
 
         // Przycisk zakończ/kontynuuj zadanie

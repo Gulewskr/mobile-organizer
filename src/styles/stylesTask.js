@@ -88,7 +88,50 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         flexDirection: "row",
         borderBottomWidth: 1
-    }
+    },
+    addButton:{
+        position: "absolute",
+        top: "80%",
+        right: "4%",
+        padding: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        height: "9%",
+        aspectRatio: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 5
+    },
+    sortButton:{
+        position: "absolute",
+        top: "90%",
+        left: "4%",
+        padding: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        height: "9%",
+        aspectRatio: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 5
+    },
+    deleteButton:{
+        position: "absolute",
+        top: "90%",
+        right: "4%",
+        padding: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        height: "9%",
+        aspectRatio: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 5
+    },  
+    buttonIcon:{
+        height: "90%",
+        aspectRatio: 1,
+    },
 });
 
 export default styles;

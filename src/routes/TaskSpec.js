@@ -93,7 +93,7 @@ export default TaskSpec = ({navigation, route}) => {
           </View>
         </View>
         {
-          dVisibility && <DeadlineChanger ids={ids} day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={setDVisibility}/>
+          dVisibility && <DeadlineChanger ids={ids} day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={()=>setDVisibility(false)}/>
         }
       {/* nagłówek - koniec */}
       <ScrollView style={{zIndex: 1, width: "100%"}}>
@@ -105,7 +105,7 @@ export default TaskSpec = ({navigation, route}) => {
       oVisibility ?
       <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
         <View style={styles2.optionContainer}>
-          <TaskOptions key={taskID} ids={getOptionTaskIDS()} show={setOVisibility} navigation={navigation} />
+          <TaskOptions key={taskID} ids={getOptionTaskIDS()} show={() => setOVisibility(false)} navigation={navigation} />
         </View>
       </TouchableOpacity>
       :

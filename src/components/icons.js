@@ -14,5 +14,9 @@ export const icons = {
     dots: require('../icons/gui/dots.png'),
     pen: require('../icons/gui/pen.png'),
     cross: require('../icons/gui/cross.png'),
-    save: require('../icons/gui/save.png')
+    save: require('../icons/gui/save.png'),
+    trash: require('../icons/gui/trash.png'),
+    plus: require('../icons/gui/plus.png'),
+    sort: require('../icons/gui/sortArrowsRoundWhite.png'),
+    tag: require('../icons/gui/tag.png')
 }

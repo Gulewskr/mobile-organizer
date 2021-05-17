@@ -18,6 +18,43 @@ export function DataContextProvider({ children }){
         setTasksItems(itemsCopy);
     };
 
+    //TODO
+    const addItemTask = (ids, name, deadline, day, month, year) => {
+      let itemsCopy = [... tasksItems];
+
+      const insertTask = (data, ids, name, deadline, day, month, year, id) => {
+        if(ids != null && ids != undefined && id < ids.length - 1)
+        {
+          data[ids[id]].more = insertTask(data[ids[id]].more, ids, name, deadline, day, month, year, id + 1);
+        }else{
+          data.more.push(createTask(name, deadline, day, month, year));
+        }
+        return data;
+      }
+
+      const createTask = (name, deadline, day, month, year) => {
+        let item = {'name' : name, 
+                    "deadline" : deadline,
+                    "data" : {
+                      "day" : day,
+                      "month" : month,
+                      "year" : year},
+                    "specified" : false,
+                    "more" : "",
+                    "ended" : false
+                    }
+        return item;
+      }
+
+      if(ids == null || ids == undefined || ids.length == 0)
+      {
+        itemsCopy.push(createTask(name, deadline, day, month, year));
+      }else{
+        insertTask(itemsCopy, ids, name, deadline, day, month, year, 0);
+      }
+      setTasksItems(itemsCopy);
+    }
+
     const getItemsTasks = (ids) => {
       let itemsCopy = [... tasksItems];
       let data = null;

@@ -109,8 +109,8 @@ const DeadlineChanger = (props) => {
 
     return(
         <View style={[styles.changerContainer, {backgroundColor: themeID.colorContainer}]}>
-            <Text style={styles.changerText}>Wybierz deadline*</Text>
-            <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(false)}}>
+            <Text style={styles.changerText}>Wybierz deadline</Text>
+            <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close()}}>
                 <Image style={styles2.exitButtonIcon} source={icons.cross} />
             </TouchableOpacity>
             <View style={{flexDirection: "row"}}>
