@@ -130,7 +130,9 @@ const TaskOptions = (props) => {
         <View style={[styles2.optionContainerInside, {backgroundColor: themeID.colorContainer}]}>
             {/* Zmiana nazwy */}
             <View style={styles2.optionsTextInputContainer}>
-            <TextInput multiline={true} editable={editName} style={[styles2.optionsText, styles2.optionsTextInput, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
+            <ScrollView style={styles2.optionsTextInput}>
+                <TextInput multiline={true} editable={editName} style={[styles2.optionsText, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
+            </ScrollView>
             { editName ? 
             <View style={{flexDirection: "row"}}>
             <TouchableOpacity onPress={() => { allowEditName(false); setNewName(true) }}>
@@ -155,7 +157,7 @@ const TaskOptions = (props) => {
             <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
             </TouchableOpacity>
             {/* Przejście do szczegółów */}
-            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => props.navigation.push('Task', {'task': task, 'index': props.ids})}>
+            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation.push('Task', {'task': task, 'index': props.ids});}}>
             <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
             </TouchableOpacity>
             {/* Przycisk zakończ/kontynuuj zadanie */}

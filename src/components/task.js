@@ -19,7 +19,7 @@ const Task = (props) => {
     return (
         <View style={[styles.taskContainer, {backgroundColor: themeID.colorContainer}]}>
             <View style={styles.textContainer} >
-                <Text style={[styles.taskText, {fontSize: 26, color: themeID.colorText1}]}>
+                <Text style={[styles.taskText, {fontSize: 18, color: themeID.colorText1}]}>
                     {props.nazwa}
                 </Text>
                 { props.deadline != false &&
@@ -40,7 +40,7 @@ const Task = (props) => {
                     </View>
                 }
             </View>
-            <TouchableOpacity style={[styles.iconContainer, {backgroundColor: themeID.colorButton1}]} onPress = {() => {props.setV(true); props.setT(props.index)}} >
+            <TouchableOpacity style={[styles.iconContainer, {backgroundColor: themeID.colorButton1}]} onPress = {() => {props.showOptions(); props.setId()}} >
                 <Image style={styles.icon} source={icons.arrowRight} />
             </TouchableOpacity>
         </View >

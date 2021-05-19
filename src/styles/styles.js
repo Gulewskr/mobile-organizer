@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         fontSize: 28
     },
     navbar_text2:{
-        fontSize: 32,
+        fontSize: 28,
         top: "12%",
     },
     navbar_button_icon:{
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     ConfirmButtonText:{
-        fontSize: 24,
+        fontSize: 20,
         textAlign: "center"
     },
     ConfirmButtonButton:{
@@ -139,8 +139,7 @@ const styles = StyleSheet.create({
         left: 0, 
         right: 0, 
         top: 0, 
-        bottom: 0,
-        zIndex: 2,
+        bottom: 0
     }
   });
 

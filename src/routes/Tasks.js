@@ -31,7 +31,7 @@ export default Tasks = ({navigation}) => {
       return(
       <Task key={index} index={index} nazwa={data.name} deadline={data.deadline} 
       day={data.data.day} month={data.data.month} year={data.data.year} more={data.more} 
-      ended={data.ended} setV={setOVisibility} setT={setTaskID}/>
+      ended={data.ended} showOptions={ () => { setAddMenu(false); setOVisibility(true) }} setId={()=>{setTaskID(index)}}/>
     );});
   }catch(err){
     console.log(err);
@@ -52,11 +52,9 @@ export default Tasks = ({navigation}) => {
       </ScrollView>
       { 
       oVisibility ?
-      <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
-        <View style={styles2.optionContainer}>
-          <TaskOptions key={taskID} ids={[taskID]} close={()=>setOVisibility(false)} navigation={navigation} />
-        </View>
-      </TouchableOpacity>
+      <View style={styles2.optionContainer}>
+        <TaskOptions key={taskID} ids={[taskID]} close={()=>setOVisibility(false)} navigation={navigation} />
+      </View>
       :
       null
       }
@@ -70,7 +68,7 @@ export default Tasks = ({navigation}) => {
       :
       null
       }
-      <TouchableOpacity style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> setAddMenu(true)}>
+      <TouchableOpacity style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false) ;setAddMenu(true)}}>
         <Image source={icons.plus} style={styles2.buttonIcon} />
       </TouchableOpacity>
       <TouchableOpacity style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}>

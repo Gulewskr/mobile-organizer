@@ -20,6 +20,11 @@ export default TaskSpec = ({navigation, route}) => {
   const { themeID } = useTheme();
   const [oVisibility, setOVisibility] = useState(false);
   const [taskID, setTaskID] = useState(0);
+
+  const [addMenu, setAddMenu] = useState(false);
+  const [sortMenu, setSortMenu] = useState(false);
+  const [removeMenu, setRemoveMenu] = useState(false);
+
   const ids = route.params.index;
 
   const getOptionTaskIDS = () => {
@@ -50,7 +55,7 @@ export default TaskSpec = ({navigation, route}) => {
         return(
         <Task key={index} index={index} nazwa={data.name} deadline={data.deadline} 
         day={data.data.day} month={data.data.month} year={data.data.year} more={data.more} 
-        ended={data.ended} setV={setOVisibility} setT={setTaskID}/>
+        ended={data.ended} showOptions={ () => { setAddMenu(false); setOVisibility(true) }} setId={()=>{setTaskID(index)}}/>
       );});
     }
   }catch(err){
@@ -61,10 +66,13 @@ export default TaskSpec = ({navigation, route}) => {
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
       <NavbarBack napis={'Zadania'} navigate={navigation} />
       {/* nagłówek - początek */}
-        <View>
+        <View style={{width: "100%", maxHeight: "20%"}}>
           <View style={[styles2.headerContainer, {backgroundColor: themeID.colorHeader3}]}>
-          <TextInput multiline={true} editable={editName} style={[styles2.optionsText, styles2.optionsTextInput, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
-            { editName ? 
+          <ScrollView style={{width:"70%"}}>
+           <TextInput multiline={true} editable={editName} style={[styles2.optionsText, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
+          </ScrollView>
+          <View>
+          { editName ? 
             <View style={{flexDirection: "row"}}>
             <TouchableOpacity onPress={() => { allowEditName(false); setNemHeadName(true) }}>
               <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.save} />
@@ -79,7 +87,8 @@ export default TaskSpec = ({navigation, route}) => {
             </TouchableOpacity>
             }
           </View>
-          <View style={[styles2.headerContainer, {backgroundColor: themeID.colorHeader3}]}>
+          </View>
+          <View style={[styles2.headerContainer2, {height: "35%", backgroundColor: themeID.colorHeader3}]}>
             <Text style={[styles2.headerText, {color: themeID.colorText1}]}>Deadline </Text>
             {
             route.params.task.deadline ?
@@ -104,14 +113,21 @@ export default TaskSpec = ({navigation, route}) => {
       </ScrollView>
       { 
       oVisibility ?
-      <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
-        <View style={styles2.optionContainer}>
-          <TaskOptions key={taskID} ids={getOptionTaskIDS()} show={() => setOVisibility(false)} navigation={navigation} />
-        </View>
-      </TouchableOpacity>
+      <View style={styles2.optionContainer}>
+        <TaskOptions key={taskID} ids={getOptionTaskIDS()} close={() => setOVisibility(false)} navigation={navigation} />
+      </View>
       :
       null
       }
+      <TouchableOpacity style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false) ;setAddMenu(true)}}>
+        <Image source={icons.plus} style={styles2.buttonIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}>
+        <Image source={icons.sort} style={styles2.buttonIcon} />
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}>
+        <Image source={icons.trash} style={styles2.buttonIcon} />
+      </TouchableOpacity>
     </View>
   );   
 };

@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     taskText:{
-        fontSize: 20,
+        fontSize: 16,
     },
     deadlineText:{
         marginLeft: 20,
-        fontSize: 20,
+        fontSize: 18,
         color: "#FE1010",
     },
     proggresText:{
-        fontSize: 20,
+        fontSize: 18,
         marginLeft: 40,
         color: "#129403",
     },
@@ -53,19 +53,20 @@ const styles = StyleSheet.create({
         width: "100%",
         borderWidth: 1,
         borderRadius: 15,
-        zIndex: 3,
+        zIndex: 4,
         padding: 20
     },
     optionsText:{
-        fontSize: 26,
+        fontSize: 20,
+        textAlign: "center"
     },
     optionsTextInputContainer:{
         marginBottom: 15, 
         flexDirection: "row",
-        justifyContent: "center"
+        maxHeight: "25%"
     },
     optionsTextInput:{
-        maxWidth: "55%",
+        maxWidth: "65%",
         borderRadius: 5,
         padding: 2
     },
@@ -79,14 +80,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     headerText:{
-        fontSize: 26
+        fontSize: 20
+    },
+    headerContainerInput:{
+
     },
     headerContainer:{
-        width: 400,
+        width: "100%",
+        maxHeight: "65%",
         padding: 10,
-        justifyContent: "center",
+        flexDirection: "row",
+        borderBottomWidth: 1
+    },
+    headerContainer2:{
+        width: "100%",
         alignItems: "center",
-        alignSelf: "center",
+        justifyContent: "center",
+        padding: 10,
         flexDirection: "row",
         borderBottomWidth: 1
     },
