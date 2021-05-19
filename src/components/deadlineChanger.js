@@ -12,9 +12,10 @@ const DeadlineChanger = (props) => {
 
     const { changeDate } = useContext(DataContext);
     const { themeID } = useTheme();
-    const [ day, setDay ] = useState(props.day);
-    const [ month, setMonth ] = useState(props.month);
-    const [ year, setYear ] = useState(props.year);
+    let currentTime = new Date();
+    const [ day, setDay ] = useState(props.deadline? props.day : currentTime.getDate());
+    const [ month, setMonth ] = useState(props.deadline? props.month : currentTime.getMonth());
+    const [ year, setYear ] = useState(props.deadline? props.year : currentTime.getFullYear());
 
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -88,8 +89,6 @@ const DeadlineChanger = (props) => {
     }
 
     const ValueChanger = (props) => {
-        const [ active, setActive ] = useState(false);
-
         return (
             <View style={styles.scrollChoose}>
                 <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
@@ -109,7 +108,7 @@ const DeadlineChanger = (props) => {
 
     return(
         <View style={[styles.changerContainer, {backgroundColor: themeID.colorContainer}]}>
-            <Text style={styles.changerText}>Wybierz deadline</Text>
+            <Text style={[styles.changerText,{color: themeID.colorText1}]}>Wybierz deadline</Text>
             <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close()}}>
                 <Image style={styles2.exitButtonIcon} source={icons.cross} />
             </TouchableOpacity>
@@ -126,4 +125,130 @@ const DeadlineChanger = (props) => {
     );
 }
 
+const DeadlineChooser = (props) => {
+
+    const { changeDate } = useContext(DataContext);
+    const { themeID } = useTheme();
+    const [ day, setDay ] = useState(props.day);
+    const [ month, setMonth ] = useState(props.month);
+    const [ year, setYear ] = useState(props.year);
+
+    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+    const nextDay = () => {
+        var next = day + 1;
+        var max = numberOfDays[month];
+        if(next > max) next = 1;
+        return next;
+    }
+
+    const prevDay = () => {
+        var prev = day - 1;
+        if(prev < 1){
+            prev = numberOfDays[month];
+        }
+        return prev;
+    }
+
+    const nextMonth = () => {
+        return month + 1  >  11 ? 0 : month + 1;
+    }
+
+    const prevMonth = () => {
+        return month - 1  >=  0 ? month - 1 : 11;
+    }
+
+    const setNextDay = () => {
+        var next = day + 1;
+        var max = numberOfDays[month];
+        if(next > max) next = 1;
+        setDay(next);
+        props.setDay(next);
+    }
+
+    const setPrevDay = () => {
+        var prev = day - 1;
+        if(prev < 1){
+            prev = numberOfDays[month];
+        }
+        setDay(prev);
+        props.setDay(prev);
+    }
+
+    const setNextMonth = () => {
+        if(month + 1  >  11)
+        {
+            setMonth(0);
+            props.setMonth(0);
+            if(day > numberOfDays[0]){
+                setDay(numberOfDays[0]);
+            }
+        }else{
+            setMonth(month + 1);
+            props.setMonth(month + 1);
+            if(day > numberOfDays[month + 1]){
+                setDay(numberOfDays[month + 1]);
+                props.setDay(numberOfDays[month + 1]);
+            }
+        }
+    }
+
+    const setPrevMonth = () => {
+        if(month - 1  >=  0)
+        {
+            setMonth(month - 1);
+            props.setMonth(month - 1);
+            if(day > numberOfDays[month - 1]) 
+            {
+                setDay(numberOfDays[month - 1]);
+                props.setDay(numberOfDays[month - 1]);
+            }
+        }else{
+            setMonth(11);
+            props.setMonth(11);
+            if(day > numberOfDays[11]){
+                setDay(numberOfDays[11]);
+                props.setDay(numberOfDays[11]);
+            }
+        }
+    }
+
+    const setNextYear = () => { 
+        setYear(year + 1); 
+        props.setYear(year + 1);
+    }
+    const setPrevYear = () => {
+        setYear(year - 1); 
+        props.setYear(year - 1);    
+    }
+
+    const ValueChanger = (props) => {
+        return (
+            <View style={styles.scrollChoose}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
+                    <Image style={styles.scrollChooseButtonIcon} source={icons.arrowUp} />
+                </TouchableOpacity>
+                <View style={styles.scrollList}>
+                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.prev}</Text></View>
+                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.colorHeader3}]}><Text style={{color: themeID.textCellText}}>{props.value}</Text></View>
+                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.next}</Text></View>
+                </View>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickNext()}>
+                    <Image style={styles.scrollChooseButtonIcon} source={icons.arrowDown} />
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
+    return(
+        <View style={{flexDirection: "row", width: "100%"}}>
+            {/* tablica se zrob elementy które będą potem jako menu i se będziesz tak chop siup góra dół */}
+            <ValueChanger value={day}  next={nextDay()} prev={prevDay()} clickPrev={setPrevDay} clickNext={setNextDay}/>
+            <ValueChanger value={nameOfMonths[month]}  next={nameOfMonths[nextMonth()]} prev={nameOfMonths[prevMonth()]} clickPrev={setPrevMonth} clickNext={setNextMonth}/>
+            <ValueChanger value={year}  next={year + 1} prev={year - 1} clickPrev={setPrevYear} clickNext={setNextYear}/>
+        </View>
+    );
+}
+
+export { DeadlineChooser };
 export default DeadlineChanger;

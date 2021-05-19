@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container:{
         width: "96%",
-        top: "40%",
         position: "absolute",
         zIndex: 6,
         alignSelf: "center",
         alignItems: "center",
+        justifyContent: "center",
         padding: "4%",
         borderWidth: 1,
         borderRadius: 15
@@ -50,6 +50,24 @@ const styles = StyleSheet.create({
     },
     font1:{
         fontSize: 20
+    },
+    font2:{
+        fontSize: 20,
+        marginRight: 20
+    }, 
+    buttonIcon:{
+        height: "80%",
+        aspectRatio: 1,
+        alignSelf: "center"
+    },
+    buttonIconMain:{
+        width: "15%",
+        marginTop: 10,
+        marginBottom: 10,
+        aspectRatio: 1,
+        justifyContent: "center",
+        borderRadius: 10,
+        borderWidth: 1
     }
 });
 

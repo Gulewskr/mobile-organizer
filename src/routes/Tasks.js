@@ -29,7 +29,7 @@ export default Tasks = ({navigation}) => {
   try{
     value = tasksItems.map((data, index) => {
       return(
-      <Task key={index} index={index} specified={data.specified} nazwa={data.name} deadline={data.deadline} 
+      <Task key={index} index={index} nazwa={data.name} deadline={data.deadline} 
       day={data.data.day} month={data.data.month} year={data.data.year} more={data.more} 
       ended={data.ended} setV={setOVisibility} setT={setTaskID}/>
     );});
@@ -47,20 +47,21 @@ export default Tasks = ({navigation}) => {
       <ScrollView style={{zIndex: 1, width: "100%"}}>
       {/* Wypisywanie listy zadań: */}
       {value}
+      <View style={{marginBottom: 200}}/>
       {/* Koniec listy zadań */}
       </ScrollView>
       { 
       oVisibility ?
       <TouchableOpacity style={styles.fillRect} onPress={()=>setOVisibility(false)}>
         <View style={styles2.optionContainer}>
-          <TaskOptions key={taskID} ids={[taskID]} show={()=>setOVisibility(false)} navigation={navigation} />
+          <TaskOptions key={taskID} ids={[taskID]} close={()=>setOVisibility(false)} navigation={navigation} />
         </View>
       </TouchableOpacity>
       :
       null
       }
       {addMenu ?
-      <AddTaskMenu addTask={tasksItems} close={() => setAddMenu(false)}/>
+      <AddTaskMenu addTask={tasksItems} close={() => setAddMenu(false)} ids={null}/>
       :
       null
       }

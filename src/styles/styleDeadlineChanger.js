@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         zIndex: 5
     },
     changerText:{
+        marginBottom: 15,
         fontSize: 20
     },
     scrollList:{
@@ -21,8 +22,9 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     scrollChoose:{
-        margin: "5%",
-        width: "30%",
+        marginRight: "3%",
+        marginBottom: "5%",
+        width: "31.5%",
     },
     scrollChooseCell:{
         alignItems: "center"

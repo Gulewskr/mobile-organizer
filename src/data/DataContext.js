@@ -37,7 +37,7 @@ export function DataContextProvider({ children }){
                     "deadline" : deadline,
                     "data" : {
                       "day" : day,
-                      "month" : month,
+                      "month" : month + 1,
                       "year" : year},
                     "specified" : false,
                     "more" : "",
@@ -188,11 +188,13 @@ export function DataContextProvider({ children }){
       () => ({
         tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
         setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeName, removeTaskItem, changeDate, changeTaskProgress, getItemsTasks
+        changeName, removeTaskItem, changeDate, changeTaskProgress, 
+        getItemsTasks, addItemTask
       }),
       [tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
         setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeName, removeTaskItem, changeDate, changeTaskProgress, getItemsTasks
+        changeName, removeTaskItem, changeDate, changeTaskProgress, 
+        getItemsTasks, addItemTask
       ],
     );
 

@@ -14,6 +14,8 @@ const Task = (props) => {
 
     const { themeID } = useTheme();
 
+    let specified = !(more == undefined || more == null || more == "" || more.length == 0);
+
     return (
         <View style={[styles.taskContainer, {backgroundColor: themeID.colorContainer}]}>
             <View style={styles.textContainer} >
@@ -21,12 +23,12 @@ const Task = (props) => {
                     {props.nazwa}
                 </Text>
                 { props.deadline != false &&
-                    <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
+                    <View style={{width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Deadline</Text>
                         <Text style={styles.deadlineText} >{ dataString(props.day, props.month, props.year) }</Text>
                     </View>
                 }
-                { props.specified ?
+                { specified ?
                     <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Ukończenie</Text>
                         <Text style={styles.proggresText} >{calculateProgres(more)}</Text>
@@ -47,8 +49,6 @@ const Task = (props) => {
 
 function calculateProgres(tasks)
 {
-    if(tasks.length == 0) return "brak zadan";
-
     let ended = 0;
     for(let i = 0; i < tasks.length ; i++)
     {

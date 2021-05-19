@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     deadlineText:{
+        marginLeft: 20,
         fontSize: 20,
         color: "#FE1010",
     },

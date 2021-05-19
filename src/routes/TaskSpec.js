@@ -48,7 +48,7 @@ export default TaskSpec = ({navigation, route}) => {
     if( route.params.task.more != undefined && route.params.task.more != ""){ 
       value = route.params.task.more.map((data, index) => {
         return(
-        <Task key={index} index={index} specified={data.specified} nazwa={data.name} deadline={data.deadline} 
+        <Task key={index} index={index} nazwa={data.name} deadline={data.deadline} 
         day={data.data.day} month={data.data.month} year={data.data.year} more={data.more} 
         ended={data.ended} setV={setOVisibility} setT={setTaskID}/>
       );});
@@ -93,12 +93,13 @@ export default TaskSpec = ({navigation, route}) => {
           </View>
         </View>
         {
-          dVisibility && <DeadlineChanger ids={ids} day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} close={()=>setDVisibility(false)}/>
+          dVisibility && <DeadlineChanger ids={ids} day={route.params.task.data.day} month={route.params.task.data.month - 1} year={route.params.task.data.year} deadline={route.params.task.deadline} close={()=>setDVisibility(false)}/>
         }
       {/* nagłówek - koniec */}
       <ScrollView style={{zIndex: 1, width: "100%"}}>
         {/* Wypisywanie listy podZadań: */}
         {value}
+        <View style={{marginBottom: 200}}/>
         {/* Koniec listy podZadań */}
       </ScrollView>
       { 
