@@ -10,27 +10,29 @@ import { icons } from '../components/icons';
 
 const TaskOptions = (props) => {
 
-    const { changeName, save, changeTaskProgress, removeTaskItem, getItemsTasks} = useContext(DataContext);
+    //const { changeName, save, changeTaskProgress, removeTaskItem, getItemsTasks} = useContext(DataContext);
+    const { changeName, changeDeadline, changeStatus, setTaskID} = useContext(DataContext);
     const { themeID } = useTheme();
 
     //props.ids - indeksy do zadania
     //props.show - ustawienie widzialności true/false
-
-    //task - aktualne zadanie
-    const task = getItemsTasks(props.ids);
-
+    
     try{
-        if(task === undefined) return null;
-        
+        if(props.task === undefined) return null;
+
         // Zmiana nazwy
-        const [ taskName, onChangeName ] = useState( task.name );
-        const [ editName,  allowEditName ] = useState(false);
+        const [ accName, setAccName ] = useState( props.task.name);
+        const [ taskName, onChangeName ] = useState( props.task.name);
+        const [ editName,  allowEditName ] = useState( false );
+
+        
 
         const setNewName = (changeOrReset) => {
             if(changeOrReset){
-                changeName(props.ids, taskName);
+                changeName(props.id, taskName);
+                setAccName(taskName);
             }
-            else onChangeName(task.name);
+            else onChangeName(accName);
             allowEditName(false);
         };
     
@@ -46,7 +48,7 @@ const TaskOptions = (props) => {
             const ConfirmButton = () => {
                 const confirm = (bool) => {
                         if(bool){
-                            changeTaskProgress(props.ids);
+                            changeStatus(props.id, !props.task.ended, props.task.connectedTask);
                         }
                         setV(false);
                 };
@@ -55,7 +57,7 @@ const TaskOptions = (props) => {
                     return (
                     <TouchableOpacity style={styles.fillRect} onPress={()=>setV(false)}>
                     <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
-                        <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>{task.ended ? "Czy chcesz kontynuować zadanie?" : "Czy chcesz zakończyć zadanie?"}</Text>
+                        <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>{props.task.ended ? "Czy chcesz kontynuować zadanie?" : "Czy chcesz zakończyć zadanie?"}</Text>
                     <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
                         <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
                         <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Tak</Text>
@@ -75,7 +77,7 @@ const TaskOptions = (props) => {
          return (
             <>
             <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setV(true)}>
-            <Text style={{fontSize: 16, color: "#129403", alignSelf: "center"}}>{ task.ended ? "Kontynuuj zadanie" : "Zakończ zadanie" }</Text>
+            <Text style={{fontSize: 16, color: "#129403", alignSelf: "center"}}>{ props.task.ended ? "Kontynuuj zadanie" : "Zakończ zadanie" }</Text>
             </TouchableOpacity>
             <ConfirmButton />
             </>
@@ -88,7 +90,7 @@ const TaskOptions = (props) => {
             const ConfirmButton = () => {
                 const confirm = (bool) => {
                     if(bool){
-                        removeTaskItem(props.ids);
+                        removeTaskItem(props.id);
                         props.show(false);
                     }
                     setV(false);
@@ -157,7 +159,7 @@ const TaskOptions = (props) => {
             <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
             </TouchableOpacity>
             {/* Przejście do szczegółów */}
-            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation.push('Task', {'task': task, 'index': props.ids});}}>
+            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation();}}>
             <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
             </TouchableOpacity>
             {/* Przycisk zakończ/kontynuuj zadanie */}

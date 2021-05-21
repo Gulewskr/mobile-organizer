@@ -2,9 +2,11 @@ import React, {useContext} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 import {icons} from './icons.js';
+import {DataContext} from '../data/DataContext';
 
 import styles from '../styles/styles';
 import { useTheme } from '../data/colors';
+
 
 const NavbarMenu = (props) => {
     const { themeID } = useTheme();
@@ -17,6 +19,7 @@ const NavbarMenu = (props) => {
 
 const NavbarBack = (props) => {
     const { themeID } = useTheme();
+    const { PrevID } = useContext(DataContext);
     return (
         <View style = {[styles.navbar, styles.navbar2,  {backgroundColor: themeID.colorHeader2}]}>
          <TouchableOpacity style = {styles.navbar_icon_continer} onPress={() => props.navigate.navigate("Profile") }>
@@ -25,7 +28,8 @@ const NavbarBack = (props) => {
          <View style = {styles.navbar_text_Container}>
          <Text style = {[styles.navbar_text, styles.navbar_text2]}>{props.napis}</Text>
          </View>
-         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} onPress={() => props.navigate.goBack() } >
+         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} 
+         onPress={() => { props.navigate.goBack() }}>
             <Image style = {styles.navbar_button_icon} source={icons.backArrow} />
          </TouchableOpacity>
         </View>

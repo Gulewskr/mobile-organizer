@@ -5,17 +5,19 @@ import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
 import {DataContext} from '../data/DataContext';
 import styles from '../styles/styleDeadlineChanger';
 import styles2 from '../styles/styles';
+import styles3 from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
 
 const DeadlineChanger = (props) => {
 
-    const { changeDate } = useContext(DataContext);
+    const { changeDeadline } = useContext(DataContext);
     const { themeID } = useTheme();
     let currentTime = new Date();
     const [ day, setDay ] = useState(props.deadline? props.day : currentTime.getDate());
     const [ month, setMonth ] = useState(props.deadline? props.month : currentTime.getMonth());
     const [ year, setYear ] = useState(props.deadline? props.year : currentTime.getFullYear());
+    const [ haveD, deadline ] = useState(props.deadline);
 
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -84,8 +86,9 @@ const DeadlineChanger = (props) => {
 
     const saveValue = () => {
         //day, month, year
-        changeDate(props.ids, day, month + 1, year); 
-        props.close(false);
+        //(taskID, bool, day, month, year)
+        changeDeadline(props.ids, haveD, day, month + 1, year); 
+        props.close();
     }
 
     const ValueChanger = (props) => {
@@ -112,12 +115,24 @@ const DeadlineChanger = (props) => {
             <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close()}}>
                 <Image style={styles2.exitButtonIcon} source={icons.cross} />
             </TouchableOpacity>
+            <View style={{flexDirection: "row", alignItems: "center"}}>
+                <Text style={[styles3.font2, {color: themeID.colorText1}]}>Deadline</Text>
+                <TouchableOpacity style={[styles3.buttonIconMain,haveD ? {backgroundColor: themeID.colorButton1} : {backgroundColor: themeID.colorButtonUnchecked1}]}
+                onPress={() => deadline(!haveD) }
+                >
+                    <Image style={[styles3.buttonIcon, haveD?{opacity:1}:{opacity:0.2}]} source={icons.checkmark} />
+                </TouchableOpacity>
+            </View>
+            { 
+            haveD ?
             <View style={{flexDirection: "row"}}>
                 {/* tablica se zrob elementy które będą potem jako menu i se będziesz tak chop siup góra dół */}
                 <ValueChanger value={day}  next={nextDay()} prev={prevDay()} clickPrev={setPrevDay} clickNext={setNextDay}/>
                 <ValueChanger value={nameOfMonths[month]}  next={nameOfMonths[nextMonth()]} prev={nameOfMonths[prevMonth()]} clickPrev={setPrevMonth} clickNext={setNextMonth}/>
                 <ValueChanger value={year}  next={year + 1} prev={year - 1} clickPrev={setPrevYear} clickNext={setNextYear}/>
             </View>
+            : null
+            }
             <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => saveValue()}>
                 <Text style={{color: themeID.colorText1}}>Potwierdź</Text>
             </TouchableOpacity>

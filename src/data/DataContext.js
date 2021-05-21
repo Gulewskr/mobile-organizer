@@ -1,215 +1,66 @@
-import React, {createContext, useMemo, useState, useContext} from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import events from './events.json';
-import notes from './notes.json';
-import tasks from './tasks.json';
+import React, { useEffect, createContext, useState } from 'react';
+import {database} from './database'
 
-export const DataContext = React.createContext();
+export const DataContext = createContext({});
 
-export function DataContextProvider({ children }){
-    const [tasksItems, setTasksItems] = useState(tasks);
-    const [notesItems, setNotesItems] = useState(notes);
-    const [eventsItems, setEventsItems] = useState(events);
-  
-    const refreshTaskItem = (index, newData) => { 
-        let itemsCopy = [... tasksItems];
-        itemsCopy.splice(index, 1, newData);
-        setTasksItems(itemsCopy);
-    };
+const IDNavTask = [];
 
-    //TODO
-    const addItemTask = (ids, name, deadline, day, month, year) => {
-      let itemsCopy = [... tasksItems];
+export const DataContextProvider = ({children}) => {
 
-      const insertTask = (data, ids, name, deadline, day, month, year, id) => {
-        if(ids != null && ids != undefined && id < ids.length - 1)
-        {
-          data[ids[id]].more = insertTask(data[ids[id]].more, ids, name, deadline, day, month, year, id + 1);
-        }else{
-          data.more.push(createTask(name, deadline, day, month, year));
-        }
-        return data;
-      }
+  const [ tasks, setTasks ] = useState(null);
+  const [ task, setTask ] = useState(null);
 
-      const createTask = (name, deadline, day, month, year) => {
-        let item = {'name' : name, 
-                    "deadline" : deadline,
-                    "data" : {
-                      "day" : day,
-                      "month" : month + 1,
-                      "year" : year},
-                    "specified" : false,
-                    "more" : "",
-                    "ended" : false
-                    }
-        return item;
-      }
+  const [ taskID, setTaskId ] = useState(0);
 
-      if(ids == null || ids == undefined || ids.length == 0)
-      {
-        itemsCopy.push(createTask(name, deadline, day, month, year));
-      }else{
-        insertTask(itemsCopy, ids, name, deadline, day, month, year, 0);
-      }
-      setTasksItems(itemsCopy);
-    }
+  useEffect(() => {
+    refreshTasks()
+  }, [] )
 
-    const getItemsTasks = (ids) => {
-      let itemsCopy = [... tasksItems];
-      let data = null;
-      if(ids != null && ids != undefined && ids.length > 0)
-      {
-        data = itemsCopy[ids[0]];
-      }else{
-        return itemsCopy;
-      }
-      
-      for(let i = 1; i < ids.length; i++)
-      {
-        data = data.more[ids[i]];
-      }
-      
-      return data;
-    }
+  const addNewTask = ( name, deadline, day, month, year, connectedid ) => {
+    return database.addTask( name, deadline, day, month, year, connectedid, refreshTasks)
+  };
 
-    //usunięcie zadania z listy
-    const removeTaskItem = (ids) => {
-      
-      var removeMore = (data, ids, id) => {
-        if(ids != null && ids != undefined && id < ids.length - 1)
-        {
-          data[ids[id]].more = removeMore(data[ids[id]].more, ids, id + 1);
-        }else{
-          data.splice(ids[id], 1);
-        }
-        return data;
-      }
+  const refreshTasks = () =>  {
+    //database.getTasks( setTasks );
+    database.getTask( taskID, setTask);
+    database.getMoreTask(taskID, setTasks);
+  }
 
-      let itemsCopy = [... tasksItems];
-      removeMore(itemsCopy, ids, 0);
-      setTasksItems(itemsCopy);
-    }
+  const changeName = (taskID, name) => {
+    return database.changeName(taskID, name, refreshTasks)
+  }
 
-    //zmiana nazwy zadania
-    const changeName = (ids, newName) => {
+  const changeDeadline= (taskID, bool, day, month, year) => {
+    return database.changeDeadline(taskID, bool ? 1 : 0 , day, month, year, refreshTasks)
+  }
 
-      var setNewName = (data, newName, ids, id) => {
-        if(ids != null && ids != undefined && id < ids.length - 1)
-        {
-          data[ids[id]].more = setNewName(data[ids[id]].more, newName, ids, id + 1);
-        }else{
-          data[ids[id]].name = newName;
-        }
-        return data;
-      }
+  const changeStatus = (taskID, bool, parentID) => {
+    return database.changeStatus(taskID, bool ? 1 : 0, refreshTasks, parentID)
+  }
 
-      let itemsCopy = [... tasksItems];
-      setNewName(itemsCopy, newName, ids, 0);
-      setTasksItems(itemsCopy);
-    }
+  const getMoreTask = (id) => {
+    return database.getMoreTask(id, setTasks);
+  }
 
-    //zmiana daty deadline'u
-    const changeDate = (ids, day, month, year) => {
+  const setTaskID = async (id) => {
+    setTaskId(id);
+    database.getTask( id, setTask);
+    database.getMoreTask(id, setTasks);
+  }
 
-      var setNewDate = (data, ids, day, month, year, id) => {
-        if(ids != null && ids != undefined && id < ids.length - 1)
-        {
-          data[ids[id]].more = setNewDate(data[ids[id]].more, ids, day, month, year, id + 1);
-        }else{
-          data[ids[id]].deadline = true;
-          data[ids[id]].data.day = day;
-          data[ids[id]].data.month = month;
-          data[ids[id]].data.year = year;
-        }
-        return data;
-      }
+  // Make the context object:
+  const dataContext = {
+    tasks,
+    task,
+    addNewTask,
+    setTaskID,
+    changeName,
+    changeDeadline,
+    changeStatus,
+    getMoreTask
+  };
 
-      let itemsCopy = [... tasksItems];
-      setNewDate(itemsCopy, ids, day, month, year, 0);
-      setTasksItems(itemsCopy);
-    }
-
-    const refreshTasks = () => {
-      setTasksItems(tasksItems);
-    }
-
-    //zmiana stanu zakończenia zadania
-    const changeTaskProgress = (ids) => {
-      
-      var changeProgress = (data, ids, id) => {
-        if(ids != null && ids != undefined && id < ids.length - 1)
-        {
-          data[ids[id]].more = changeProgress(data[ids[id]].more, ids, id + 1);
-        }else{
-          data[ids[id]].ended = !data[ids[id]].ended;
-        }
-        return data;
-      }
-
-      let itemsCopy = [... tasksItems];
-      changeProgress(itemsCopy, ids, 0);
-      setTasksItems(itemsCopy);
-    }
-
-    const save = async() => {
-      try {
-        await AsyncStorage.setItem("tasks", JSON.stringify(tasksItems));
-        await AsyncStorage.setItem("notes", JSON.stringify(notesItems));
-        await AsyncStorage.setItem("events", JSON.stringify(eventsItems));
-      } catch (err) {
-        alert(err);
-      }
-    }
-
-    const load = async() => {
-      try {
-        let tasks = await AsyncStorage.getItem("tasks");
-        let notes = await AsyncStorage.getItem("notes");
-        let events = await AsyncStorage.getItem("events");
-
-        if (tasks != null){
-          setTasksItems(JSON.parse(task));
-        }
-
-        if (notes != null){
-          setNotesItems(JSON.parse(notes));
-        }
-
-        if ( events != null){
-          setEventsItems(JSON.parse(events));
-        }
-
-      } catch (err) {
-        alert(err);
-      }
-    }
-    const value = useMemo(
-      () => ({
-        tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
-        setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeName, removeTaskItem, changeDate, changeTaskProgress, 
-        getItemsTasks, addItemTask
-      }),
-      [tasksItems, setTasksItems, notesItems, setNotesItems, eventsItems, 
-        setEventsItems, refreshTaskItem, refreshTasks, save, load,
-        changeName, removeTaskItem, changeDate, changeTaskProgress, 
-        getItemsTasks, addItemTask
-      ],
-    );
-
-    return (
-      <DataContext.Provider value={value}>
-        {children}
-      </DataContext.Provider>
-    );
+  // pass the value in provider and return
+  return <DataContext.Provider value={dataContext}>{children}</DataContext.Provider>;
 };
-
-
-function useData(){
-  const {tasksItems, refreshItem} = useContext(DataContext);
-  return [ tasksItems, refreshItem ];
-};
-
-export {useData}
-export default DataContext;

@@ -10,7 +10,7 @@ import { icons } from '../components/icons';
 
 const AddTaskMenu = (props) => {
 
-    const { addItemTask } = useContext(DataContext);
+    const { addNewTask } = useContext(DataContext);
     const { themeID } = useTheme();
 
     const [ name, setName ] = useState("nazwa zadania");
@@ -50,7 +50,10 @@ const AddTaskMenu = (props) => {
                 haveDeadline && <DeadlineChooser day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear} />
             }
             <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
-            onPress={() => { addItemTask(props.ids, name, haveDeadline, day, month, year); props.close() }}
+            onPress={() => {
+                 //addItemTask(props.ids, name, haveDeadline, day, month, year); props.close() 
+                 addNewTask(name, haveDeadline, day, month + 1, year, props.id); props.close()
+                }}
             >
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz</Text>
             </TouchableOpacity>

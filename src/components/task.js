@@ -10,8 +10,6 @@ import {dataString} from '../data/calendar';
 const Task = (props) => {
     
     const more = props.more;
-    //const [progress, setProggres] = useState("0%");
-
     const { themeID } = useTheme();
 
     let specified = !(more == undefined || more == null || more == "" || more.length == 0);
@@ -28,10 +26,15 @@ const Task = (props) => {
                         <Text style={styles.deadlineText} >{ dataString(props.day, props.month, props.year) }</Text>
                     </View>
                 }
-                { specified ?
+                { props.spec ?
+                    props.ended ?
+                    <View style={{flexDirection: "row"}}>
+                        <Text style={[styles.taskText, {color: "#129403"}]}>Ukończono</Text>
+                    </View>
+                    :
                     <View style={{flexDirection: "row", width: "100%", flexWrap: 'wrap'}}>
                         <Text style={[styles.taskText, {color: themeID.colorText1}]}>Ukończenie</Text>
-                        <Text style={styles.proggresText} >{calculateProgres(more)}</Text>
+                        <Text style={styles.proggresText} >{props.progress}%</Text>
                     </View>
                     :
                     props.ended == true &&
