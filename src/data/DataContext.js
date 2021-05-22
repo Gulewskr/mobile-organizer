@@ -43,6 +43,10 @@ export const DataContextProvider = ({children}) => {
     return database.getMoreTask(id, setTasks);
   }
 
+  const sortTask = (id, opt1, opt2, opt3) => {
+    return database.sortTask(id, opt1, opt2, opt3, setTasks);
+  }
+
   const setTaskID = async (id) => {
     setTaskId(id);
     database.getTask( id, setTask);
@@ -55,6 +59,7 @@ export const DataContextProvider = ({children}) => {
     task,
     addNewTask,
     setTaskID,
+    sortTask,
     changeName,
     changeDeadline,
     changeStatus,

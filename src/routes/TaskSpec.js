@@ -55,9 +55,6 @@ export default TaskSpec = ({navigation, route}) => {
       else onChangeName(task.name);
     };
 
-    
-
-
     var value = null;
     
       if( tasks != undefined && tasks != ""){ 
@@ -124,8 +121,8 @@ export default TaskSpec = ({navigation, route}) => {
         <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
         </>
         }
-        { addMenu && <AddTaskMenu close={() => setAddMenu(false)} id={task.id}/>}
-        { sortMenu && <SortTaskMenu close={() => setSortMenu(false)} />}
+        { addMenu && <AddTaskMenu id={task.id} close={() => setAddMenu(false)}/>}
+        { sortMenu && <SortTaskMenu id={task.id} close={() => setSortMenu(false)} />}
         <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false) ;setAddMenu(true)}}>
           <Image source={icons.plus} style={styles2.buttonIcon} />
         </TouchableOpacity>

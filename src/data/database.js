@@ -113,6 +113,58 @@ const addTask = (name, deadline, day, month, year, connectedid, successFunc) => 
     refreshTaskProgress(connectedid);
 }
 
+//sortowanie zadan
+const sortTask = (taskID, opt1, opt2, opt3, setFunc) => {
+  var polecenie = 'SELECT * FROM tasks WHERE connectedTask = ' + taskID;
+  switch(opt1){
+    case 0: break;
+    case 1: polecenie += ' AND deadline = 1 '; break;
+    case 2: polecenie += ' AND deadline = 0 '; break;
+    default: 
+      console.log("error with db sortTask arguments opt1");
+      return;
+  }
+  switch(opt2){
+    case 0: if(opt3 != 0){polecenie += ' ORDER by '} break;
+    case 1: 
+      polecenie += ' ORDER by name DESC'; 
+      break;
+    case 2: 
+      polecenie += ' ORDER by name ASC';
+      break;
+    default:
+      console.log("error with db sortTask arguments opt2");
+      return;
+  }
+  switch(opt3){
+    case 0: break;
+    case 1: 
+      if(opt2 != 0){polecenie += ','};  
+      polecenie += '_year DESC, _month DESC, _day DESC';
+      break;
+    case 2: 
+      if(opt2 != 0){polecenie += ','};  
+      polecenie += '_year ASC, _month ASC, _day ASC';
+      break;
+    default:
+      console.log("error with db sortTask arguments opt3");
+      return;
+  }
+
+  //console.log(polecenie);
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        polecenie,
+        [],
+        (_, { rows: { _array } }) => {setFunc(_array)}
+      );
+    },
+    (t, error) => { console.log("db error with sorting tasks") },
+    (_t, _success) => { console.log("loaded sorted tasks");}
+  );
+}
+
 const refreshTaskProgress = (id) => {
   db.transaction( 
     tx => {
@@ -159,6 +211,7 @@ export const database = {
   getTask,
   getMoreTask,
   addTask,
+  sortTask,
   changeName,
   changeStatus,
   changeDeadline,

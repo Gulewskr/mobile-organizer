@@ -11,7 +11,7 @@ import { icons } from '../components/icons';
 
 const SortTaskMenu = (props) => {
 
-    //const { addItemTask } = useContext(DataContext);
+    const { sortTask } = useContext(DataContext);
     const { themeID } = useTheme();
 
     const [o1, setO1] = useState(false);
@@ -23,11 +23,6 @@ const SortTaskMenu = (props) => {
     const [o4, setO4] = useState(false);
     const [o4T,setO4T] = useState(1);
 
-    useEffect(() => {
-     console.log("sortowanie po nazwie: " + o3T);
-     console.log("sortowanie po deadline'nie: " + o4T);
-    }, [o3T, o4T])
-
     const sortItems = () => {
         /*przypadki:
             0 - wszystkie zadania
@@ -38,6 +33,12 @@ const SortTaskMenu = (props) => {
             1 - sortowanie malejaco
             2 - sortowanie rosnaco 
         */
+        var option1 = 0, option2 = 0, option3 = 0; 
+        if(o1) option1 = 1;
+        if(o2) option1 = 2;
+        if(o3) option2 = o3T;
+        if(o4) option3 = o4T;
+        sortTask(props.id, option1, option2, option3);
     }
 
 
@@ -50,8 +51,8 @@ const SortTaskMenu = (props) => {
                     onValueChange={(itemValue, itemIndex) => 
                         params.valueSet(itemValue)
                         }>
-                        <Picker.Item useNativeAndroidPickerStyle={false} label="malejąco" value="1" />
-                        <Picker.Item useNativeAndroidPickerStyle={false} label="rosnąco" value="2" />
+                        <Picker.Item useNativeAndroidPickerStyle={false} label="malejąco" value={1} />
+                        <Picker.Item useNativeAndroidPickerStyle={false} label="rosnąco" value={2} />
                 </Picker>
             </View>
         );

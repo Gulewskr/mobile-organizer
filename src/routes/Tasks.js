@@ -73,12 +73,12 @@ export default Tasks = ({navigation}) => {
       null
       }
       {addMenu ?
-      <AddTaskMenu close={() => setAddMenu(false)} id={''}/>
+      <AddTaskMenu id={"''"} close={() => setAddMenu(false)}/>
       :
       null
       }
       {sortMenu ?
-      <SortTaskMenu close={() => setSortMenu(false)} />
+      <SortTaskMenu id={"''"} close={() => setSortMenu(false)} />
       :
       null
       }
