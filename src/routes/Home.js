@@ -13,7 +13,7 @@ const Home = ({navigation}) => {
   return (
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
       <NavbarMenu />
-      <ScrollView style = {{marginTop: 10}}>
+      <ScrollView style = {{width: "100%"}}>
        <MenuButton icon = {icons.task} Text={'ZADANIA'} navigate={navigation} route={'Tasks'}  />
        <MenuButton icon = {icons.calendar} Text={'KALENDARZ'} navigate={navigation} route={'Callendar'}  />
        <MenuButton icon = {icons.cake} Text={'WYDARZENIA'} navigate={navigation} route={'Events'} />

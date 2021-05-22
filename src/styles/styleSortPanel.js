@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     },
     font1:{
         fontSize: 22,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        alignSelf: "center"
     },
     exitButton:{
         width: "12%",
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
         width: "12%",
         aspectRatio: 1,
         justifyContent: "center",
+        marginTop: 5,
         alignItems: "center",
         borderRadius: 10,
         borderWidth: 1
@@ -69,18 +71,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: "5%"
     },
+    picker:{
+        width: "45%",
+        marginRight: "5%",
+        justifyContent: "center",
+        backgroundColor: "#EEEEEE",
+        borderRadius: 10,
+        borderWidth: 1,
+    },
     sortContainer:{
         alignItems: "center",
         justifyContent: "center",
         width: "96%",
         margin: 10,
         borderWidth: 1,
-        borderRadius: 10
+        borderRadius: 10,
+        padding: 5
     },
     sortRow:{
         flexDirection: "row",
-        marginTop: 5,
-        justifyContent: "center"
+        marginTop: 5
     },
     acceptButton:{
         margin: 25,
@@ -92,7 +102,8 @@ const styles = StyleSheet.create({
     },
     font2:{
         fontSize: 20,
-        marginRight: 20
+        marginRight: 20,
+        textAlignVertical: "center"
     }
 });
 

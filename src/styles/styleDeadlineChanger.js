@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         padding: "8%",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 5
+        zIndex: 10
     },
     changerText:{
         marginBottom: 15,

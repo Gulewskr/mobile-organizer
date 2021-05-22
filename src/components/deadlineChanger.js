@@ -85,8 +85,6 @@ const DeadlineChanger = (props) => {
     const setPrevYear = () => { setYear(year - 1); }
 
     const saveValue = () => {
-        //day, month, year
-        //(taskID, bool, day, month, year)
         changeDeadline(props.ids, haveD, day, month + 1, year); 
         props.close();
     }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 
 import { DataContext } from '../data/DataContext';
@@ -8,15 +8,25 @@ import styles2 from '../styles/stylesTask';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
 
+import DeadlineChanger from './deadlineChanger';
+
 const TaskOptions = (props) => {
 
     //const { changeName, save, changeTaskProgress, removeTaskItem, getItemsTasks} = useContext(DataContext);
     const { changeName, changeDeadline, changeStatus, setTaskID} = useContext(DataContext);
     const { themeID } = useTheme();
+  
+    // Zmiana deadline
+    const [ dVisibility, setDVisibility ] = useState(false);
 
-    //props.ids - indeksy do zadania
-    //props.show - ustawienie widzialności true/false
-    
+    useEffect(() => {
+        if(dVisibility){     
+          console.log("zmiana deadline'u");
+        }else{
+          console.log("koniec zmiany deadline'u");
+        }
+      }, [dVisibility])
+
     try{
         if(props.task === undefined) return null;
 
@@ -129,44 +139,47 @@ const TaskOptions = (props) => {
         };
 
         return (
-        <View style={[styles2.optionContainerInside, {backgroundColor: themeID.colorContainer}]}>
-            {/* Zmiana nazwy */}
+        <>
+        <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
+                {/* Zmiana nazwy */}
             <View style={styles2.optionsTextInputContainer}>
-            <ScrollView style={styles2.optionsTextInput}>
-                <TextInput multiline={true} editable={editName} style={[styles2.optionsText, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
-            </ScrollView>
-            { editName ? 
-            <View style={{flexDirection: "row"}}>
-            <TouchableOpacity onPress={() => { allowEditName(false); setNewName(true) }}>
-                <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.save} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => { allowEditName(false); setNewName(false) }}>
-                <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.cross} />
-            </TouchableOpacity>
-            </View>
-            :
-            <TouchableOpacity onPress={() => { allowEditName(true) }}>
-                <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
-            </TouchableOpacity>
-            }
-            </View>
-            {/* Przycisk exit */}
-            <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => close()}>
-            <Image style={styles.exitButtonIcon} source={icons.cross} />
-            </TouchableOpacity>
-            {/* Edycja deadline */}
-            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => save()}>
-            <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
-            </TouchableOpacity>
-            {/* Przejście do szczegółów */}
-            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation();}}>
-            <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
-            </TouchableOpacity>
-            {/* Przycisk zakończ/kontynuuj zadanie */}
-            <ChangeEndingState />
-            {/* Przycik usuń zadanie */}
+                <ScrollView style={styles2.optionsTextInput}>
+                    <TextInput multiline={true} editable={editName} style={[styles2.optionsText, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
+                </ScrollView>
+                { editName ? 
+                <View style={{flexDirection: "row"}}>
+                <TouchableOpacity onPress={() => { allowEditName(false); setNewName(true) }}>
+                    <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.save} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { allowEditName(false); setNewName(false) }}>
+                    <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.cross} />
+                </TouchableOpacity>
+                </View>
+                :
+                <TouchableOpacity onPress={() => { allowEditName(true) }}>
+                    <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
+                </TouchableOpacity>
+                }
+                </View>
+                {/* Przycisk exit */}
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => close()}>
+                <Image style={styles.exitButtonIcon} source={icons.cross} />
+                </TouchableOpacity>
+                {/* Edycja deadline */}
+                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setDVisibility(true)}>
+                <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
+                </TouchableOpacity>
+                {/* Przejście do szczegółów */}
+                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation();}}>
+                <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
+                </TouchableOpacity>
+                {/* Przycisk zakończ/kontynuuj zadanie */}
+                <ChangeEndingState />
+                {/* Przycik usuń zadanie */}
             <RemoveTask />
         </View>
+        { dVisibility && <DeadlineChanger ids={props.id} day={props.task._day} month={props.task._month - 1} year={props.task._year} deadline={props.task.deadline} close={()=>setDVisibility(false)}/> }
+        </>
         );
     }catch (err){
       console.log(err);

@@ -65,9 +65,10 @@ export default Tasks = ({navigation}) => {
       </ScrollView>
       { 
       oVisibility ?
-      <View style={styles2.optionContainer}>
-        <TaskOptions id={taskID} task={task} close={()=>setOVisibility(false)} navigation={()=>{ navigation.push('Task', {'id': taskID, 'name': task.name})}} />
-      </View>
+      <>
+      <TaskOptions id={taskID} task={task} close={()=>setOVisibility(false)} navigation={()=>{ navigation.push('Task', {'id': taskID, 'name': task.name})}} />
+      <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
+      </>
       :
       null
       }
@@ -81,13 +82,13 @@ export default Tasks = ({navigation}) => {
       :
       null
       }
-      <TouchableOpacity style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false); setSortMenu(false); setAddMenu(true)}}>
+      <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false); setSortMenu(false); setAddMenu(true)}}>
         <Image source={icons.plus} style={styles2.buttonIcon} />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(false); setSortMenu(true)}}>
+      <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(false); setSortMenu(true)}}>
         <Image source={icons.sort} style={styles2.buttonIcon} />
       </TouchableOpacity>
-      <TouchableOpacity style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(true)}} >
+      <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(true)}} >
         <Image source={icons.trash} style={styles2.buttonIcon} />
       </TouchableOpacity>
       </>

@@ -45,12 +45,9 @@ const styles = StyleSheet.create({
     optionContainer:{
         zIndex: 5,
         position: "absolute",
-        top: "30%",
+        top: "36%",
         width: "96%",
-        alignSelf:"center"
-    },
-    optionContainerInside:{
-        width: "100%",
+        alignSelf:"center",
         borderWidth: 1,
         borderRadius: 15,
         zIndex: 4,
