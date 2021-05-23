@@ -50,6 +50,20 @@ const changeName = (taskID, name, successFunc) => {
   );
 }
 
+//usuwanie zadania
+const deleteTask = (taskID, successFunc) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'DELETE FROM tasks WHERE id = ? OR connectedtask = ?;',
+        [taskID, taskID]
+      );
+    },
+    (t, error) => { console.log("db error deleteTask"); console.log(error);},
+    (t, success) => { successFunc() }
+  );
+}
+
 //zmiana statusu zadania
 const changeStatus = (taskID, status, successFunc, parrentTask) => {
   db.transaction(
@@ -211,10 +225,11 @@ export const database = {
   getTask,
   getMoreTask,
   addTask,
-  sortTask,
   changeName,
   changeStatus,
   changeDeadline,
+  deleteTask,
+  sortTask,
   setupDatabaseAsync,
   dropTablesAsync
 }

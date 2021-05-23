@@ -13,7 +13,7 @@ import DeadlineChanger from './deadlineChanger';
 const TaskOptions = (props) => {
 
     //const { changeName, save, changeTaskProgress, removeTaskItem, getItemsTasks} = useContext(DataContext);
-    const { changeName, changeDeadline, changeStatus, setTaskID} = useContext(DataContext);
+    const { changeName, changeStatus, deleteTask} = useContext(DataContext);
     const { themeID } = useTheme();
   
     // Zmiana deadline
@@ -100,8 +100,8 @@ const TaskOptions = (props) => {
             const ConfirmButton = () => {
                 const confirm = (bool) => {
                     if(bool){
-                        removeTaskItem(props.id);
-                        props.show(false);
+                        deleteTask(props.id);
+                        props.close();
                     }
                     setV(false);
                 };

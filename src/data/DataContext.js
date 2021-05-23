@@ -39,6 +39,10 @@ export const DataContextProvider = ({children}) => {
     return database.changeStatus(taskID, bool ? 1 : 0, refreshTasks, parentID)
   }
 
+  const deleteTask = (taskID) => {
+    return database.deleteTask(taskID, refreshTasks);
+  }
+
   const getMoreTask = (id) => {
     return database.getMoreTask(id, setTasks);
   }
@@ -58,12 +62,13 @@ export const DataContextProvider = ({children}) => {
     tasks,
     task,
     addNewTask,
-    setTaskID,
-    sortTask,
     changeName,
     changeDeadline,
     changeStatus,
-    getMoreTask
+    deleteTask,
+    getMoreTask,
+    setTaskID,
+    sortTask
   };
 
   // pass the value in provider and return

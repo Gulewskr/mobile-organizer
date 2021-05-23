@@ -2,13 +2,13 @@ import React, {useState, useContext, useEffect} from 'react';
 import { View, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 
 import {DataContext} from '../data/DataContext';
-import {getAllTask} from '../data/database';
 
 import {NavbarBack} from '../components/navbar';
 import TaskOptions from '../components/taskOptions';
 import Task from '../components/task';
 import AddTaskMenu from '../components/addingTask';
 import SortTaskMenu from '../components/sortingTask';
+import DeleteMenu from '../components/deleteMenu';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -29,6 +29,13 @@ export default Tasks = ({navigation}) => {
 
   const { tasks, setTaskID } = useContext(DataContext);
 
+  const setActiveMenu = (activeID) => {
+    setOVisibility(activeID == 0);
+    setAddMenu(activeID == 1);
+    setSortMenu(activeID == 2);
+    setRemoveMenu(activeID == 3);
+  }
+
   //gdy ekran jest aktywny wczytywane są wartości
   const isFocused = useIsFocused();
    useEffect(() => {
@@ -39,13 +46,15 @@ export default Tasks = ({navigation}) => {
 
   var value = null;
   
+  if(removeMenu == false)
   try{
-    value = tasks.map((data, index) => {
-      return(
-      <Task key={data.id} index={data.id} nazwa={data.name} deadline={data.deadline} 
-      day={data._day} month={data._month} year={data._year} ended={data.ended} spec={data.spec} progress={data.endedP}
-      showOptions={ () => { setAddMenu(false); setOVisibility(true) }} setId={()=>{setTaskid(data.id); setTask(data);}}/>
-    );});
+      value = tasks.map((data, index) => {
+        return(
+          <Task key={data.id} index={data.id} nazwa={data.name} deadline={data.deadline} 
+            day={data._day} month={data._month} year={data._year} ended={data.ended} spec={data.spec} progress={data.endedP}
+            press={() => { setActiveMenu(0); setTaskid(data.id); setTask(data);}}/>
+        );
+      });
   }catch(err){
     console.log(err);
   }
@@ -53,44 +62,47 @@ export default Tasks = ({navigation}) => {
   return (
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
       <NavbarBack napis={'Zadania'} navigate={navigation} />
-      { removeMenu ?
-      null
-      :
-      <>
-      <ScrollView style={{zIndex: 1, width: "100%"}}>
       {/* Wypisywanie listy zadań: */}
-      {value}
-      <View style={{marginBottom: 200}}/>
-      {/* Koniec listy zadań */}
+      {removeMenu ?
+      <DeleteMenu id={''} close={() => {setRemoveMenu(false)}}/>
+      : 
+      <ScrollView style={{zIndex: 1, width: "100%"}}>
+        {value} 
+        <View style={{marginBottom: 200}}/>
       </ScrollView>
-      { 
-      oVisibility ?
+      }
+      {/* Koniec listy zadań */}
+      { removeMenu ||
       <>
-      <TaskOptions id={taskID} task={task} close={()=>setOVisibility(false)} navigation={()=>{ navigation.push('Task', {'id': taskID, 'name': task.name})}} />
-      <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
-      </>
-      :
-      null
-      }
-      {addMenu ?
-      <AddTaskMenu id={"''"} close={() => setAddMenu(false)}/>
-      :
-      null
-      }
-      {sortMenu ?
-      <SortTaskMenu id={"''"} close={() => setSortMenu(false)} />
-      :
-      null
-      }
-      <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false); setSortMenu(false); setAddMenu(true)}}>
-        <Image source={icons.plus} style={styles2.buttonIcon} />
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(false); setSortMenu(true)}}>
-        <Image source={icons.sort} style={styles2.buttonIcon} />
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}  onPress={()=> {setOVisibility(false); setAddMenu(true)}} >
-        <Image source={icons.trash} style={styles2.buttonIcon} />
-      </TouchableOpacity>
+      { 
+        oVisibility ?
+        <>
+          <TaskOptions id={taskID} task={task} close={()=>setOVisibility(false)} navigation={()=>{ navigation.push('Task', {'id': taskID, 'name': task.name})}} />
+          <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
+        </>
+        :
+        null
+        }
+        {}
+        {addMenu ?
+        <AddTaskMenu id={"''"} close={() => setAddMenu(false)}/>
+        :
+        null
+        }
+        {sortMenu ?
+        <SortTaskMenu id={"''"} close={() => setSortMenu(false)} />
+        :
+        null
+        }
+        <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(1);}}>
+          <Image source={icons.plus} style={styles2.buttonIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(2);}}>
+          <Image source={icons.sort} style={styles2.buttonIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(3)}} >
+          <Image source={icons.trash} style={styles2.buttonIcon} />
+        </TouchableOpacity>
       </>
       }
     </View>

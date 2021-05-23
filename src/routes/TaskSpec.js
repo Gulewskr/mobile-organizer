@@ -11,6 +11,7 @@ import TaskOptions from '../components/taskOptions';
 import Task from '../components/task';
 import AddTaskMenu from '../components/addingTask';
 import SortTaskMenu from '../components/sortingTask';
+import DeleteMenu from '../components/deleteMenu';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -20,11 +21,11 @@ import { icons } from '../components/icons';
 import { useIsFocused } from "@react-navigation/native";
 
 export default TaskSpec = ({navigation, route}) => {
-  const { task, tasks, setTaskID, changeName, PrevID } = useContext(DataContext);
+  const { task, tasks, setTaskID, changeName} = useContext(DataContext);
   const { themeID } = useTheme();
   const [oVisibility, setOVisibility] = useState(false);
   const [taskID, setTaskid] = useState(0);
-  const [ oTask, setOTask ] = useState(null);
+  const [oTask, setOTask] = useState(null);
 
   // Zmiana deadline
   const [ dVisibility, setDVisibility ] = useState(false);
@@ -33,6 +34,15 @@ export default TaskSpec = ({navigation, route}) => {
   const [sortMenu, setSortMenu] = useState(false);
   const [removeMenu, setRemoveMenu] = useState(false);
   
+  const setActiveMenu = (activeID) => {
+    setOVisibility(activeID == 0);
+    setAddMenu(activeID == 1);
+    setSortMenu(activeID == 2);
+    setRemoveMenu(activeID == 3);
+    setDVisibility(activeID == 4);
+  }
+
+
   // Zmiana nazwy
   const [ accName, setAccName ] = useState( route.params.name );
   const [ taskName, onChangeName ] = useState( route.params.name );
@@ -56,15 +66,19 @@ export default TaskSpec = ({navigation, route}) => {
     };
 
     var value = null;
-    
-      if( tasks != undefined && tasks != ""){ 
+  
+    if(removeMenu == false)
+    try{
         value = tasks.map((data, index) => {
           return(
             <Task key={data.id} index={data.id} nazwa={data.name} deadline={data.deadline} 
-            day={data._day} month={data._month} year={data._year} ended={data.ended} 
-            showOptions={ () => { setAddMenu(false); setOVisibility(true) }} setId={()=>{setTaskid(data.id); setOTask(data);}}/>
-        );});
-      }
+              day={data._day} month={data._month} year={data._year} ended={data.ended} spec={data.spec} progress={data.endedP}
+              press={() => { setActiveMenu(0); setTaskid(data.id); setOTask(data)}}/>
+          );
+        });
+    }catch(err){
+      console.log(err);
+    }
     
 
     return (
@@ -77,7 +91,8 @@ export default TaskSpec = ({navigation, route}) => {
               <TextInput multiline={true} editable={editName} style={[styles2.optionsText, editName?{color: themeID.colorTextInput, backgroundColor: themeID.colorTextInputBackground} : {color: themeID.colorText1}]} onChangeText={onChangeName} value={ taskName } />
             </ScrollView>
             <View>
-            { editName ? 
+            { editName ?
+              removeMenu || 
               <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => { allowEditName(false); setNemHeadName(true) }}>
                   <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.save} />
@@ -87,6 +102,7 @@ export default TaskSpec = ({navigation, route}) => {
                 </TouchableOpacity>
               </View>
               :
+              removeMenu ||
               <TouchableOpacity onPress={() => { allowEditName(true) }}>
                 <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
               </TouchableOpacity>
@@ -101,37 +117,48 @@ export default TaskSpec = ({navigation, route}) => {
               :
               <Text style={[styles2.deadlineText]}>brak</Text>
             }
-            <TouchableOpacity onPress={() => { setDVisibility(true) }}>
-              <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
-            </TouchableOpacity>
+            {
+            removeMenu ||
+              <TouchableOpacity onPress={() => { setActiveMenu(4) }}>
+                <Image style={[styles2.icon,{marginLeft: 5}]} source={icons.pen} />
+              </TouchableOpacity>
+            }
           </View>
         </View>
         {/* nagłówek - koniec */}
-        <ScrollView style={{zIndex: 1, width: "100%"}}>
-          {/* Wypisywanie listy podZadań: */}
-          {value}
-          <View style={{marginBottom: 200}}/>
-          {/* Koniec listy podZadań */}
-        </ScrollView>
-        { dVisibility && <DeadlineChanger ids={task.id} day={task._day} month={task._month - 1} year={task._year} deadline={task.deadline} close={()=>setDVisibility(false)}/> }
-        { 
-        oVisibility &&
-        <> 
-        <TaskOptions id={taskID} task={oTask} close={() => setOVisibility(false)} navigation={()=>{navigation.push('Task', {'id': taskID, 'name': oTask.name})}} /> 
-        <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
+        {/* Wypisywanie listy zadań: */}
+        {removeMenu ?
+          <DeleteMenu id={route.params.id} close={() => {setRemoveMenu(false)}}/>
+          : 
+          <ScrollView style={{zIndex: 1, width: "100%"}}>
+            {value} 
+            <View style={{marginBottom: 200}}/>
+          </ScrollView>
+        }
+        {/* Koniec listy zadań */}
+        { removeMenu ||
+        <>
+          { dVisibility && <DeadlineChanger ids={task.id} day={task._day} month={task._month - 1} year={task._year} deadline={task.deadline} close={()=>setDVisibility(false)}/> }
+          { 
+            oVisibility &&
+            <> 
+            <TaskOptions id={taskID} task={oTask} close={() => setOVisibility(false)} navigation={()=>{navigation.push('Task', {'id': taskID, 'name': oTask.name})}} /> 
+            <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
+            </>
+          }
+          { addMenu && <AddTaskMenu id={task.id} close={() => setAddMenu(false)}/>}
+          { sortMenu && <SortTaskMenu id={task.id} close={() => setSortMenu(false)} />}
+          <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(1)}}>
+            <Image source={icons.plus} style={styles2.buttonIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(2)}}>
+            <Image source={icons.sort} style={styles2.buttonIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(3)}}>
+            <Image source={icons.trash} style={styles2.buttonIcon} />
+          </TouchableOpacity>
         </>
         }
-        { addMenu && <AddTaskMenu id={task.id} close={() => setAddMenu(false)}/>}
-        { sortMenu && <SortTaskMenu id={task.id} close={() => setSortMenu(false)} />}
-        <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setOVisibility(false) ;setAddMenu(true)}}>
-          <Image source={icons.plus} style={styles2.buttonIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]}>
-          <Image source={icons.sort} style={styles2.buttonIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]}>
-          <Image source={icons.trash} style={styles2.buttonIcon} />
-        </TouchableOpacity>
       </View>
     );
   }catch(err){
