@@ -40,7 +40,7 @@ export default Tasks = ({navigation}) => {
   const isFocused = useIsFocused();
    useEffect(() => {
     if(isFocused){     
-     setTaskID('');
+     setTaskID(0);
     }
    }, [isFocused])
 
@@ -49,6 +49,7 @@ export default Tasks = ({navigation}) => {
   if(removeMenu == false)
   try{
       value = tasks.map((data, index) => {
+        console.log(index);
         return(
           <Task key={data.id} index={data.id} nazwa={data.name} deadline={data.deadline} 
             day={data._day} month={data._month} year={data._year} ended={data.ended} spec={data.spec} progress={data.endedP}
@@ -83,14 +84,13 @@ export default Tasks = ({navigation}) => {
         :
         null
         }
-        {}
         {addMenu ?
-        <AddTaskMenu id={"''"} close={() => setAddMenu(false)}/>
+        <AddTaskMenu id={0} close={() => setAddMenu(false)}/>
         :
         null
         }
         {sortMenu ?
-        <SortTaskMenu id={"''"} close={() => setSortMenu(false)} />
+        <SortTaskMenu id={0} close={() => setSortMenu(false)} />
         :
         null
         }

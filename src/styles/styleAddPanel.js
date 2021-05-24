@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16,
         borderRadius: 10,
+        width: "70%",
+        alignItems: "center",
+        margin: 5,
         borderWidth: 1,
     },
     exitButton:{
@@ -69,6 +72,34 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 10,
         borderWidth: 1
+    },
+    picker:{
+        width: "60%",
+        marginRight: "5%",
+        paddingLeft: "10%",
+        justifyContent: "center",
+        backgroundColor: "#EEEEEE",
+        borderRadius: 10,
+        borderWidth: 1,
+    },
+    tagContainer:{
+        padding: 5,
+        margin: 5,
+        borderWidth: 1,
+        borderRadius: 10,
+        width: "90%",
+    },
+    tagButton:{
+        width: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        borderWidth: 1,
+        aspectRatio: 1
+    },
+    tagIconButton:{
+        height: "90%",
+        aspectRatio: 1
     }
 });
 

@@ -140,6 +140,16 @@ const styles = StyleSheet.create({
         height: "90%",
         aspectRatio: 1,
     },
+    sectorHeader:{
+        width: "80%",
+        marginLeft: "3%",
+        marginBottom: 20
+    },
+    line:{
+        width: "100%",
+        height: 2,
+        backgroundColor: "#000000"
+    }
 });
 
 export default styles;

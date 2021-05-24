@@ -1,5 +1,5 @@
 
-import React, { useEffect, createContext, useState } from 'react';
+import React, { useEffect, createContext, useState, useLayoutEffect } from 'react';
 import {database} from './database'
 
 export const DataContext = createContext({});
@@ -11,21 +11,47 @@ export const DataContextProvider = ({children}) => {
   const [ tasks, setTasks ] = useState(null);
   const [ task, setTask ] = useState(null);
 
-  const [ taskID, setTaskId ] = useState(0);
+  const [ taskID, setTaskId ] = useState('');
+
+  const [ catalogs, setCatalogs ] = useState(null);
+  const [ tags, setTags ] = useState(null);
 
   useEffect(() => {
-    refreshTasks()
+    refreshTasks();
+    refreshNotes()
   }, [] )
 
   const addNewTask = ( name, deadline, day, month, year, connectedid ) => {
     return database.addTask( name, deadline, day, month, year, connectedid, refreshTasks)
   };
 
-  const refreshTasks = () =>  {
+  const addNoteFromPanel = (name, catalogName, tagList, connectedTask, connectedEvent) => {
+    return database.addNoteFromPanel(name, catalogName, tagList, connectedTask, connectedEvent, refreshNotes);
+  };
+
+  const addCatalog = (name) => {
+    database.addCatalog(name, refreshNotes);
+  };
+
+  const addTag = async(name) => {
+    try{
+      await database.addTag(name);
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  const refreshTasks = async() =>  {
     //database.getTasks( setTasks );
-    database.getTask( taskID, setTask);
-    database.getMoreTask(taskID, setTasks);
+    await database.getTask( taskID, setTask);
+    await database.getMoreTask(taskID, setTasks);
   }
+
+  const refreshNotes = () =>  {
+    //database.getTasks( setTasks );
+    database.getCatalogs( setCatalogs );
+  }
+
 
   const changeName = (taskID, name) => {
     return database.changeName(taskID, name, refreshTasks)
@@ -44,24 +70,31 @@ export const DataContextProvider = ({children}) => {
   }
 
   const getMoreTask = (id) => {
-    return database.getMoreTask(id, setTasks);
+    database.getMoreTask(id, setTasks);
   }
 
   const sortTask = (id, opt1, opt2, opt3) => {
     return database.sortTask(id, opt1, opt2, opt3, setTasks);
   }
 
-  const setTaskID = async (id) => {
+  const setTaskID = (id) => {
     setTaskId(id);
     database.getTask( id, setTask);
     database.getMoreTask(id, setTasks);
   }
 
+  
+
   // Make the context object:
   const dataContext = {
     tasks,
     task,
+    catalogs,
+    tags,
     addNewTask,
+    addTag,
+    addNoteFromPanel,
+    addCatalog,
     changeName,
     changeDeadline,
     changeStatus,
