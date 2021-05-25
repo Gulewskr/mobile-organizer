@@ -100,6 +100,18 @@ const styles = StyleSheet.create({
     tagIconButton:{
         height: "90%",
         aspectRatio: 1
+    },
+    tagItem:{
+        padding: 4,
+        borderWidth: 1,
+        margin: 2,
+        flexDirection: "row",
+        borderRadius: 5
+    },
+    tagItemIcon:{
+        height: 20,
+        aspectRatio: 1,
+        marginLeft: 3
     }
 });
 

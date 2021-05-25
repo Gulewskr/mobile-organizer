@@ -38,6 +38,7 @@ export default Tasks = ({navigation}) => {
 
   //gdy ekran jest aktywny wczytywane są wartości
   const isFocused = useIsFocused();
+  
    useEffect(() => {
     if(isFocused){     
      setTaskID(0);

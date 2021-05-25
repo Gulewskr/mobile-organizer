@@ -48,7 +48,7 @@ const getMoreTask = async(taskID, setFunc) => {
       tx.executeSql(
         'SELECT * FROM tasks WHERE connectedtask = ?;',
         [taskID],
-        (_, { rows: { _array } }) => {console.log(_array); setFunc(_array)}
+        (_, { rows: { _array } }) => {setFunc(_array)}
       );
     },
     (t, error) => { console.log("db error load tasks by connected"); reject(error)},
@@ -138,22 +138,12 @@ const addTask = (name, deadline, day, month, year, connectedid, successFunc) => 
 //dodawanie notatki z panelu
 const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connectedEvent, successFunc) => {
   try {
-    //await addCatalog(catalogName);
-    await addTags(tagList);
     await addNote(name, catalogID, connectedTask, connectedEvent);
     successFunc();
     await makeConnectionsToTag(name, tagList);
   } catch (e) {
     console.warn(e);
   };
-  db.transaction( 
-    tx => {
-      tx.executeSql( "INSERT or IGNORE into catalogs (name) values (?);",
-      [name] );
-    },
-    (t, error) => { console.log("db error addingCatalog"); console.log(error);},
-    (t, success) => { console.log("succed addingCatalog") }
-  );
 }
 
 //dodawanie notatki
@@ -164,8 +154,8 @@ const addNote = async (name, catalogID, connectedTask, connectedEvent) => {
       tx.executeSql( "INSERT into notes (name, value, connectedtask, connectedevent, catalog) values (?, '', ?, ?, ?);",
       [name, connectedTask, connectedEvent, catalogID] );
     },
-    (t, error) => { console.log("db error addingNote"); console.log(error); reject(error)},
-    (t, success) => { console.log("succed addingNote"); resolve(success) }
+    (t, error) => { console.log("db error adding Note"); console.log(error); reject(error)},
+    (t, success) => { console.log("succed adding Note"); resolve(success) }
   );
 });
 }
@@ -192,23 +182,23 @@ const makeConnectionsToTag = async(noteName, tags) => {
   var command = "";
   for(let i=0; i<tags.length; i++)
   {//insert into tagsConnection (tag, note) SELECT id, "lol" frOM catalogs where name = "kox"
-    command += "INSERT into tagsConnection (tag, note) SELECT "+tags[i]+", id from notes where name = "+noteName+";";
+    command += "INSERT into tagsConnection (tag, note) SELECT '"+tags[i]+"', id FROM notes WHERE name = '"+noteName+"';";
   }
+  console.log(command);
   new Promise((resolve, reject) => {
     db.transaction( 
       tx => {
         tx.executeSql( command,
         [] );
       },
-      (t, error) => { console.log("db error addingCatalog"); console.log(error); reject(error)},
-      (t, success) => { console.log("succed addingCatalog"); resolve(success) }
+      (t, error) => { console.log("db error adding connection with tag"); console.log(error); reject(error)},
+      (t, success) => { console.log("succed adding connection with tag"); resolve(success) }
     );
   });
 }
 
 //dodawniae katalogu
 const addCatalog = async (name, successFunc) => {
-  console.log(name);
   new Promise((resolve, reject) => {
   db.transaction( 
     tx => {
@@ -235,6 +225,23 @@ const getCatalogs = (setFunc) => {
   );
 }
 
+//TODO
+const getNotesFromCatalog = async (id) => {
+  new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "SELECT * FROM notes WHERE catalog = ?;",
+        [id],
+        (_, { rows: { _array } }) => {resolve(_array)}
+        );
+      },
+      (t, error) => { console.log("db error geting catalog notes"); console.log(error); reject(error)},
+      (t, success) => { console.log("succed get catalog notes"); resolve(success) }
+    );
+  });
+}
+
+/*
 //dodawania listy tagów
 const addTags = async (tags) => {
   var command = " ";
@@ -255,7 +262,7 @@ const addTags = async (tags) => {
       (t, success) => { console.log("succed adding Catalog"); resolve(success) }
     );
   });
-}
+}*/
 
 const addTag = async (name) => {
   new Promise((resolve, reject) => {
@@ -265,7 +272,7 @@ const addTag = async (name) => {
         [name] );
       },
       (t, error) => { console.log("db error wtf adding tag"); console.log(error); reject(error)},
-      (t, success) => { console.log("succed adding tag"); successFunc(); resolve(success) }
+      (t, success) => { console.log("succed adding tag"); resolve(success) }
     );
   });
 }
@@ -372,10 +379,10 @@ const setupDatabaseAsync = async () => {
           "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek INT, connectedTask integer, FOREIGN KEY(connectedtask) REFERENCES tasks(id));"
         );
         tx.executeSql(
-          "create table if not exists catalogs (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE); create table if not exists tags (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE);"
+          "create table if not exists catalogs (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE);"
         );
         tx.executeSql(
-          "create table if not exists tags (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE); create table if not exists tags (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE);"
+          "create table if not exists tags (name TEXT primary key UNIQUE not null);"
         );
         tx.executeSql(
           "create table if not exists notes (id integer primary key AUTOINCREMENT not null, name TEXT, value Text, connectedTask integer, connectedEvent integer, catalog Integer, FOREIGN KEY(catalog) REFERENCES catalogs(id), FOREIGN KEY(connectedtask) REFERENCES tasks(id), FOREIGN KEY(connectedEvent) REFERENCES events(id));"
@@ -406,6 +413,9 @@ const dropTablesAsync = async() => {
           "DROP TABLE IF EXISTS tasks;"
         );
         tx.executeSql(
+          "DROP TABLE IF EXISTS tags;"
+        );
+        tx.executeSql(
           "DROP TABLE IF EXISTS events;"
         );
       },
@@ -428,6 +438,7 @@ export const database = {
   getCatalogs,
   getTask,
   getMoreTask,
+  getNotesFromCatalog,
   sortTask,
   setupDatabaseAsync
 }

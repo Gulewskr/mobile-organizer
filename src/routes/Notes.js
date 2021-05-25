@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, ScrollView, Text, TouchableOpacity, Image} from 'react-native';
 
 import {DataContext} from '../data/DataContext';
@@ -12,7 +12,7 @@ import {useTheme} from '../data/colors.js';
 
 export default Notes = ({navigation}) => {
   
-  const { catalogs, setTaskID, addNoteFromPanel } = useContext(DataContext);
+  const { catalogs, setTaskID, addNoteFromPanel, getNotesFromCatalog } = useContext(DataContext);
   const { themeID } = useTheme();
   
   const [addMenu, setAddMenu] = useState(false);
@@ -27,6 +27,12 @@ export default Notes = ({navigation}) => {
 
   const SingleCatalog = (props) => {
 
+    const [notes, setNotes] = useState(null);
+    //getNotesFromCatalog
+    useEffect(() => {
+      setNotes(getNotesFromCatalog(props.id));
+      console.log("wywołano");
+     }, [props.id])
 
     return(
       <>
@@ -34,6 +40,7 @@ export default Notes = ({navigation}) => {
           <Text style={[styles2.taskText, {marginLeft:"2%", color: themeID.colorText2}]}>{props.name}</Text>
           <View style={[styles2.line,{backgroundColor: themeID.colorText2}]}/>
         </View>
+        <Text>Ilość notatek: {notes != null && notes.length}</Text>
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
 import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
@@ -11,10 +11,14 @@ import { icons } from '../components/icons';
 
 const AddingNoteMenu = (props) => {
 
-    const { addCatalog, catalogs, addTag } = useContext(DataContext);
+    const { addCatalog, catalogs, addTag, addNoteFromPanel } = useContext(DataContext);
     const { themeID } = useTheme();
 
+    //nazwa
     const [ name, setName ] = useState("Wpisz nazwę");
+    //tagi - do notatki
+    const [ tags, setTags ] = useState([]);
+
     const [ menu, setMenu ] = useState(props.mode);
 
     const [ catalog, setCatalog] = useState(1);
@@ -31,38 +35,41 @@ const AddingNoteMenu = (props) => {
 
     const TagAddMenu = () => {
         const [ tagName, setTagName ] = useState("tag");
-        const [ tags, setTags ] = useState([]);
-
         const addTagToTags = (tag) => {
             var tagsCopy = [...tags];
-            tagsCopy.push(tag);
+            if(tagsCopy.indexOf(tag) == -1 )
+            {
+                tagsCopy.push(tag);
+                addTag(tag);
+            }
             setTags(tagsCopy);
         }
 
         const removeTag = (tag) => {
             var tagsCopy = [...tags];
             var id = tagsCopy.indexOf(tag);
-            if(id != -1){
+            if(id != -1)
+            {
                 tagsCopy.splice(id, 1);
-                setIdToDelete(tagsCopy);
+                setTags(tagsCopy);
             }
         }
 
         return(
             <View style={[styles.tagContainer, {backgroundColor: themeID.colorBackground}]} >
-                <View style={{flexDirection:"row"}}>
+                <ScrollView contentContainerStyle={{flexDirection:"row", justifyContent:"center", alignItems:"center", flexWrap: "wrap" }} style={{maxHeight: 120, width: "100%"}}>
                 {
                     tags.map((data, index) => {
                         return(
-                            <View key={index} ><Text>{data}</Text></View>
+                            <View style={[styles.tagItem, {backgroundColor: themeID.colorButton1}]} key={index} ><Text>{data}</Text>
+                            <TouchableOpacity onPress={()=>{removeTag(data)}}><Image style={styles.tagItemIcon} source={icons.cross}/></TouchableOpacity></View>
                         );
                 })
-
-                }</View>
+                }</ScrollView>
                 <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                     <TextInput maxLength={25} multiline={false} onChangeText={setTagName} value={tagName} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
                     <TouchableOpacity style={[styles.tagButton, {backgroundColor: themeID.colorButton1}]}
-                        onPress={()=>{addTag(tagName); addTagToTags(tagName); setTagName("tag");}}>
+                        onPress={()=>{addTagToTags(tagName); setTagName("tag");}}>
                         <Image style={styles.tagIconButton} source={icons.plus} />
                     </TouchableOpacity>
                 </View>
@@ -81,10 +88,10 @@ const AddingNoteMenu = (props) => {
                             setCatalog(itemValue)
                             }>
                             {
-                                catalogs.map((data, index) => {
-                                    return(
-                                        <Picker.Item key={index} useNativeAndroidPickerStyle={false} label={data.name} value={data.id} />
-                                    );
+                            catalogs.map((data, index) => {
+                                return(
+                                    <Picker.Item key={index} useNativeAndroidPickerStyle={false} label={data.name} value={data.id} />
+                                );
                             })
                             }
                     </Picker>
@@ -95,10 +102,15 @@ const AddingNoteMenu = (props) => {
         }
     }
 
+    /*
+        0 - wybór menu
+        1 - nowy katalog
+        2 - nowa notatka
+     */
     switch (menu) {
         case 0:
             return(
-                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
+                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header />
                     <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
                     onPress={() => {setMenu(1)}}>
@@ -113,7 +125,7 @@ const AddingNoteMenu = (props) => {
             break;
         case 1:
             return(
-                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
+                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header />
                     <TextInput multiline={true} onChangeText={setName} value={name} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
                     <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
@@ -125,13 +137,15 @@ const AddingNoteMenu = (props) => {
             break;
         case 2:
             return(
-                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
+                <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header />
                     <TextInput multiline={true} onChangeText={setName} value={name} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
                     <RMPicker />
                     <TagAddMenu />
                     <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
-                    onPress={() => { addCatalog(name); props.close() }}>
+                    onPress={() => { 
+                        addNoteFromPanel(name, catalog, tags, 0, 0);
+                        props.close() }}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
                     </TouchableOpacity>
                 </View>

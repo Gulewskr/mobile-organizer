@@ -11,7 +11,7 @@ export const DataContextProvider = ({children}) => {
   const [ tasks, setTasks ] = useState(null);
   const [ task, setTask ] = useState(null);
 
-  const [ taskID, setTaskId ] = useState('');
+  const [ taskID, setTaskId ] = useState(0);
 
   const [ catalogs, setCatalogs ] = useState(null);
   const [ tags, setTags ] = useState(null);
@@ -73,6 +73,18 @@ export const DataContextProvider = ({children}) => {
     database.getMoreTask(id, setTasks);
   }
 
+  //TODO
+  const getNotesFromCatalog = async (id) => 
+  {
+    try{
+      let result = await database.getNotesFromCatalog(id);
+      console.log(result);
+      return result;
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   const sortTask = (id, opt1, opt2, opt3) => {
     return database.sortTask(id, opt1, opt2, opt3, setTasks);
   }
@@ -100,6 +112,7 @@ export const DataContextProvider = ({children}) => {
     changeStatus,
     deleteTask,
     getMoreTask,
+    getNotesFromCatalog,
     setTaskID,
     sortTask
   };
