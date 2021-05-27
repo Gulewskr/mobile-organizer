@@ -16,6 +16,7 @@ import NoteOptions from '../components/tagMenu';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
+import styles3 from '../styles/stylesDialog';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
 
@@ -23,7 +24,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default NoteSpec = ({navigation, route}) => {
   
-  const { getNote, changeNoteName } = useContext(DataContext);
+  const { getNote, changeNoteName, updateNote, deleteNote} = useContext(DataContext);
   const { themeID } = useTheme();
   const [ note, setNote ] = useState(null);
 
@@ -53,20 +54,35 @@ export default NoteSpec = ({navigation, route}) => {
 
   //wczytanie notatki
   const isFocused = useIsFocused();
+  const noteRefresh = () => {
+    getNote(route.params.id).then(
+      (result) => {
+        if(mounted.current){
+          setNote(result); 
+          changeName(result.name);
+          changeText(result.value);
+        }
+      });
+  }
   useEffect(() => {
     if(isFocused){
-        getNote(route.params.id).then(
-          (result) => {
-            if(mounted.current){
-              setNote(result); 
-              changeName(result.name);
-              changeText(result.value);
-            }
-          });
+      noteRefresh();
     }
   }, [isFocused]);
 
- 
+  const uptadeNoteValue = (bool) =>{
+    if(bool)
+    {
+      updateNote(route.params.id, text);
+    }else{
+      noteRefresh();
+    }
+  }
+
+  const destroy = () => {
+    deleteNote(route.params.id);
+    navigation.goBack();
+  }
 
   const TaskHeader = () => {
 
@@ -108,31 +124,66 @@ export default NoteSpec = ({navigation, route}) => {
       </View>
       );
   }
-  //TODO - usuwanie, edycja notatki
+
+  const RemovePanel = () => {
+    return(
+      <View style={[styles3.container, {backgroundColor: themeID.colorContainer, top: "20%"}]}>
+        <View style={{flexDirection: "row"}}>
+          <Text style={[styles3.questionText, {color: themeID.colorText1}]}>Czy na pewno chcesz usunąć notatkę?</Text>
+          <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {setRemoveMenu(false)}}>
+            <Image style={styles.exitButtonIcon} source={icons.cross} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles3.buttonContainer}>
+          <TouchableOpacity style={[styles3.button, {backgroundColor: themeID.colorButton1}]}
+            onPress={() => {destroy()}}><Text style={{color: themeID.colorText1}}>TAK</Text></TouchableOpacity>
+          <View style={{width: "20%"}}/>
+          <TouchableOpacity style={[styles3.button, {backgroundColor: themeID.colorButton1}]}
+            onPress={() => {setRemoveMenu(false)}}><Text style={{color: themeID.colorText1}}>ANULUJ</Text></TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+  //TODO - usuwanie
   try{
     return (
       <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
         <NavbarBack napis={'Notatki'} navigate={navigation} />
-        <View style={{width: "100%", maxHeight: "20%", marginBottom: -20}}>
+        <View style={{width: "100%", maxHeight: "20%"}}>
           <TaskHeader />
         </View>
         {/* Wypisywanie listy zadań: */}
-        <ScrollView style={{zIndex: 1, width: "100%"}}>
-          <Text>{text}</Text> 
+        <ScrollView style={{zIndex: 1, width: "96%"}}>
+          <TextInput multiline={true} editable={edit} style={{fontSize: 18, color: themeID.colorText2}} onChangeText={changeText} value={ text } />
           <View style={{marginBottom: 200}}/>
         </ScrollView>
         {/* Koniec listy zadań */}
         { edit ?
-        null
+        <>
+        <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]} 
+        onPress={()=> {uptadeNoteValue(true); setEdit(false);}}>
+          <Image source={icons.save} style={styles2.buttonIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]} 
+        onPress={()=> {uptadeNoteValue(false); setEdit(false);}}>
+          <Image source={icons.cross} style={styles2.buttonIcon} />
+        </TouchableOpacity>
+        </>
         : 
         <>
-          { tagMenu && <NoteOptions id={note.id} catalog={note.catalog} close={()=>{setTagMenu(false)}}/>}
+          { tagMenu && !edit && <NoteOptions id={note.id} catalog={note.catalog} close={()=>{setTagMenu(false)}}/>}
+          { removeMenu && !edit && 
+            <>
+              <RemovePanel />
+              <TouchableOpacity style={styles.fillRect} onPress={() => {setRemoveMenu(false)}}/>
+            </>
+          }
           <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]} 
-          onPress={()=> {setActiveMenu(2)}}>
+          onPress={()=> {setActiveMenu(0)}}>
             <Image source={icons.pen} style={styles2.buttonIcon} />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={[styles2.deleteButton,{backgroundColor: themeID.colorButton1}]} 
-          onPress={()=> {setActiveMenu(3)}}>
+          onPress={()=> {setActiveMenu(2)}}>
             <Image source={icons.trash} style={styles2.buttonIcon} />
           </TouchableOpacity>
         </>
@@ -144,4 +195,3 @@ export default NoteSpec = ({navigation, route}) => {
   }
   return null;   
 };
-

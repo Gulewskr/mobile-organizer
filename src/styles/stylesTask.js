@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderWidth: 1,
         width: "90%",
-        marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 20,
         paddingLeft: 30,
         padding: 10,
         alignSelf:"center",
@@ -153,14 +152,18 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
     },
     sectorHeader:{
-        width: "80%",
+        width: "100%",
         marginLeft: "3%",
-        marginBottom: 10
+        marginBottom: 10,
+        flexDirection: "row"
     },
     line:{
         width: "100%",
-        height: 2,
-        backgroundColor: "#000000"
+        height: 2
+    },
+    headerButton:{
+        width: "10%",
+        aspectRatio: 1
     },
     iconContainer2:{
         width: "20%",

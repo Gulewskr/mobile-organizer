@@ -373,7 +373,7 @@ const getTagsByID = async (id) => {
       tx => {
         tx.executeSql( "SELECT * FROM tagsConnection WHERE note = ?;",
         [id],
-        (t,{rows:{ _array } }) => { console.log(_array);; resolve(_array);});
+        (t,{rows:{ _array } }) => {resolve(_array);});
       },
       (t, error) => { console.log("ERROR: geting tags by note id"); reject(null);},
       (t, success) => { console.log("succed got tags for note");}
@@ -381,6 +381,7 @@ const getTagsByID = async (id) => {
   });
 }
 
+//pobranie wszystkich tagów do menu filtrów
 const getTags = async () => {
   return await new Promise((resolve, reject) => {
     db.transaction( 
@@ -409,6 +410,65 @@ const addTag = async (name) => {
   });
 }
 
+//zmiana treści notatki
+const setNote = async(noteID, text) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "UPDATE notes Set value = ? WHERE id = ?;",
+        [text, noteID]
+        );
+      },
+      (t, error) => { console.log("ERROR: changing note"); reject(null)},
+      (t, success) => { console.log("changed note"); resolve(success)}
+    );
+  });
+}
+
+//zmiana katalogu dla notatki
+const changeNoteCatalog = async(noteID, newCatalogID) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "UPDATE notes Set catalog = ? WHERE id = ?;",
+        [newCatalogID, noteID]
+        );
+      },
+      (t, error) => { console.log("ERROR: changing note catalog"); reject(null)},
+      (t, success) => { console.log("changed note catalog"); resolve(success)}
+    );
+  });
+}
+
+//usunięcie tagu z notatki
+const deleteTagConnection = async(noteID, tag) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM tagsConnection WHERE note = ? AND tag = ?;",
+        [noteID, tag]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting tag connection"); reject(null)},
+      (t, success) => { console.log("deleted tag connection"); resolve(success)}
+    );
+  });
+}
+
+//usunięcie notatki
+const deleteNote = async( noteID ) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM notes WHERE id = ?;",
+        [noteID]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting note"); reject(null)},
+      (t, success) => { console.log("deleted note"); resolve(success)}
+    );
+  });
+}
 
 //---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia
 
@@ -425,7 +485,10 @@ export const database = {
   changeStatus,
   changeDeadline,
   changeNoteName,
+  changeNoteCatalog,
+  deleteNote,
   deleteTask,
+  deleteTagConnection,
   dropTablesAsync,
   getCatalogs,
   getTask,
@@ -434,6 +497,8 @@ export const database = {
   getMoreTask,
   getNote,
   getNotesFromCatalog,
+  makeConnectionsToTag,
   sortTask,
+  setNote,
   setupDatabaseAsync
 }

@@ -17,12 +17,19 @@ export default Notes = ({navigation}) => {
   const { themeID } = useTheme();
   
   const [addMenu, setAddMenu] = useState(false);
+  //TODO sortowanie tylko że to bardziej katalogów
+  //TODO ewentualnie parametry sortowania przekazywane poszczególnym katalogom
   const [sortMenu, setSortMenu] = useState(false);
   const [removeMenu, setRemoveMenu] = useState(false);
 
   //przekazywana zmienna do elementów - zmiana odświerza dane
   const [refresh, setRefresh] = useState(false);
 
+  //TODO - dodać funkcje do usuwania 
+  //ID zadań do usunięcia
+  const [notesToRemove, setNotesToRemove] = useState([]);
+  //ID katalogów do usunięcia
+  const [catalogsToRemove, setCatalogsToRemove] = useState([]);
 
   const setActiveMenu = (activeID) => {
     setAddMenu(activeID == 0);
@@ -37,7 +44,8 @@ export default Notes = ({navigation}) => {
   const SingleCatalog = (props) => {
 
     const [notes, setNotes] = useState(null);
-    
+    const [v, setV] = useState(false);
+
     const mounted = useRef(false);
 
     const Note = (props) => {
@@ -49,6 +57,20 @@ export default Notes = ({navigation}) => {
             <Image source={icons.arrowRight} style={styles2.icon} />
           </TouchableOpacity>
         </View>
+      );
+    }
+
+    const NoteToDelete = (props) => {
+      //TODO styl notatki do usunięcia
+      return(
+        /*<View style={[styles2.taskContainer, {backgroundColor: themeID.colorContainer}]}>
+          <Text style={{fontSize: 20, color: themeID.colorText1, width:"80%"}}>{props.data.name}</Text>
+          <TouchableOpacity style={[styles2.iconContainer2, {backgroundColor: themeID.colorButton1}]} 
+          onPress={() => goToTask(props.data.id)}>
+            <Image source={icons.arrowRight} style={styles2.icon} />
+          </TouchableOpacity>
+        </View>*/
+        null
       );
     }
 
@@ -80,10 +102,15 @@ export default Notes = ({navigation}) => {
     return(
       <>
         <View style={styles2.sectorHeader}>
-          <Text style={[styles2.taskText, {marginLeft:"2%", color: themeID.colorText2}]}>{props.name}</Text>
-          <View style={[styles2.line,{backgroundColor: themeID.colorText2}]}/>
+          <View style={{width: "85%"}}>
+            <Text style={[styles2.taskText, {marginLeft:"2%", color: themeID.colorText2}]}>{props.name}</Text>
+            <View style={[styles2.line,{backgroundColor: themeID.colorText2}]}/>
+          </View>
+          <TouchableOpacity style={styles2.headerButton} onPress={() => {setV(!v)}}>
+            <Image source={v ? icons.arrowUp : icons.arrowDown} style={styles2.icon} />
+          </TouchableOpacity>
         </View>
-        {value}
+        { v && value }
       </>
     );
   }

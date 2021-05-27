@@ -41,6 +41,35 @@ export const DataContextProvider = ({children}) => {
     }
   };
 
+  const deleteTagConnection = (id, tag) => {
+    return database.deleteTagConnection(id, tag);  
+  }
+
+  const changeNoteCatalog = async(idNote, idCatalog) => {
+    try{
+      await database.changeNoteCatalog(idNote, idCatalog);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  const deleteNote = async(ID) => {
+    try{
+      await database.deleteNote(ID);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  const addTagToNote = async(noteID, tag) => {
+    try{
+      await database.addTag(tag);
+      database.makeConnectionsToTag(noteID, tag);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+  
   const refreshTasks = async() =>  {
     //database.getTasks( setTasks );
     await database.getTask( taskID, setTask);
@@ -52,6 +81,9 @@ export const DataContextProvider = ({children}) => {
     database.getCatalogs( setCatalogs );
   }
 
+  const updateNote = (noteID, text) => {
+    database.setNote(noteID, text);
+  }
 
   const changeName = (taskID, name) => {
     return database.changeName(taskID, name, refreshTasks);
@@ -133,19 +165,24 @@ export const DataContextProvider = ({children}) => {
     tags,
     addNewTask,
     addTag,
+    addTagToNote,
     addNoteFromPanel,
     addCatalog,
     changeName,
     changeDeadline,
     changeNoteName,
     changeStatus,
+    changeNoteCatalog,
+    deleteNote,
     deleteTask,
+    deleteTagConnection,
     getMoreTask,
     getNote,
     getNotesFromCatalog,
     getTagsByID,
     setTaskID,
-    sortTask
+    sortTask,
+    updateNote
   };
 
   // pass the value in provider and return

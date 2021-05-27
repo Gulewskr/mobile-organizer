@@ -106,13 +106,19 @@ const styles = StyleSheet.create({
         padding: 4,
         borderWidth: 1,
         margin: 2,
+        alignItems: "center",
+        justifyContent: "center",
         flexDirection: "row",
         borderRadius: 5
     },
     tagItemIcon:{
         height: 20,
         aspectRatio: 1,
-        marginLeft: 3
+        marginLeft: 10
+    },
+    cross:{
+        height: 20,
+        aspectRatio: 1
     }
 });
 

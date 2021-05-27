@@ -11,7 +11,7 @@ import { icons } from '../components/icons';
 
 const NoteOptions = (props) => {
 
-    const { addCatalog, catalogs, getTagsByID, addNoteFromPanel } = useContext(DataContext);
+    const { catalogs, getTagsByID, deleteTagConnection, changeNoteCatalog, addTagToNote } = useContext(DataContext);
     const { themeID } = useTheme();
 
     //props.close()
@@ -31,9 +31,14 @@ const NoteOptions = (props) => {
         );
     }
 
+    const changeCatalog = (catalog) => {
+        changeNoteCatalog(id, catalog);
+    }
+
     const TagMenu = () => {
         
         const [tags, setTags] = useState(null);
+        const [tagName, setTagName] = useState("nowy tag");
 
         const mounted = useRef(false);
         //sprawdzanie czy komponent jest mounted
@@ -41,14 +46,37 @@ const NoteOptions = (props) => {
             mounted.current = true;
             return () => (mounted.current = false);
         });
-        useEffect(() => {
+
+        const getTags = async() => {
             getTagsByID(id).then(
                 (result) => {
                     if(mounted.current){
                         setTags(result);
                     }
                 });
+        }
+
+        useEffect(() => {
+            getTags();
         }, []);
+
+        const deleteTag = async(tag) => {
+            try{
+                await deleteTagConnection(id, tag);
+                getTags();
+            }catch (e){
+                console.warn(e);
+            }
+        }
+
+        const addNewTag = async() => {
+            try{
+                await addTagToNote(id, tagName);
+                getTags();
+            }catch (e){
+                console.warn(e);
+            }
+        }
 
         var value = null;
         if(tags != null)
@@ -56,8 +84,12 @@ const NoteOptions = (props) => {
             try{
                 value = tags.map((data, index) => {
                     return(
-                        //TODO - dodać style i usuwanie tagów
-                        <View key={index}><Text>{data.tag}</Text></View>
+                        <View key={index} style={[styles.tagItem, {backgroundColor: themeID.colorButton1}]}>
+                            <Text>{data.tag}</Text>
+                            <TouchableOpacity style={styles.tagItemIcon} onPress={()=>{deleteTag(data.tag)}}>
+                                <Image style={styles.cross} source={icons.cross} />
+                            </TouchableOpacity>
+                        </View>
                     );
                   });
             }catch(err){
@@ -66,22 +98,33 @@ const NoteOptions = (props) => {
         } 
 
         return(
-            <View>
-                {value}
+            <>
+            <View style={[styles.tagContainer, {backgroundColor: themeID.colorBackground}]} >
+                <ScrollView contentContainerStyle={{flexDirection:"row", justifyContent:"center", alignItems:"center", flexWrap: "wrap" }} style={{maxHeight: 120, width: "100%"}}>
+                    {value}
+                </ScrollView>
             </View>
+            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+                <TextInput maxLength={25} multiline={false} onChangeText={setTagName} value={tagName} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
+                <TouchableOpacity style={[styles.tagButton, {backgroundColor: themeID.colorButton1}]}
+                  onPress={()=>{addNewTag(tagName); setTagName("tag");}}>
+                    <Image style={styles.tagIconButton} source={icons.plus} />
+                </TouchableOpacity>
+            </View>
+            </>
         );
     }
 
     const RMPicker = (params) => {
         try{
             return (
-                <>
-                <Text style={[styles.font1, {color: themeID.colorText1}]}>Zmień katalog</Text>
                 <View style={styles.picker} >
                     <Picker
                         selectedValue={catalog} 
                         onValueChange={(itemValue, itemIndex) => 
-                            setCatalog(itemValue)
+                            {
+                             setCatalog(itemValue);
+                             changeCatalog(itemValue);}
                             }>
                             {
                             catalogs.map((data, index) => {
@@ -92,7 +135,6 @@ const NoteOptions = (props) => {
                             }
                     </Picker>
                 </View>
-                </>
             );
         }catch(err){
             console.log(err);
@@ -103,11 +145,9 @@ const NoteOptions = (props) => {
     return (
         <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
             <Header />
+            <Text style={[styles.font1, {color: themeID.colorText1}]}>Zmień katalog</Text>
             <RMPicker />
-            //TODO - przycisk zapisz zapisuje notatkę w nowym katalogu
-            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]} onPress={()=>{console.log("zapisano")}}>
-                <Text style={[styles.font1, {color: themeID.colorText1}]}>Zapisz</Text>
-            </TouchableOpacity>
+            <Text style={[styles.font1, {color: themeID.colorText1}]}>Zmień tagi</Text>
             <TagMenu />
         </View>
     );
