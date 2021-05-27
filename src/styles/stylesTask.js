@@ -6,10 +6,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderWidth: 1,
         width: "90%",
-        marginTop: 20,
+        marginTop: 10,
+        marginBottom: 10,
         paddingLeft: 30,
         padding: 10,
         alignSelf:"center",
+        justifyContent: "center",
+        alignItems: "center",
         flexDirection: "row"
     },
     textContainer:{
@@ -89,6 +92,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 1
     },
+    headerContainerNotes:{
+        width: "100%",
+        minHeight: 50,
+        maxHeight: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        borderBottomWidth: 1
+    },
     headerContainer2:{
         width: "100%",
         alignItems: "center",
@@ -143,12 +155,20 @@ const styles = StyleSheet.create({
     sectorHeader:{
         width: "80%",
         marginLeft: "3%",
-        marginBottom: 20
+        marginBottom: 10
     },
     line:{
         width: "100%",
         height: 2,
         backgroundColor: "#000000"
+    },
+    iconContainer2:{
+        width: "20%",
+        aspectRatio: 1,
+        borderWidth: 1,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
 

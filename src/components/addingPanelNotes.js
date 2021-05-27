@@ -99,6 +99,7 @@ const AddingNoteMenu = (props) => {
             );
         }catch(err){
             console.log(err);
+            return null;
         }
     }
 

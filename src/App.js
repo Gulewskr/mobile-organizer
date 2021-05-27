@@ -13,6 +13,7 @@ import TaskSpec from './routes/TaskSpec';
 import Events from './routes/Events';
 import Callendar from './routes/Callendar';
 import Notes from './routes/Notes';
+import NoteSpec from './routes/NoteSpec';
 import Profile from './routes/Profile';
 import Settings from './routes/Settings';
 
@@ -41,10 +42,11 @@ export default function App() {
             <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Tasks" component={Tasks} />
-              <Stack.Screen name="Task" component={TaskSpec} initialParams={{'task': 'shit'}}/>
+              <Stack.Screen name="Task" component={TaskSpec} initialParams={{'task': 0}}/>
               <Stack.Screen name="Callendar" component={Callendar} />
               <Stack.Screen name="Events" component={Events} />
               <Stack.Screen name="Notes" component={Notes} />
+              <Stack.Screen name="Note" component={NoteSpec} initialParams={{'id': 0}}/>
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Profile" component={Profile} />
             </Stack.Navigator>

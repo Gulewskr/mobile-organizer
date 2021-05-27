@@ -54,15 +54,19 @@ export const DataContextProvider = ({children}) => {
 
 
   const changeName = (taskID, name) => {
-    return database.changeName(taskID, name, refreshTasks)
+    return database.changeName(taskID, name, refreshTasks);
+  }
+
+  const changeNoteName = (id, name) => {
+    return database.changeNoteName(id, name);
   }
 
   const changeDeadline= (taskID, bool, day, month, year) => {
-    return database.changeDeadline(taskID, bool ? 1 : 0 , day, month, year, refreshTasks)
+    return database.changeDeadline(taskID, bool ? 1 : 0 , day, month, year, refreshTasks);
   }
 
   const changeStatus = (taskID, bool, parentID) => {
-    return database.changeStatus(taskID, bool ? 1 : 0, refreshTasks, parentID)
+    return database.changeStatus(taskID, bool ? 1 : 0, refreshTasks, parentID);
   }
 
   const deleteTask = (taskID) => {
@@ -73,15 +77,39 @@ export const DataContextProvider = ({children}) => {
     database.getMoreTask(id, setTasks);
   }
 
-  //TODO
+  const getTagsByID = async (id) => {
+    try{
+      let result = await database.getTagsByID(id);
+      return result;
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  }
+
+  const getNote = async (id) => 
+  {
+    try{
+      let result = await database.getNote(id);
+      if(result.length > 0){
+        return result[0];
+      }else{
+        return null
+      }
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  }
+
   const getNotesFromCatalog = async (id) => 
   {
     try{
       let result = await database.getNotesFromCatalog(id);
-      console.log(result);
       return result;
     } catch (e) {
       console.warn(e);
+      return null;
     }
   }
 
@@ -109,10 +137,13 @@ export const DataContextProvider = ({children}) => {
     addCatalog,
     changeName,
     changeDeadline,
+    changeNoteName,
     changeStatus,
     deleteTask,
     getMoreTask,
+    getNote,
     getNotesFromCatalog,
+    getTagsByID,
     setTaskID,
     sortTask
   };
