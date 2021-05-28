@@ -262,10 +262,9 @@ const changeNoteName = (id, name) => {
 }
 
 //dodawanie notatki z panelu
-const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connectedEvent, successFunc) => {
+const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connectedEvent) => {
   try {
     var id = await addNote(name, catalogID, connectedTask, connectedEvent);
-    successFunc();
     if(id != null)
       for(let i=0; i<tagList.length; i++)
       {
@@ -308,7 +307,7 @@ const makeConnectionsToTag = async(note, tag) => {
 }
 
 //dodawniae katalogu
-const addCatalog = async (name, successFunc) => {
+const addCatalog = async (name) => {
   new Promise((resolve, reject) => {
   db.transaction( 
     tx => {
@@ -316,12 +315,27 @@ const addCatalog = async (name, successFunc) => {
       [name] );
     },
     (t, error) => { console.log("ERROR: db adding Catalog"); reject(error)},
-    (t, success) => { console.log("succed adding Catalog"); successFunc(); resolve(success) }
+    (t, success) => { console.log("succed adding Catalog"); resolve(success) }
   );
 });
 }
 
 //pobieranie listy katalogów
+const getCatalogs = async() => {
+  return await new Promise((resolve, reject) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'SELECT * FROM catalogs;',
+        [],
+        (t,{rows:{ _array } }) => {resolve(_array);});
+    },
+    (t, error) => { console.log("ERROR: db loading catalogs"); reject(null);},
+    (_t, _success) => { console.log("loaded catalogs");}
+  );
+  });
+}
+/*  //wersja do useState
 const getCatalogs = (setFunc) => {
   db.transaction(
     tx => {
@@ -334,20 +348,25 @@ const getCatalogs = (setFunc) => {
     (t, error) => { console.log("ERROR: db loading catalogs") },
     (_t, _success) => { console.log("loaded catalogs");}
   );
-}
+}*/
 
 //pobieranie listy notatek z danego katalogu
-const getNotesFromCatalog = async (id) => {
+const getNotesFromCatalog = async (id, command) => {
   return await new Promise((resolve, reject) => {
-    db.transaction( 
-      tx => {
-        tx.executeSql( "SELECT * FROM notes WHERE catalog = ?;",
-        [id],
-        (t,{rows:{ _array } }) => {resolve(_array);});
-      },
-      (t, error) => { console.log("ERROR: geting catalog notes"); reject(null);},
-      (t, success) => { console.log("succed get catalog notes");}
-    );
+    let c = "SELECT * FROM notes WHERE catalog = ";
+    c += id + " ";
+    c += command;
+    c += ";";
+    console.log(c);
+      db.transaction(
+        tx => {
+          tx.executeSql( c,
+          [],
+          (t,{rows:{ _array } }) => {resolve(_array);});
+        },
+        (t, error) => { reject("ERROR: geting catalog notes");},
+        (t, success) => { console.log("succed get catalog notes");}
+      );
   });
 }
 
@@ -388,7 +407,7 @@ const getTags = async () => {
       tx => {
         tx.executeSql( "SELECT * FROM tags;",
         [],
-        (t,{rows:{ _array } }) => { console.log(_array);; resolve(_array);});
+        (t,{rows:{ _array } }) => {resolve(_array);});
       },
       (t, error) => { console.log("ERROR: geting tags"); reject(null);},
       (t, success) => { console.log("succed got tags");}
@@ -455,6 +474,36 @@ const deleteTagConnection = async(noteID, tag) => {
   });
 }
 
+//usunięcie połączeń tagu
+const deleteTagConnections = async(tag) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM tagsConnection WHERE tag = ?;",
+        [tag]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting tag connection"); reject(null)},
+      (t, success) => { console.log("deleted tag connection"); resolve(success)}
+    );
+  });
+}
+
+//usunięcie tagu
+const deleteTag = async(tag) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM tags WHERE name = ?;",
+        [tag]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting tag "); reject(null)},
+      (t, success) => { console.log("deleted tag "); resolve(success)}
+    );
+  });
+}
+
 //usunięcie notatki
 const deleteNote = async( noteID ) => {
   return await new Promise((resolve, reject) => {
@@ -466,6 +515,36 @@ const deleteNote = async( noteID ) => {
       },
       (t, error) => { console.log("ERROR: deleting note"); reject(null)},
       (t, success) => { console.log("deleted note"); resolve(success)}
+    );
+  });
+}
+
+//usuwanie notatek z katalogu
+const deleteNoteFromCatalog = async( catalogID ) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM notes WHERE catalog = ?;",
+        [catalogID]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting notes from catalog"); reject(null)},
+      (t, success) => { console.log("deleted notes from catalog " + catalogID); resolve(success)}
+    );
+  });
+}
+
+//usuwanie katalogu
+const deleteCatalog = async( catalogID ) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM catalogs WHERE id = ?;",
+        [catalogID]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting catalog"); reject(null)},
+      (t, success) => { console.log("deleted catalog " + catalogID); resolve(success)}
     );
   });
 }
@@ -486,9 +565,13 @@ export const database = {
   changeDeadline,
   changeNoteName,
   changeNoteCatalog,
+  deleteCatalog,
   deleteNote,
+  deleteNoteFromCatalog,
   deleteTask,
+  deleteTag,
   deleteTagConnection,
+  deleteTagConnections,
   dropTablesAsync,
   getCatalogs,
   getTask,

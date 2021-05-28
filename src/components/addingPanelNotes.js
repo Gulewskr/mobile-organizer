@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
@@ -11,7 +11,7 @@ import { icons } from '../components/icons';
 
 const AddingNoteMenu = (props) => {
 
-    const { addCatalog, catalogs, addTag, addNoteFromPanel } = useContext(DataContext);
+    const { addCatalog, addTag, getCatalogs, addNoteFromPanel } = useContext(DataContext);
     const { themeID } = useTheme();
 
     //nazwa
@@ -21,7 +21,25 @@ const AddingNoteMenu = (props) => {
 
     const [ menu, setMenu ] = useState(props.mode);
 
+    const [ catalogs, setCatalogs] = useState([]);
     const [ catalog, setCatalog] = useState(1);
+
+    const mounted = useRef(false);
+    //sprawdzanie czy komponent jest mounted
+    useEffect(() => {
+        mounted.current = true;
+        return () => (mounted.current = false);
+    });
+
+    useEffect(() => {
+        getCatalogs().then(
+            (result) => {
+                if(mounted.current){
+                    setCatalogs(result);
+                }
+            }
+        );
+    }, []);
 
     const Header = () =>{
         return(

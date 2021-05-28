@@ -90,6 +90,33 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
     },
+    tagFilterRow:{
+        width:"100%",
+        flexDirection: "row"
+    }, 
+    tagContainerFilter:{
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 10,
+        width: "80%",
+    },
+    tagFilterButtonContainer:{
+        width: "15%",
+        marginLeft: 10,
+        alignSelf: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        
+    },
+    tagFilterButton:{
+        width: "100%",
+        marginBottom: 5,
+        aspectRatio: 1,
+        borderWidth: 1,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
     tagButton:{
         width: 40,
         justifyContent: "center",

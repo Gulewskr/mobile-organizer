@@ -66,7 +66,7 @@ export default Tasks = ({navigation}) => {
       <NavbarBack napis={'Zadania'} navigate={navigation} />
       {/* Wypisywanie listy zadań: */}
       {removeMenu ?
-      <DeleteMenu id={''} close={() => {setRemoveMenu(false)}}/>
+      <DeleteMenu id={0} close={() => {setRemoveMenu(false)}}/>
       : 
       <ScrollView style={{zIndex: 1, width: "100%"}}>
         {value} 

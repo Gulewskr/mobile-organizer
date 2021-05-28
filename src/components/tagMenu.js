@@ -11,7 +11,8 @@ import { icons } from '../components/icons';
 
 const NoteOptions = (props) => {
 
-    const { catalogs, getTagsByID, deleteTagConnection, changeNoteCatalog, addTagToNote } = useContext(DataContext);
+    const [loaded, setLoaded] = useState(false);
+    const { getTagsByID, getCatalogs, deleteTagConnection, changeNoteCatalog, addTagToNote } = useContext(DataContext);
     const { themeID } = useTheme();
 
     //props.close()
@@ -19,7 +20,37 @@ const NoteOptions = (props) => {
     //props.catalog
 
     //dane notatki
+    const [ catalogs, setCatalogs] = useState([]);
+    const [tags, setTags] = useState(null);
     const [ catalog, setCatalog] = useState(props.catalog);
+
+    const mounted = useRef(false);
+    //sprawdzanie czy komponent jest mounted
+    useEffect(() => {
+        mounted.current = true;
+        return () => (mounted.current = false);
+    });
+
+    useEffect(() => {
+        getCatalogs().then(
+            (result) => {
+                if(mounted.current){
+                    setCatalogs(result);
+                }
+            }
+        );
+        getTags();
+        setLoaded(true);
+    }, [])
+
+    const getTags = async() => {
+        getTagsByID(id).then(
+            (result) => {
+                if(mounted.current){
+                    setTags(result);
+                }
+            });
+    }
 
     const Header = () => {
         return(
@@ -34,31 +65,11 @@ const NoteOptions = (props) => {
     const changeCatalog = (catalog) => {
         changeNoteCatalog(id, catalog);
     }
+    
 
     const TagMenu = () => {
         
-        const [tags, setTags] = useState(null);
         const [tagName, setTagName] = useState("nowy tag");
-
-        const mounted = useRef(false);
-        //sprawdzanie czy komponent jest mounted
-        useEffect(() => {
-            mounted.current = true;
-            return () => (mounted.current = false);
-        });
-
-        const getTags = async() => {
-            getTagsByID(id).then(
-                (result) => {
-                    if(mounted.current){
-                        setTags(result);
-                    }
-                });
-        }
-
-        useEffect(() => {
-            getTags();
-        }, []);
 
         const deleteTag = async(tag) => {
             try{
@@ -117,6 +128,7 @@ const NoteOptions = (props) => {
 
     const RMPicker = (params) => {
         try{
+            
             return (
                 <View style={styles.picker} >
                     <Picker
@@ -143,6 +155,7 @@ const NoteOptions = (props) => {
     }
 
     return (
+        loaded?
         <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
             <Header />
             <Text style={[styles.font1, {color: themeID.colorText1}]}>Zmień katalog</Text>
@@ -150,6 +163,7 @@ const NoteOptions = (props) => {
             <Text style={[styles.font1, {color: themeID.colorText1}]}>Zmień tagi</Text>
             <TagMenu />
         </View>
+        :null
     );
 }
 
