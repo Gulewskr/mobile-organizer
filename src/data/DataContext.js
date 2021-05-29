@@ -11,6 +11,8 @@ export const DataContextProvider = ({children}) => {
   const [ tasks, setTasks ] = useState(null);
   const [ task, setTask ] = useState(null);
 
+  const [events, setEvents] = useState(null);
+
   const [ taskID, setTaskId ] = useState(0);
 
   const [ catalogs, setCatalogs ] = useState(null);
@@ -18,6 +20,7 @@ export const DataContextProvider = ({children}) => {
 
   useEffect(() => {
     refreshTasks();
+    refreshEvents();
     //refreshNotes()
   }, [] )
 
@@ -73,7 +76,7 @@ export const DataContextProvider = ({children}) => {
   }
   const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, icon) => {
     try{
-      await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute, icon);
+      await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute, icon, refreshEvents);
     } catch (e) {
       console.warn(e);
     }
@@ -89,9 +92,12 @@ export const DataContextProvider = ({children}) => {
   }
   
   const refreshTasks = async() =>  {
-    //database.getTasks( setTasks );
     await database.getTask( taskID, setTask);
     await database.getMoreTask(taskID, setTasks);
+  }
+
+  const refreshEvents = async() =>  {
+    await database.getEvents(setEvents);
   }
 
   const updateNote = (noteID, text) => {
@@ -162,9 +168,9 @@ export const DataContextProvider = ({children}) => {
     }
   }
 
-  const getEventsByType = async (type) => {
+  const getEvents = async () => {
     try{
-      let result = await database.getEvents(type);
+      let result = await database.getEvents();
       return result;
     } catch (e) {
       console.warn(e);
@@ -215,6 +221,7 @@ export const DataContextProvider = ({children}) => {
     tasks,
     task,
     tags,
+    events,
     addEvent,
     addNewTask,
     addTag,
@@ -232,7 +239,7 @@ export const DataContextProvider = ({children}) => {
     delteTag,
     deleteTagConnection,
     getCatalogs,
-    getEventsByType,
+    getEvents,
     getMoreTask,
     getNote,
     getNotesFromCatalog,

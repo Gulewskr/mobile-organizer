@@ -16,7 +16,6 @@ import { icons } from '../icons';
 
 const AddingEventMenu = (props) => {
 
-    //TODO dokończyć menu dodawania 
     const { addEvent } = useContext(DataContext);
     const { themeID } = useTheme();
 
@@ -39,10 +38,6 @@ const AddingEventMenu = (props) => {
     const addEventToDB = () => {
         addEvent(name, type, year, month, day, daily, hour, minutes, iconID);
     }
-
-    //edycja nazwy
-    //menu wyboru ikony
-    //TODO zmienić w bazie danych żeby było id ikony
 
     const TypePicker = () => {
         return(
@@ -136,7 +131,7 @@ const AddingEventMenu = (props) => {
                     </View>
                 </View>
             }
-            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => addEventToDB()}>
+            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {addEventToDB(); props.close();}}>
                 <Text style={{color: themeID.colorText1}}>Potwierdź</Text>
             </TouchableOpacity>
         </View>
