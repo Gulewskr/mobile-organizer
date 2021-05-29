@@ -93,6 +93,13 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         alignSelf: 'center'
     },
+    exitButtonContainer:{
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        height: 60,
+        marginBottom: 5,
+    },
     exitButton:{
         position: "absolute",
         right: 10,
@@ -100,15 +107,14 @@ const styles = StyleSheet.create({
         top: 10,
         width: 50,
         height: 50,
-        alignContent: "center",
+        alignItems: "center",
         justifyContent: "center",
         borderWidth: 1,
         borderRadius: 15
     },
     exitButtonIcon:{
-        width: "50%",
-        height: "50%",
-        alignSelf: "center",
+        height: "60%",
+        aspectRatio: 1
     },
     ConfirmButton:{
         position: "absolute",

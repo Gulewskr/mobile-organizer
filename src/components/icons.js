@@ -4,6 +4,7 @@ export const icons = {
     arrowUp: require('../icons/gui/arrowUp.png'),
     arrowDown: require('../icons/gui/arrowDown.png'),
     backArrow: require('../icons/gui/return.png'),
+    brush: require('../icons/gui/brush.png'),
     cake: require('../icons/gui/birthdayCake.png'),
     calendar: require('../icons/gui/calendar.png'),
     checkmark: require('../icons/gui/checkmark.png'),

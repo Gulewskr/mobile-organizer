@@ -80,9 +80,12 @@ const EventMenu = () => {
             (result) => {
                 result.map((data,index) => {
                         if(checkDataFuture(data._day, data._month, data._year)){
+                            console.log("POG");
                             nextEvents.push(data);
                         }
+                        console.log(data);
                     });
+                    
                     return nextEvents;
             }
         );
@@ -98,7 +101,7 @@ const EventMenu = () => {
   }, []);
 
   const FutureEvents = () => {
-    console.log("nastepne" + eventsF);
+    console.log(eventsF);
     
     return(
       <View><Text>Przyszłe wydarzenia</Text></View>
@@ -106,7 +109,7 @@ const EventMenu = () => {
   }
 
   const WeeklyEvents = () => {
-    console.log("tygodniowe" + eventsW);
+    console.log(eventsW);
     
     return(
       <View><Text>Cotygodniowe wydarzenia</Text></View>
@@ -114,7 +117,7 @@ const EventMenu = () => {
   }
 
   const MonthlyEvents = () => {
-    console.log("miesieczne" + eventsM);
+    console.log(eventsM);
     
     return(
       <View><Text>Comiesięczne wydarzenia</Text></View>

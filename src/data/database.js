@@ -13,7 +13,7 @@ const setupDatabaseAsync = async () => {
           "create table if not exists tasks (id integer primary key AUTOINCREMENT not null, name TEXT, deadline bool, _year int, _month int, _day int, ended bool, connectedTask int, spec BOOL, endedP DOUBLE);"
         );
         tx.executeSql(
-          "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek INT, hour int, minute int);"
+          "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek INT, hour int, minute int, icon int);"
         );
         tx.executeSql(
           "create table if not exists catalogs (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE);"
@@ -552,13 +552,12 @@ const deleteCatalog = async( catalogID ) => {
 //---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia
 
 
-const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute) => {
+const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, icon) => {
   return await new Promise((resolve, reject) => {
     db.transaction( 
       tx => {
-        tx.executeSql("INSERT INTO events (name, type, _year, _month, _day, dayWeek, hour, minute) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
-        [name, type, _year, _month, _day, dayWeek, hour, minute]
-    );
+        tx.executeSql("INSERT INTO events (name, type, _year, _month, _day, dayWeek, hour, minute, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        [name, type, _year, _month, _day, dayWeek, hour, minute, icon]);
     },
     (t, error) => { console.log("ERROR: creating event"); reject(null)},
     (t, success) => { console.log("created event"); resolve(success)}
@@ -566,13 +565,13 @@ const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute) =
   });
 }
 
-const getEvents = async(type) => {
+const getEvents = async() => {
   return await new Promise((resolve, reject) => {
     db.transaction( 
       tx => {
-        tx.executeSql( "SELECT * FROM events WHERE type = ?;",
-        [type],
-        (t,{rows:{ _array } }) => {resolve(_array);});
+        tx.executeSql( "SELECT * FROM events;",
+        [],
+        (t,{rows:{ _array } }) => { console.log("dla typu " + type);console.log(_array);; resolve(_array);});
       },
       (t, error) => { console.log("ERROR: geting events"); reject(null);},
       (t, success) => { console.log("succed got events");}

@@ -146,6 +146,17 @@ const styles = StyleSheet.create({
     cross:{
         height: 20,
         aspectRatio: 1
+    },
+    PickerRowWithText:{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5
+    },
+    PickerRowWithTextText:{
+        fontSize: 20,
+        marginRight: 10,
+        marginTop: 10
     }
 });
 

@@ -71,9 +71,9 @@ export const DataContextProvider = ({children}) => {
       console.warn(e);
     }
   }
-  const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute) => {
+  const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, icon) => {
     try{
-      await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute);
+      await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute, icon);
     } catch (e) {
       console.warn(e);
     }

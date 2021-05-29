@@ -19,8 +19,6 @@ const DeadlineChanger = (props) => {
     const [ year, setYear ] = useState(props.deadline? props.year : currentTime.getFullYear());
     const [ haveD, deadline ] = useState(props.deadline);
 
-    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
     const nextDay = () => {
         var next = day + 1;
         var max = numberOfDays[month];
@@ -92,15 +90,15 @@ const DeadlineChanger = (props) => {
     const ValueChanger = (props) => {
         return (
             <View style={styles.scrollChoose}>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickNext()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowUp} />
                 </TouchableOpacity>
                 <View style={styles.scrollList}>
-                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.prev}</Text></View>
-                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.colorHeader3}]}><Text style={{color: themeID.textCellText}}>{props.value}</Text></View>
                     <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.next}</Text></View>
+                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.colorHeader3}]}><Text style={{color: themeID.textCellText}}>{props.value}</Text></View>
+                    <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.prev}</Text></View>
                 </View>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickNext()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowDown} />
                 </TouchableOpacity>
             </View>
