@@ -13,7 +13,7 @@ const setupDatabaseAsync = async () => {
           "create table if not exists tasks (id integer primary key AUTOINCREMENT not null, name TEXT, deadline bool, _year int, _month int, _day int, ended bool, connectedTask int, spec BOOL, endedP DOUBLE);"
         );
         tx.executeSql(
-          "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek INT, connectedTask integer, FOREIGN KEY(connectedtask) REFERENCES tasks(id));"
+          "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek INT, hour int, minute int);"
         );
         tx.executeSql(
           "create table if not exists catalogs (id integer primary key AUTOINCREMENT not null, name TEXT UNIQUE);"
@@ -551,12 +551,42 @@ const deleteCatalog = async( catalogID ) => {
 
 //---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia
 
+
+const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql("INSERT INTO events (name, type, _year, _month, _day, dayWeek, hour, minute) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+        [name, type, _year, _month, _day, dayWeek, hour, minute]
+    );
+    },
+    (t, error) => { console.log("ERROR: creating event"); reject(null)},
+    (t, success) => { console.log("created event"); resolve(success)}
+    );
+  });
+}
+
+const getEvents = async(type) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "SELECT * FROM events WHERE type = ?;",
+        [type],
+        (t,{rows:{ _array } }) => {resolve(_array);});
+      },
+      (t, error) => { console.log("ERROR: geting events"); reject(null);},
+      (t, success) => { console.log("succed got events");}
+    );
+  });
+}
+
 //TODO
 
 
 //export funkcji bazy danych
 export const database = {
   addCatalog,
+  addEvent,
   addNoteFromPanel,
   addTag,
   addTask,
@@ -574,6 +604,7 @@ export const database = {
   deleteTagConnections,
   dropTablesAsync,
   getCatalogs,
+  getEvents,
   getTask,
   getTags,
   getTagsByID,

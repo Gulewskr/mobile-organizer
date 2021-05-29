@@ -71,6 +71,13 @@ export const DataContextProvider = ({children}) => {
       console.warn(e);
     }
   }
+  const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute) => {
+    try{
+      await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
 
   const addTagToNote = async(noteID, tag) => {
     try{
@@ -86,12 +93,6 @@ export const DataContextProvider = ({children}) => {
     await database.getTask( taskID, setTask);
     await database.getMoreTask(taskID, setTasks);
   }
-
-  /*
-  const refreshNotes = () =>  {
-    //database.getTasks( setTasks );
-    database.getCatalogs( setCatalogs );
-  }*/
 
   const updateNote = (noteID, text) => {
     database.setNote(noteID, text);
@@ -161,6 +162,16 @@ export const DataContextProvider = ({children}) => {
     }
   }
 
+  const getEventsByType = async (type) => {
+    try{
+      let result = await database.getEvents(type);
+      return result;
+    } catch (e) {
+      console.warn(e);
+      return null;
+    }
+  }
+
   const getNote = async (id) => 
   {
     try{
@@ -204,6 +215,7 @@ export const DataContextProvider = ({children}) => {
     tasks,
     task,
     tags,
+    addEvent,
     addNewTask,
     addTag,
     addTagToNote,
@@ -220,6 +232,7 @@ export const DataContextProvider = ({children}) => {
     delteTag,
     deleteTagConnection,
     getCatalogs,
+    getEventsByType,
     getMoreTask,
     getNote,
     getNotesFromCatalog,
