@@ -144,7 +144,7 @@ export default NoteSpec = ({navigation, route}) => {
       </View>
     );
   }
-  //TODO - usuwanie
+
   try{
     return (
       <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>

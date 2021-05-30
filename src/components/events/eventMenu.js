@@ -5,20 +5,10 @@ import styles from '../../styles/deletePanelStyles';
 import { useTheme } from '../../data/colors';
 import { icons } from '../icons';
 import { eventControl } from './eventControler';
-
+import { EventPanel, EventPanelDelete } from './eventPanel';
 import {DataContext} from '../../data/DataContext';
 
-/*
-    wszystkie wydarzenia są jako events w dataContext i przekazywane z tamtąd
-    klasa z funkcjami odpowiedzialnymi za przetentegowywanie danych związanych z listą eventów:
-        -pobranie cotygodniowych
-        -pobranie najbliższego tygodnia + przyszłych
-        -pobranie z danego miesiąca
-        -pobranie z danego dnia
-
-
-
-*/
+import {SectorMenu} from '../sectorHeader';
 
 const EventMenu = (props) => {
     const { themeID } = useTheme();
@@ -41,38 +31,92 @@ const EventMenu = (props) => {
         refreshEvents(events);
     }, [events]);
 
-    const MonthlyEvents = () => {
-        //console.log("ten tydzień");
+    const NextWeekEvents = () => {
         //console.log(eventsThisW);
-        
+        var value = null;
+        if(Array.isArray(eventsThisW))
+        {
+            value = eventsThisW.map((data, index) => {
+                if(!props.remove){
+                    return(
+                        <EventPanel key={index} data={data} delete={false} press={()=>{props.optionID(data); props.option(true);}}/>
+                    );
+                }
+                else{
+                    return(
+                        <EventPanel key={index} data={data} delete={true} pressADD={()=>{props.removeAdd(data.id)}} pressRem={()=>{props.removeDel(data.id);}}/>
+                    );
+                }
+            })
+        }
+
         return(
-        <View><Text>Wydarzenia najbliższego tygodnia</Text></View>
+        <>
+            <SectorMenu name={"Wydarzenia najbliższego tygodnia"}/>
+            {value}
+        </>
         );
     }
 
     const FutureEvents = () => {
-        //console.log("przyszłe");
         //console.log(eventsFuture);
-        
+        var value = null;
+        if(Array.isArray(eventsFuture))
+        {
+            value = eventsFuture.map((data, index) => {
+                if(!props.remove){
+                    return(
+                        <EventPanel key={index} data={data} delete={false} press={()=>{props.optionID(data); props.option(true);}}/>
+                    );
+                }
+                else{
+                    return(
+                        <EventPanel key={index} data={data} delete={true} pressADD={()=>{props.removeAdd(data.id)}} pressRem={()=>{props.removeDel(data.id);}}/>
+                    );
+                }
+            })
+        }
+
         return(
-        <View><Text>Dalsze wydarzenia</Text></View>
+        <>
+            <SectorMenu name={"Dalsze wydarzenia"}/>
+            {value}
+        </>
         );
     }
 
     const WeeklyEvents = () => {
-        //console.log("cotygodniowe");
         //console.log(eventsWeekly);
-        
+        var value = null;
+        if(Array.isArray(eventsWeekly))
+        {
+            value = eventsWeekly.map((data, index) => {
+                if(!props.remove){
+                    return(
+                        <EventPanel key={index} data={data} delete={false} press={()=>{props.optionID(data); props.option(true);}}/>
+                    );
+                }
+                else{
+                    return(
+                        <EventPanel key={index} data={data} delete={true} pressADD={()=>{props.removeAdd(data.id)}} pressRem={()=>{props.removeDel(data.id);}}/>
+                    );
+                }
+            })
+        }
+
         return(
-        <View><Text>Cotygodniowe wydarzenia</Text></View>
+        <>
+            <SectorMenu name={"Cotygodniowe wydarzenia"}/>
+            {value}
+        </>
         );
     }
 
     return(
         <>
-            <FutureEvents />
+            <NextWeekEvents />
             <WeeklyEvents />
-            <MonthlyEvents />
+            <FutureEvents />
         </>
     );
 }

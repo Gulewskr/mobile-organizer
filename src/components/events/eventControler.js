@@ -41,7 +41,7 @@ const checkDataFuture = (day = currentDay(), month = currentMonth(), year = curr
         if(month > currentMonth())
         {
             return true;
-        }else if(month = currentMonth()){
+        }else if(month == currentMonth()){
             if(day >= currentDay())
             {
                 return true;
@@ -119,7 +119,7 @@ const nextWeekFuture = (events) => {
                     var day = data._day;
                     var month = getMonthForMonthyEvent(day);
                     var year = getYearForYearlyEvent(month, day);
-                    if(checkThisWeekdat(day, month, year)){
+                    if(checkThisWeek(day, month, year)){
                         nextWeek.push(data);
                     }else{
                         future.push(data);
@@ -128,7 +128,7 @@ const nextWeekFuture = (events) => {
                     var day = data._day;
                     var month = data._month;
                     var year = getYearForYearlyEvent(month, day);
-                    if(checkThisWeekdat(day, month, year)){
+                    if(checkThisWeek(day, month, year)){
                         nextWeek.push(data);
                     }else{
                         future.push(data);
@@ -154,4 +154,9 @@ const getWeeklyEvents = (events) => {
 export const eventControl = {
     nextWeekFuture,
     getWeeklyEvents
+}
+
+export const dateCalculator = {
+    getMonthForMonthyEvent,
+    getYearForYearlyEvent
 }

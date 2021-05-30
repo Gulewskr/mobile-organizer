@@ -1,18 +1,46 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    taskContainer: {
+    container: {
         borderRadius: 15,
         borderWidth: 1,
         width: "90%",
         marginBottom: 20,
-        paddingLeft: 30,
+        paddingLeft: 10,
         padding: 10,
         alignSelf:"center",
+    },
+    nameFont:{
+        fontSize: 18,
+    },
+    headerRow:{
+        flexDirection: "row", 
+        marginBottom: 5,
+        width: "100%",
+    },  
+    eventIcon:{
+        height: "100%",
+        aspectRatio: 1
+    },
+    singleRow:{
+        marginBottom: 2,
+    },
+    moreButton:{
+        position: "absolute",
+        height: 40,
+        right: 5,
+        bottom: 5,
+        aspectRatio: 1,
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "row"
+        borderRadius: 40,
+        borderWidth: 1,
     },
+    moreIcon:{
+        height: "80%",
+        aspectRatio: 1
+    },
+
     textContainer:{
         width: "70%",
         flexDirection: "column"
@@ -30,9 +58,7 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         alignSelf: "center"
     },
-    taskText:{
-        fontSize: 16,
-    },
+    
     deadlineText:{
         marginLeft: 20,
         fontSize: 18,

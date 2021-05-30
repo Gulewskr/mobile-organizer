@@ -74,6 +74,16 @@ export const DataContextProvider = ({children}) => {
       console.warn(e);
     }
   }
+
+  const deleteEvent = async(ID) => {
+    try{
+      await database.deleteEvent(ID);
+      refreshEvents();
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, icon) => {
     try{
       await database.addEvent(name, type, _year, _month, _day, dayWeek, hour, minute, icon, refreshEvents);
@@ -234,6 +244,7 @@ export const DataContextProvider = ({children}) => {
     changeStatus,
     changeNoteCatalog,
     deleteCatalog,
+    deleteEvent,
     deleteNote,
     deleteTask,
     delteTag,

@@ -551,7 +551,7 @@ const deleteCatalog = async( catalogID ) => {
 
 //---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia---Wydarzenia
 
-
+//dodawanie wydarzenia
 const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, icon, refreshEvents) => {
   return await new Promise((resolve, reject) => {
     db.transaction( 
@@ -565,22 +565,7 @@ const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, i
   });
 }
 
-/*
-const getEvents = async() => {
-  return await new Promise((resolve, reject) => {
-    db.transaction( 
-      tx => {
-        tx.executeSql( "SELECT * FROM events;",
-        [],
-        (t,{rows:{ _array } }) => { resolve(_array);});
-      },
-      (t, error) => { console.log("ERROR: geting events"); reject(null);},
-      (t, success) => { console.log("succed got events");}
-    );
-  });
-}
-*/
-
+//pobieranie listy wydarzeń
 const getEvents = async(setFunc) => {
   new Promise((resolve, reject) => {
     db.transaction(
@@ -593,6 +578,21 @@ const getEvents = async(setFunc) => {
       },
       (t, error) => { console.log("db error load task by id"); reject(error) },
       (t, success) => { console.log("loaded task by id"); resolve('success')}
+    );
+  });
+}
+
+//usuwanie wydarzenia
+const deleteEvent = async( eventID ) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "DELETE FROM events WHERE id = ?;",
+        [eventID]
+        );
+      },
+      (t, error) => { console.log("ERROR: deleting events"); reject(null)},
+      (t, success) => { console.log("deleted events " + eventID); resolve(success)}
     );
   });
 }
@@ -613,6 +613,7 @@ export const database = {
   changeNoteName,
   changeNoteCatalog,
   deleteCatalog,
+  deleteEvent,
   deleteNote,
   deleteNoteFromCatalog,
   deleteTask,
