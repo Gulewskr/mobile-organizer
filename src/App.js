@@ -11,6 +11,7 @@ import Home from './routes/Home';
 import Tasks from './routes/Tasks';
 import TaskSpec from './routes/TaskSpec';
 import Events from './routes/Events';
+import EventSpec from './routes/EventSpec';
 import Callendar from './routes/Callendar';
 import Notes from './routes/Notes';
 import NoteSpec from './routes/NoteSpec';
@@ -44,7 +45,8 @@ export default function App() {
               <Stack.Screen name="Tasks" component={Tasks} />
               <Stack.Screen name="Task" component={TaskSpec} initialParams={{'task': 0}}/>
               <Stack.Screen name="Callendar" component={Callendar} />
-              <Stack.Screen name="Events" component={Events} />
+              <Stack.Screen name="Events" component={Events}/>
+              <Stack.Screen name="Event" component={EventSpec} initialParams={{'id': 0}}/>
               <Stack.Screen name="Notes" component={Notes} />
               <Stack.Screen name="Note" component={NoteSpec} initialParams={{'id': 0}}/>
               <Stack.Screen name="Settings" component={Settings} />

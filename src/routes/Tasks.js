@@ -50,7 +50,6 @@ export default Tasks = ({navigation}) => {
   if(removeMenu == false)
   try{
       value = tasks.map((data, index) => {
-        console.log(index);
         return(
           <Task key={data.id} index={data.id} nazwa={data.name} deadline={data.deadline} 
             day={data._day} month={data._month} year={data._year} ended={data.ended} spec={data.spec} progress={data.endedP}
@@ -86,7 +85,7 @@ export default Tasks = ({navigation}) => {
         null
         }
         {addMenu ?
-        <AddTaskMenu id={0} close={() => setAddMenu(false)}/>
+        <AddTaskMenu id={0} eID={0} close={() => setAddMenu(false)}/>
         :
         null
         }

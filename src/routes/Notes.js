@@ -7,6 +7,7 @@ import { icons } from '../components/icons';
 import {NavbarBack} from '../components/navbar';
 import AddingNoteMenu from '../components/addingPanelNotes';
 import SortMenu from '../components/sortingNotes';
+import Note from '../components/note';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -128,18 +129,6 @@ export default Notes = ({navigation}) => {
       }
     }
 
-    const Note = (props) => {
-      return(
-        <View style={[styles2.taskContainer, {backgroundColor: themeID.colorContainer}]}>
-          <Text style={{fontSize: 20, color: themeID.colorText1, width:"80%"}}>{props.data.name}</Text>
-          <TouchableOpacity style={[styles2.iconContainer2, {backgroundColor: themeID.colorButton1}]} 
-          onPress={() => goToTask(props.data.id)}>
-            <Image source={icons.arrowRight} style={styles2.icon} />
-          </TouchableOpacity>
-        </View>
-      );
-    }
-
     const NoteToDelete = (props) => {
       const [toDelete, setToDelete] = useState(checkIFExistInNoteRemoveList(props.data.id) || d);
 
@@ -201,7 +190,7 @@ export default Notes = ({navigation}) => {
             );
           }else{
             return(
-              <Note key={data.id} data={data} />
+              <Note key={data.id} data={data} press={() => {goToTask(data.id)}} />
             );
           }
         })
@@ -271,7 +260,7 @@ export default Notes = ({navigation}) => {
       }
       {addMenu ?
         /* dodawanie notatek */
-        <AddingNoteMenu mode={0} close={() => {setRefresh(!refresh); setAddMenu(false)}} />
+        <AddingNoteMenu mode={0} taskID={0} eventID={0} close={() => {setRefresh(!refresh); setAddMenu(false)}} />
         :
         null
         }

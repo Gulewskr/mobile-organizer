@@ -40,6 +40,24 @@ const styles = StyleSheet.create({
         height: "80%",
         aspectRatio: 1
     },
+    headerContainer:{
+        width: "100%",
+        padding: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        borderBottomWidth: 1,
+    },
+    changerContainer:{
+        position: "absolute",
+        top: "30%",
+        padding: 10,
+        alignItems: "center",
+        borderWidth: 1,
+        borderRadius: 10,
+    },
+
+
 
     textContainer:{
         width: "70%",
@@ -108,13 +126,6 @@ const styles = StyleSheet.create({
     },
     headerContainerInput:{
 
-    },
-    headerContainer:{
-        width: "100%",
-        maxHeight: "65%",
-        padding: 10,
-        flexDirection: "row",
-        borderBottomWidth: 1
     },
     headerContainerNotes:{
         width: "100%",

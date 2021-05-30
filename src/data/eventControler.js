@@ -1,5 +1,5 @@
 import React from 'react'
-import {nameOfMonths, nameOfDays, numberOfDays} from '../../data/calendar';
+import {nameOfMonths, nameOfDays, numberOfDays} from './calendar';
 
 //Funkcje pomocnicze ---------------------------------
 
@@ -101,7 +101,6 @@ const checkThisWeek = (day = currentDay(), month = currentMonth(), year = curren
 const nextWeekFuture = (events) => {
     var nextWeek = [];
     var future = [];
-    console.log(events);
     if(Array.isArray(events)){
         events.map((data, ind) => {
             switch(data.type){
@@ -140,6 +139,22 @@ const nextWeekFuture = (events) => {
     return [nextWeek, future];
 }
 
+
+const getEventsMonth = (events, month, year) => {
+    var n = [];
+    if(Array.isArray(events)){
+        for(let i = 0; i<events.length; i++){
+            switch(events[i].type){
+                case 0: if(events[i]._month == month && events[i]._year == year){n.push(events[i]);}break;
+                case 1: break;
+                case 2: n.push(events[i]); break;
+                case 3: if(events[i]._month == month){n.push(events[i]);}break;
+            } 
+        }
+    }
+    return n;
+}
+
 const getWeeklyEvents = (events) => {
     var weekly = [];
     if(Array.isArray(events)){
@@ -150,10 +165,23 @@ const getWeeklyEvents = (events) => {
     return weekly;
 }
 
+const getEventByID = (events, id) => {
+    if(Array.isArray(events)){
+        for(let i = 0; i<events.length; i++){
+            if(events[i].id == id){
+                return events[i];
+            } 
+        }
+    }
+    return null;
+}
+
 //export funkcji bazy danych
 export const eventControl = {
     nextWeekFuture,
-    getWeeklyEvents
+    getWeeklyEvents,
+    getEventsMonth,
+    getEventByID
 }
 
 export const dateCalculator = {

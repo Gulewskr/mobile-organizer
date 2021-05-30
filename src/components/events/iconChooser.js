@@ -5,7 +5,7 @@ import {View, Text, Image, TextInput, ScrollView, TouchableOpacity, TouchableWit
 import {Picker} from '@react-native-community/picker'
 
 import {eventIcons} from '../../data/icons';
-import DataEvent from './dataEventChanger';
+import DataEvent from '../../data/dataEventChanger';
 import {WeeklyEventMenu, MothlyEventMenu, YearlyEventMenu} from './repetetableEvents';
 import {DataContext} from '../../data/DataContext';
 import styles from '../../styles/styleEventDate';

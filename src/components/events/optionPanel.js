@@ -17,14 +17,8 @@ import { icons } from '../icons';
 const EventOptions = (props) => {
     
     const { themeID } = useTheme();
-    //TODO dodać funkcje do bazy danych
-    //const { changeEventName } = useContext(DataContext);
-    /*
-        
-        -zmiana nazwy
-        -zmiana daty
-        -zmiana godziny 
-    */
+    const { changeEventName, changeEventDate, changeEventDays, changeEventIcon, deleteEvent } = useContext(DataContext);
+
     const [name, setName] = useState(props.data.name);
     const [ editName,  allowEditName ] = useState( false );
     const [day, setDay] = useState(props.data._day);
@@ -58,11 +52,15 @@ const EventOptions = (props) => {
         setIconA(false);
         setWeek(props.data.dayWeek);
         setD(false);
-    },[props.data])
+    },[props.data]);
+
+    useEffect(() => {
+        changeEventIcon(props.data.id, icon)
+    },[icon]);
 
     const changeName = (bool) => {
         if(bool){
-            //changeEventName(name, props.data.id);
+            changeEventName(props.data.id, name);
         }else{
             setName(props.data.name);
         }
@@ -71,7 +69,7 @@ const EventOptions = (props) => {
 
     const changeDate = (bool) => {
         if(bool){
-            //changeEventDate(m, h, day, month, year, props.data.id);
+            changeEventDate(props.data.id, year, month, day, h, m);
         }else{
             setName(props.data.name);
         }
@@ -80,9 +78,9 @@ const EventOptions = (props) => {
 
     const changeWeek = (bool) => {
         if(bool){
-            //changeEventDaily(week, props.data.id);
+            changeEventDays(props.data.id, week);
         }else{
-            setName(props.data.name);
+            setWeek(props.data.dayWeek);
         }
         setChangeData(false);
     }
@@ -90,7 +88,7 @@ const EventOptions = (props) => {
     const DeletePanel = () => {
         const confirm = (bool) => {
             if(bool){
-                //removeEvent(props.data.id)
+                deleteEvent(props.data.id)
                 props.close();
             }else{
                 setD(false);
@@ -128,7 +126,7 @@ const EventOptions = (props) => {
     return (
         <View style={[styles3.addEventContainer, {backgroundColor: themeID.colorContainer}]}>
             <View style={styles2.exitButtonContainer}>  
-                <Text style={[styles.changerText,{color: themeID.colorText1}]}>Opcje wydarzenia {type}</Text>    
+                <Text style={[styles.changerText,{color: themeID.colorText1}]}>Opcje wydarzenia</Text>    
                 <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close()}}>
                     <Image style={styles2.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
@@ -166,32 +164,27 @@ const EventOptions = (props) => {
             </View>
             { !iconA && changeData && type == 0 &&
                 <>
-                <DataEvent day={day} setD={setDay} month={month} setM={setMonth} year={year} 
-                    setY={setYear} hour={h} setH={setH} minutes={m} setMin={setM} />
-                <ConfirmReturnButtons func={changeDate} />
+                    <DataEvent day={day} setD={setDay} month={month} setM={setMonth} year={year} 
+                        setY={setYear} hour={h} setH={setH} minutes={m} setMin={setM} />
+                    <ConfirmReturnButtons func={changeDate} />
                 </>
             }
             { !iconA && changeData && type == 1 &&
                 <>
-                <WeeklyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} daily={week} setD={setWeek}/>
-                <ConfirmReturnButtons func={changeWeek} />
+                    <WeeklyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} daily={week} setD={setWeek}/>
+                    <ConfirmReturnButtons func={changeWeek} />
                 </>
             }
             { !iconA && changeData && type == 2 &&
                 <>
-                <MothlyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} day={day} setD={setDay} />
-                <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {changeDate(true);}}>
-                    <Text style={{color: themeID.colorText1}}>Potwierdź</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {changeDate(false);}}>
-                    <Text style={{color: themeID.colorText1}}>Anuluj</Text>
-                </TouchableOpacity>
+                    <MothlyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} day={day} setD={setDay} />
+                    <ConfirmReturnButtons func={changeDate} />
                 </>
             }
             { !iconA && changeData && type == 3 &&
                 <>
-                <YearlyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} day={day} setD={setDay} month={month} setM={setMonth}/>
-                <ConfirmReturnButtons func={changeDate} />
+                    <YearlyEventMenu hour={h} setH={setH} minutes={m} setMin={setM} day={day} setD={setDay} month={month} setM={setMonth}/>
+                    <ConfirmReturnButtons func={changeDate} />
                 </>
             }
             {   iconA && !changeData &&
@@ -237,12 +230,12 @@ const EventOptions = (props) => {
                     <Text style={{color: themeID.colorText1}}>{type == 1 ? "Edytuj dni" : "Edytuj datę"}</Text>
                 </TouchableOpacity>
                 <View style={{height: 10}} />
-                <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {/* przejście do widoku specyficznego wydarzenia */}}>
+                <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.navigation.push('Event', {'id': props.data.id}); props.close();}}>
                     <Text style={{color: themeID.colorText1}}>Wyświetl szczegóły</Text>
                 </TouchableOpacity>
                 <View style={{height: 10}} />
                 <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {setD(true)}}>
-                    <Text style={{color: themeID.colorText1}}>Usuń wydarzenie</Text>
+                    <Text style={{color: "#FC0E0E"}}>Usuń wydarzenie</Text>
                 </TouchableOpacity>
             </>
             }

@@ -12,6 +12,7 @@ import Task from '../components/task';
 import AddTaskMenu from '../components/addingTask';
 import SortTaskMenu from '../components/sortingTask';
 import DeleteMenu from '../components/deleteMenu';
+import {ConnectedNotesTask} from '../components/lists/connectedNotes';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -132,6 +133,7 @@ export default TaskSpec = ({navigation, route}) => {
           : 
           <ScrollView style={{zIndex: 1, width: "100%"}}>
             {value} 
+            <ConnectedNotesTask id={route.params.id} navigation={navigation} />
             <View style={{marginBottom: 200}}/>
           </ScrollView>
         }
@@ -146,7 +148,7 @@ export default TaskSpec = ({navigation, route}) => {
             <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
             </>
           }
-          { addMenu && <AddTaskMenu id={task.id} close={() => setAddMenu(false)}/>}
+          { addMenu && <AddTaskMenu id={task.id} eID={0} close={() => setAddMenu(false)}/>}
           { sortMenu && <SortTaskMenu id={task.id} close={() => setSortMenu(false)} />}
           <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(1)}}>
             <Image source={icons.plus} style={styles2.buttonIcon} />
@@ -166,4 +168,3 @@ export default TaskSpec = ({navigation, route}) => {
   }
   return null;   
 };
-

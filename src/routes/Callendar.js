@@ -5,6 +5,8 @@ import { icons } from '../components/icons';
 import {NavbarBack} from '../components/navbar';
 import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
 
+import {ThisMonthEvents} from '../components/lists/connectedEvents';
+import {ThisMonthTasks} from '../components/lists/connectedTasks';
 import styles2 from '../styles/callendarStyle';
 import styles from '../styles/styles';
 import {useTheme} from '../data/colors.js';
@@ -152,7 +154,8 @@ export default Callendar = ({navigation}) => {
      <CallendarHeader />
      <MonthPage />
      <ScrollView style = {{marginTop: 10}}>
-       <Text>{dayNumber + " " + nameOfMonths[month] + " " + year}</Text>
+       <ThisMonthEvents navigation={navigation} month={month} year={year} />
+       <ThisMonthTasks navigation={navigation} month={month} year={year} />
      </ScrollView>
     </View>
   );

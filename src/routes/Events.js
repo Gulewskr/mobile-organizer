@@ -61,7 +61,7 @@ export default Events = ({navigation}) => {
         />
       </ScrollView>
       {addMenu && <AddingEventMenu close={()=>{setActionMenu(-1);}} />}
-      {optionMenu && <EventOptions data={e} close={()=>{setActionMenu(-1);}} />}
+      {optionMenu && <EventOptions data={e} navigation={navigation} close={()=>{setActionMenu(-1);}} />}
       {removeMenu ?
       <>
         <TouchableOpacity activeOpacity={1} style={[styles2.sortButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {removeUsingList(); setActionMenu(-1);}}>

@@ -121,11 +121,6 @@ const AddingNoteMenu = (props) => {
         }
     }
 
-    /*
-        0 - wybór menu
-        1 - nowy katalog
-        2 - nowa notatka
-     */
     switch (menu) {
         case 0:
             return(
@@ -163,7 +158,7 @@ const AddingNoteMenu = (props) => {
                     <TagAddMenu />
                     <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
                     onPress={() => { 
-                        addNoteFromPanel(name, catalog, tags, 0, 0);
+                        addNoteFromPanel(name, catalog, tags, props.taskID, props.eventID);
                         props.close() }}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
                     </TouchableOpacity>

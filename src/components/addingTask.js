@@ -52,7 +52,7 @@ const AddTaskMenu = (props) => {
             <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
             onPress={() => {
                  //addItemTask(props.ids, name, haveDeadline, day, month, year); props.close() 
-                 addNewTask(name, haveDeadline, day, month + 1, year, props.id); props.close()
+                 addNewTask(name, haveDeadline, day, month + 1, year, props.id, props.eID); props.close()
                 }}
             >
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz</Text>

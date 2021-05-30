@@ -12,6 +12,8 @@ export const DataContextProvider = ({children}) => {
   const [ task, setTask ] = useState(null);
 
   const [events, setEvents] = useState(null);
+  const [notes, setNotes] = useState(null);
+  const [allTasks, setAllTasks] = useState(null);
 
   const [ taskID, setTaskId ] = useState(0);
 
@@ -21,15 +23,16 @@ export const DataContextProvider = ({children}) => {
   useEffect(() => {
     refreshTasks();
     refreshEvents();
-    //refreshNotes()
+    refreshAllTasks();
+    refreshNotes();
   }, [] )
 
-  const addNewTask = ( name, deadline, day, month, year, connectedid ) => {
-    return database.addTask( name, deadline, day, month, year, connectedid, refreshTasks)
+  const addNewTask = ( name, deadline, day, month, year, connectedid, connectedEvent ) => {
+    return database.addTask( name, deadline, day, month, year, connectedid, connectedEvent, refreshTasks)
   };
 
   const addNoteFromPanel = (name, catalogName, tagList, connectedTask, connectedEvent) => {
-    return database.addNoteFromPanel(name, catalogName, tagList, connectedTask, connectedEvent);
+    return database.addNoteFromPanel(name, catalogName, tagList, connectedTask, connectedEvent, refreshNotes);
   };
 
   const addCatalog = (name) => {
@@ -70,6 +73,7 @@ export const DataContextProvider = ({children}) => {
   const deleteNote = async(ID) => {
     try{
       await database.deleteNote(ID);
+      refreshNotes();
     } catch (e) {
       console.warn(e);
     }
@@ -101,29 +105,71 @@ export const DataContextProvider = ({children}) => {
     }
   }
   
+  const changeNoteConnection = async(eID, tID, noteID) => {
+    try{
+      await database.changeNoteConnection(eID, tID, noteID, refreshNotes);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  const changeTaskConnection = async(eID, tID) => {
+    try{
+      await database.changeTaskConnection(eID, tID, refreshTasks);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   const refreshTasks = async() =>  {
     await database.getTask( taskID, setTask);
     await database.getMoreTask(taskID, setTasks);
+    refreshAllTasks();
+  }
+
+  const refreshAllTasks = async() =>  {
+    await database.getTasks(setAllTasks);
+  }
+
+  const refreshNotes = async() =>  {
+    await database.getNotes(setNotes);
   }
 
   const refreshEvents = async() =>  {
     await database.getEvents(setEvents);
   }
 
-  const updateNote = (noteID, text) => {
-    database.setNote(noteID, text);
+  const updateNote = async(noteID, text) => {
+    await database.setNote(noteID, text);
+    await refreshNotes();
   }
 
   const changeName = (taskID, name) => {
     return database.changeName(taskID, name, refreshTasks);
   }
 
+  const changeEventName = (eventID, name) => {
+    return database.changeEventName(eventID, name, refreshEvents);
+  }
+  const changeEventDate = (id, _year, _month, _day, hour, minute) => {
+    return database.changeEventDate(id, _year, _month, _day, hour, minute, refreshEvents);
+  }
+  
+  const changeEventDays = (id, week) => {
+    return database.changeEventDays(id, week, refreshEvents);
+  }
+
+  const changeEventIcon = (id, icon) => {
+    return database.changeEventIcon(id, icon, refreshEvents);
+  }
+
   const changeNoteName = (id, name) => {
-    return database.changeNoteName(id, name);
+    database.changeNoteName(id, name);
+    refreshNotes();
   }
 
   const changeDeadline= (taskID, bool, day, month, year) => {
-    return database.changeDeadline(taskID, bool ? 1 : 0 , day, month, year, refreshTasks);
+    database.changeDeadline(taskID, bool ? 1 : 0 , day, month, year, refreshTasks);
   }
 
   const changeStatus = (taskID, bool, parentID) => {
@@ -228,10 +274,12 @@ export const DataContextProvider = ({children}) => {
 
   // Make the context object:
   const dataContext = {
+    allTasks,
+    notes,
+    events,
     tasks,
     task,
     tags,
-    events,
     addEvent,
     addNewTask,
     addTag,
@@ -240,7 +288,13 @@ export const DataContextProvider = ({children}) => {
     addCatalog,
     changeName,
     changeDeadline,
+    changeEventName,
+    changeEventDate,
+    changeEventDays,
+    changeEventIcon,
     changeNoteName,
+    changeNoteConnection,
+    changeTaskConnection,
     changeStatus,
     changeNoteCatalog,
     deleteCatalog,

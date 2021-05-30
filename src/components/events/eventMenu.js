@@ -4,7 +4,7 @@ import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
 import styles from '../../styles/deletePanelStyles';
 import { useTheme } from '../../data/colors';
 import { icons } from '../icons';
-import { eventControl } from './eventControler';
+import { eventControl } from '../../data/eventControler';
 import { EventPanel, EventPanelDelete } from './eventPanel';
 import {DataContext} from '../../data/DataContext';
 
@@ -19,7 +19,9 @@ const EventMenu = (props) => {
     const { events } = useContext(DataContext);
     
     const refreshEvents = (events) => {
-        var eF, eW, eT;
+        var eF = null;
+        var eW = null;
+        var eT = null;
         [eW, eF] = eventControl.nextWeekFuture(events);
         eT = eventControl.getWeeklyEvents(events);
         setEventsThisW(eW);

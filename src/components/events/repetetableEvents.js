@@ -61,7 +61,6 @@ const WeeklyEventMenu = (props) => {
         fri ? daily += "1" : daily += "0"; 
         sat ? daily += "1" : daily += "0"; 
         sun ? daily += "1" : daily += "0"; 
-        console.log("'"+daily+"'");
         props.setD(daily);
     }
 

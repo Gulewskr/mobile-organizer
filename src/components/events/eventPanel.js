@@ -6,9 +6,8 @@ import {eventIcons} from '../../data/icons';
 import styles from '../../styles/eventPanel';
 import { useTheme } from '../../data/colors';
 
-import {fullNamesOfDays} from '../../data/calendar';
-import {dateCalculator} from './eventControler';
-import {dataString} from '../../data/calendar';
+import {fullNamesOfDays, dataString} from '../../data/calendar';
+import {dateCalculator} from '../../data/eventControler';
 
 const getDayList = (days) =>
 {
@@ -92,7 +91,7 @@ const EventPanel = (props) => {
             { type != 1 ?
             <View style={styles.singleRow}>
                 <Text style={[styles.nameFont, {color: themeID.colorText1}]}>
-                    Data: {day}.{month}.{year}
+                    Data: {dataString(day, month + 1, year)}
                 </Text>
             </View>
             :
@@ -131,4 +130,4 @@ const EventPanelDelete = (props) => {
     );
 }
 
-export { EventPanel, EventPanelDelete }
+export { EventPanel, EventPanelDelete, getMinuteText }

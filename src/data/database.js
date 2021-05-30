@@ -10,7 +10,7 @@ const setupDatabaseAsync = async () => {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
         tx.executeSql(
-          "create table if not exists tasks (id integer primary key AUTOINCREMENT not null, name TEXT, deadline bool, _year int, _month int, _day int, ended bool, connectedTask int, spec BOOL, endedP DOUBLE);"
+          "create table if not exists tasks (id integer primary key AUTOINCREMENT not null, name TEXT, deadline bool, _year int, _month int, _day int, ended bool, connectedTask int, spec BOOL, endedP DOUBLE, connectedEvent integer, FOREIGN KEY(connectedEvent) REFERENCES events(id));"
         );
         tx.executeSql(
           "create table if not exists events (id integer primary key AUTOINCREMENT not null, name TEXT, type int, _year int, _month int, _day int, dayWeek TEXT, hour int, minute int, icon int);"
@@ -80,6 +80,21 @@ const getTask = async( taskID, setFunc) => {
     (t, error) => { console.log("db error load task by id"); reject(error) },
     (t, success) => { console.log("loaded task by id"); resolve('success')}
   );
+  });
+}
+
+//pobranie wszystkich notatek
+const getTasks = async (setFunc) => {
+  await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "SELECT * FROM tasks;",
+        [],
+        (t,{rows:{ _array } }) => {setFunc(_array); resolve()});
+      },
+      (t, error) => { console.log("ERROR: geting all tasks"); reject(null);},
+      (t, success) => { console.log("succed get all tasks");}
+    );
   });
 }
 
@@ -158,11 +173,11 @@ const changeDeadline = (taskID, deadline, day, month, year, successFunc) => {
 }
 
 //Dodawanie zadania
-const addTask = (name, deadline, day, month, year, connectedid, successFunc) => {
+const addTask = (name, deadline, day, month, year, connectedid, connectedEvent, successFunc) => {
     db.transaction( 
       tx => {
-        tx.executeSql( "INSERT INTO tasks ( name, deadline, _year, _month, _day, ended, connectedTask, spec, endedP) VALUES (?,?,?,?,?,0,?,0,0);",
-        [name, deadline ? 1:0, year, month, day, connectedid] );
+        tx.executeSql( "INSERT INTO tasks ( name, deadline, _year, _month, _day, ended, connectedTask, spec, endedP, connectedEvent) VALUES (?,?,?,?,?,0,?,0,0,?);",
+        [name, deadline ? 1:0, year, month, day, connectedid, connectedEvent] );
       },
       (t, error) => { console.log("db error insertUser"); console.log(error);},
       (t, success) => { console.log("added task"); successFunc() }
@@ -245,6 +260,21 @@ const refreshTaskProgress = (id) => {
     });
 }
 
+
+const changeTaskConnection = async(eID, tID, refreshFunc) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "UPDATE tasks Set connectedEvent = ? WHERE id = ?;",
+        [eID, tID]
+        );
+      },
+      (t, error) => { console.log("ERROR: changing task connection"); reject(null)},
+      (t, success) => { console.log("changed task connection"); refreshFunc(); resolve(success)}
+    );
+  });
+}
+
 //---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki---Notatki
 
 //zmiana nazwy notatki
@@ -262,7 +292,7 @@ const changeNoteName = (id, name) => {
 }
 
 //dodawanie notatki z panelu
-const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connectedEvent) => {
+const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connectedEvent, refreshFunc) => {
   try {
     var id = await addNote(name, catalogID, connectedTask, connectedEvent);
     if(id != null)
@@ -270,6 +300,7 @@ const addNoteFromPanel = async (name, catalogID, tagList, connectedTask, connect
       {
         await makeConnectionsToTag(id, tagList[i]);
       }
+      refreshFunc();
   } catch (e) {
     console.warn(e);
   };
@@ -335,20 +366,6 @@ const getCatalogs = async() => {
   );
   });
 }
-/*  //wersja do useState
-const getCatalogs = (setFunc) => {
-  db.transaction(
-    tx => {
-      tx.executeSql(
-        'SELECT * FROM catalogs;',
-        [],
-        (_, { rows: { _array } }) => {setFunc(_array)}
-      );
-    },
-    (t, error) => { console.log("ERROR: db loading catalogs") },
-    (_t, _success) => { console.log("loaded catalogs");}
-  );
-}*/
 
 //pobieranie listy notatek z danego katalogu
 const getNotesFromCatalog = async (id, command) => {
@@ -384,6 +401,22 @@ const getNote = async (id) => {
     );
   });
 }
+
+//pobranie wszystkich notatek
+const getNotes = async (setFunc) => {
+  await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "SELECT * FROM notes;",
+        [],
+        (t,{rows:{ _array } }) => {setFunc(_array); resolve()});
+      },
+      (t, error) => { console.log("ERROR: geting all notes"); reject(null);},
+      (t, success) => { console.log("succed get all notes");}
+    );
+  });
+}
+
 
 //pobranie tagów notatki o danym id
 const getTagsByID = async (id) => {
@@ -455,6 +488,20 @@ const changeNoteCatalog = async(noteID, newCatalogID) => {
       },
       (t, error) => { console.log("ERROR: changing note catalog"); reject(null)},
       (t, success) => { console.log("changed note catalog"); resolve(success)}
+    );
+  });
+}
+
+const changeNoteConnection = async(eID, tID, noteID, refreshFunc) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "UPDATE notes Set connectedEvent = ?, connectedTask = ? WHERE id = ?;",
+        [eID, tID, noteID]
+        );
+      },
+      (t, error) => { console.log("ERROR: changing note connection"); reject(null)},
+      (t, success) => { console.log("changed note connection"); refreshFunc(); resolve(success)}
     );
   });
 }
@@ -565,21 +612,60 @@ const addEvent = async(name, type, _year, _month, _day, dayWeek, hour, minute, i
   });
 }
 
-//pobieranie listy wydarzeń
-const getEvents = async(setFunc) => {
-  new Promise((resolve, reject) => {
-    db.transaction(
-      tx => {
-        tx.executeSql(
-          'SELECT * FROM events;',
-          [],
-          (_, { rows: { _array } }) => { setFunc(_array);}
-        );
-      },
-      (t, error) => { console.log("db error load task by id"); reject(error) },
-      (t, success) => { console.log("loaded task by id"); resolve('success')}
-    );
-  });
+//zmiana nazwy
+const changeEventName = (id, name, succFuc) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'UPDATE events Set name = ? WHERE id = ?;',
+        [name, id]
+      );
+    },
+    (t, error) => { console.log("ERROR: changing name for event");},
+    (t, success) => { console.log("changed name for event"); succFuc()}
+  );
+}
+
+//zmiana daty
+const changeEventDate = (id, _year, _month, _day, hour, minute, succFuc) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'UPDATE events Set _year = ?, _month = ?, _day = ?, hour = ?, minute = ?  WHERE id = ?;',
+        [_year, _month, _day, hour, minute, id]
+      );
+    },
+    (t, error) => { console.log("ERROR: changing data for event");},
+    (t, success) => { console.log("changed data for event"); succFuc()}
+  );
+}
+
+//zmiana dni dla cotygodniowego
+const changeEventDays = (id, week, succFuc) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'UPDATE events Set dayWeek = ?  WHERE id = ?;',
+        [week, id]
+      );
+    },
+    (t, error) => { console.log("ERROR: changing days for event");},
+    (t, success) => { console.log("changed days for event"); succFuc()}
+  );
+}
+
+//zmiana ikony
+const changeEventIcon = (id, icon, succFuc) => {
+  db.transaction(
+    tx => {
+      tx.executeSql(
+        'UPDATE events Set icon = ?  WHERE id = ?;',
+        [icon, id]
+      );
+    },
+    (t, error) => { console.log("ERROR: changing icon for event");},
+    (t, success) => { console.log("changed icon for event"); succFuc() }
+  );
 }
 
 //usuwanie wydarzenia
@@ -597,7 +683,22 @@ const deleteEvent = async( eventID ) => {
   });
 }
 
-//TODO
+//pobieranie listy wydarzeń
+const getEvents = async(setFunc) => {
+  new Promise((resolve, reject) => {
+    db.transaction(
+      tx => {
+        tx.executeSql(
+          'SELECT * FROM events;',
+          [],
+          (_, { rows: { _array } }) => { setFunc(_array);}
+        );
+      },
+      (t, error) => { console.log("db error load task by id"); reject(error) },
+      (t, success) => { console.log("loaded task by id"); resolve('success')}
+    );
+  });
+}
 
 
 //export funkcji bazy danych
@@ -610,7 +711,13 @@ export const database = {
   changeName,
   changeStatus,
   changeDeadline,
+  changeEventName,
+  changeEventDate,
+  changeEventDays,
+  changeEventIcon,
   changeNoteName,
+  changeNoteConnection,
+  changeTaskConnection,
   changeNoteCatalog,
   deleteCatalog,
   deleteEvent,
@@ -624,10 +731,12 @@ export const database = {
   getCatalogs,
   getEvents,
   getTask,
+  getTasks,
   getTags,
   getTagsByID,
   getMoreTask,
   getNote,
+  getNotes,
   getNotesFromCatalog,
   makeConnectionsToTag,
   sortTask,
