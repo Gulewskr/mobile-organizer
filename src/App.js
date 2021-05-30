@@ -19,6 +19,7 @@ import Profile from './routes/Profile';
 import Settings from './routes/Settings';
 
 import {DataContextProvider} from './data/DataContext';
+import ProfileContextProvider from './data/ProfileContext';
 import useDatabase from './data/useDatabase'
 
 import styles from './styles/styles';
@@ -36,6 +37,7 @@ export default function App() {
 
     return (
       <ThemeContextProvider>
+      <ProfileContextProvider>
       <DataContextProvider>
           <NavigationContainer screenOptions={{
             headerShown: false
@@ -55,6 +57,7 @@ export default function App() {
             <StatusBar style="auto" />
         </NavigationContainer>
       </DataContextProvider>
+      </ProfileContextProvider>
       </ThemeContextProvider>
     );
   } else {

@@ -54,8 +54,9 @@ function ThemeContextProvider({ children }){
 function useTheme(){
   const {theme, setTheme} = useContext(ThemeContext);
   const themeID = col.find(color => color.key === theme);
+  const ThemeIcon = ThemesIcon[Themes.indexOf(theme) != -1 ? Themes.indexOf(theme) : 0];
   return(
-    {theme, setTheme, themeID}
+    {theme, setTheme, themeID, ThemeIcon}
   );
 };
 

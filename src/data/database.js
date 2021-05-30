@@ -62,6 +62,34 @@ const dropTablesAsync = async() => {
   })
 }
 
+const deleteData = async() => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+        tx.executeSql(
+          "DELETE FROM tagsConnection;"
+        );
+        tx.executeSql(
+          "DELETE FROM notes;"
+        );
+        tx.executeSql(
+          "DELETE FROM catalogs;"
+        );
+        tx.executeSql(
+          "DELETE FROM tasks;"
+        );
+        tx.executeSql(
+          "DELETE FROM tags;"
+        );
+        tx.executeSql(
+          "DELETE FROM events;"
+        );
+      },
+      (_, error) => { console.log("ERROR: deleting data"); reject(error) },
+      (_, success) => { resolve(success)}
+    )
+  })
+}
+
 //---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania---Zadania
 
 //Pobieranie danych pojedynczego zadania
@@ -720,6 +748,7 @@ export const database = {
   changeTaskConnection,
   changeNoteCatalog,
   deleteCatalog,
+  deleteData,
   deleteEvent,
   deleteNote,
   deleteNoteFromCatalog,

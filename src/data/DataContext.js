@@ -270,7 +270,18 @@ export const DataContextProvider = ({children}) => {
     database.getMoreTask(id, setTasks);
   }
 
-  
+  async function resetDatabase() {
+    try {
+      await database.deleteData().then(()=>{
+        refreshTasks();
+        refreshEvents();
+        refreshAllTasks();
+        refreshNotes();
+      });
+    } catch (e) {
+      console.warn(e);
+    }
+  }
 
   // Make the context object:
   const dataContext = {
@@ -310,6 +321,7 @@ export const DataContextProvider = ({children}) => {
     getNotesFromCatalog,
     getTags,
     getTagsByID,
+    resetDatabase,
     setTaskID,
     sortTask,
     updateNote

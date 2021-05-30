@@ -6,18 +6,16 @@ const eventIcons = [
     require('../icons/events/toast.png')
 ];
 
-const profileMenIcon = [
+const profileIcons = [
     require('../icons/avatars/m1.png'),
     require('../icons/avatars/m2.png'),
     require('../icons/avatars/m3.png'),
-    require('../icons/avatars/m4.png')
-];
+    require('../icons/avatars/m4.png'),
 
-const profileWomenIcon = [
     require('../icons/avatars/w1.png'),
     require('../icons/avatars/w2.png'),
     require('../icons/avatars/w3.png'),
     require('../icons/avatars/w4.png')
-]
+];
 
-export {eventIcons, profileMenIcon, profileWomenIcon}
+export {eventIcons, profileIcons}
