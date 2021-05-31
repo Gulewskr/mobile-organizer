@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, ScrollView, Text, TouchableOpacity, Image} from 'react-native';
+import {View, ScrollView, Text, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import { icons } from '../components/icons';
 import {NavbarBack} from '../components/navbar';
@@ -17,15 +17,39 @@ export default Settings = ({navigation}) => {
 
   const { resetDatabase } = useContext(DataContext);
   const { theme, setTheme, themeID, ThemeIcon } = useTheme();
-  const { profileName, setProfileName, profileIcon, setProfileIcon, iconProfileAvatar } = getProfileSettings();
+  const { profileName, setProfileName, resetStats, setProfileIcon, iconProfileAvatar } = getProfileSettings();
 
   const ProfileName = () => {
-    
+    const [edit, setEdit] = useState(false);
+    const [name, setName] = useState(profileName);
+
+    const confirm = (bool) => {
+      if(bool) setProfileName(name);
+      setEdit(false);
+    }
+
     return(
-      <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
+      <>
+      <TouchableOpacity style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]} onPress={()=>{setEdit(true)}}>
         <Text style={[styles2.font, {color: themeID.colorText1}]}>Nazwa użytkownika</Text>
         <Text style={[styles2.font, {color: themeID.colorText1}]}>{profileName}</Text>
+      </TouchableOpacity>
+      {edit &&
+      <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+          <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Zmiana nazwy użytkownika</Text>
+          <TextInput multiline={true} editable={true} style={[styles2.optionsText, {color: themeID.colorTextInput, padding: 5, width: "80%", textAlign: "center", backgroundColor: themeID.colorTextInputBackground}]} onChangeText={setName} value={ name } />
+          <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Zapisz</Text>
+              </TouchableOpacity>
+              <View style={{width: "15%"}}></View>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(false)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#FE1010"}]} >Anuluj</Text>
+              </TouchableOpacity>
+          </View>
       </View>
+      }
+      </>
     );
   }
 
@@ -52,16 +76,16 @@ export default Settings = ({navigation}) => {
 
     return(
       <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
-        <View style={{flexDirection: "row"}}>
+        <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(true)}}>
           <View style={styles2.sectorL}>
             <Text style={[styles2.font, {color: themeID.colorText1}]}>AVATAR</Text>
           </View>
           <View style={styles2.sectorR}>
-            <TouchableOpacity style={styles2.iconButton} onPress={()=>{setMenu(true)}}>
+            <View style={styles2.iconButton}>
               <Image style={styles2.icon} source={iconProfileAvatar} />
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <View style={{flexDirection: "row", flexWrap: "wrap"}}>
           {menu && <MenuSide />}
         </View>
@@ -127,12 +151,36 @@ export default Settings = ({navigation}) => {
   }
 
   const DataReset = () => {
-    
+
+    const [menu, setMenu] = useState(false);
+
+    const confirm = (bool) => {
+      if(bool)resetStats();
+      setMenu(false);
+    }
+
+    const Confirmation = () => {
+      return(
+      <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+          <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Czy chcesz zresetować postępy?</Text>
+          <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Tak</Text>
+              </TouchableOpacity>
+              <View style={{width: "15%"}}></View>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(false)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#FE1010"}]} >Nie</Text>
+              </TouchableOpacity>
+          </View>
+      </View>);
+    }
+
     return(
-      <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
-      <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{resetDatabase()}}>
+    <>
+    <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
+      <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(true)}}>
         <View style={styles2.sectorL}>
-          <Text style={[styles2.font, {color: themeID.colorText1}]}>Motyw</Text>
+          <Text style={[styles2.font, {color: themeID.colorText1}]}>Usuń dane</Text>
         </View>
         <View style={styles2.sectorR}>
           <View style={styles2.iconButton}>
@@ -141,6 +189,62 @@ export default Settings = ({navigation}) => {
         </View>
       </TouchableOpacity>
     </View>
+    {menu &&
+    <>
+    <Confirmation />
+    <TouchableOpacity style={styles.fillRect} onPress={() => setMenu(false)}/>
+    </>
+    }
+    </>
+    );
+  }
+
+  const DataDelete = () => {
+
+    const [menu, setMenu] = useState(false);
+
+    const confirm = (bool) => {
+      if(bool)resetDatabase();
+      setMenu(false);
+    }
+
+    const Confirmation = () => {
+      return(
+      <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+          <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Czy chcesz usunąć wszystkie dane?</Text>
+          <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Tak</Text>
+              </TouchableOpacity>
+              <View style={{width: "15%"}}></View>
+              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(false)}>
+                  <Text style={[styles.ConfirmButtonText, { color: "#FE1010"}]} >Nie</Text>
+              </TouchableOpacity>
+          </View>
+      </View>);
+    }
+
+    return(
+    <>
+    <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
+      <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(true)}}>
+        <View style={styles2.sectorL}>
+          <Text style={[styles2.font, {color: themeID.colorText1}]}>Usuń dane</Text>
+        </View>
+        <View style={styles2.sectorR}>
+          <View style={styles2.iconButton}>
+            <Image style={[styles2.icon, {height: "80%", alignSelf: "center"}]} source={icons.trash} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    </View>
+    {menu &&
+    <>
+    <Confirmation />
+    <TouchableOpacity style={styles.fillRect} onPress={() => setMenu(false)}/>
+    </>
+    }
+    </>
     );
   }
 
@@ -152,6 +256,7 @@ export default Settings = ({navigation}) => {
           <AvatarMenu />
           <ThemeMenu />
           <DataReset />
+          <DataDelete />
         </ScrollView>
       </View>
   );

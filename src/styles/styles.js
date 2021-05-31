@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center', 
         alignSelf:"center",
-        justifyContent: "center"
+        justifyContent: "center",
+        zIndex: 10
     },
     ConfirmButtonText:{
         fontSize: 20,
