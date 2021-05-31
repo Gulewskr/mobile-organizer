@@ -1,5 +1,5 @@
-import React, {createContext,  useContext, useMemo, useState } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, {createContext,  useContext, useEffect, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import col from "./colors.json";
 
 export const ThemeContext = createContext();
@@ -36,7 +36,20 @@ export const ThemesIcon =
 ]
 
 function ThemeContextProvider({ children }){
-    const [theme, setTheme] = useState(col[0].key); 
+    const [theme, setTheme] = useState(col[0].key);
+    
+    useEffect(() => {
+      AsyncStorage.getItem('themeColor').then((v) => {
+        if (v){
+          setTheme(v);
+        }
+      });
+    }, []);
+
+    useEffect(() => {
+      AsyncStorage.setItem('themeColor', theme);
+    }, [theme]);
+    
     const value = useMemo(
       () => ({
         theme,

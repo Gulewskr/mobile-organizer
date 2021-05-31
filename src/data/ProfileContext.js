@@ -1,4 +1,5 @@
-import React, {createContext,  useContext, useMemo, useState } from 'react';
+import React, {createContext,  useContext, useEffect, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {profileIcons} from './icons';
 
 export const ProfileContext = createContext();
@@ -6,6 +7,24 @@ export const ProfileContext = createContext();
 function ProfileContextProvider({ children }){
     const [profileName, setProfileName] = useState("Nazwa użytkownika"); 
     const [profileIcon, setProfileIcon] = useState(0);
+
+    useEffect(() => {
+      AsyncStorage.getItem('UserIcon').then((v) => {
+        if (v){
+          setProfileIcon(parseInt(v));
+        }
+      });
+      AsyncStorage.getItem('UserName').then((v) => {
+        if (v){
+          setProfileName(v);
+        }
+      });
+    }, []);
+
+    useEffect(() => {
+      AsyncStorage.setItem('UserIcon', profileIcon.toString() );
+      AsyncStorage.setItem('UserName', profileName );
+    }, [profileIcon, profileName]);
 
     const value = useMemo(
       () => ({
