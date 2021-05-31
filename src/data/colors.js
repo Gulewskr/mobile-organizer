@@ -1,4 +1,5 @@
 import React, {createContext,  useContext, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import col from "./colors.json";
 
 export const ThemeContext = createContext();

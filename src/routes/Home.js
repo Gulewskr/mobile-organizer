@@ -7,9 +7,11 @@ import MenuButton from '../components/menuButton';
 
 import styles from '../styles/styles';
 import {useTheme} from '../data/colors.js';
+import {getProfileSettings} from '../data/ProfileContext';
 
 const Home = ({navigation}) => {
   const { themeID } = useTheme();
+  const { iconProfileAvatar } = getProfileSettings();
   return (
     <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
       <NavbarMenu />
@@ -18,7 +20,7 @@ const Home = ({navigation}) => {
        <MenuButton icon = {icons.calendar} Text={'KALENDARZ'} navigate={navigation} route={'Callendar'}  />
        <MenuButton icon = {icons.cake} Text={'WYDARZENIA'} navigate={navigation} route={'Events'} />
        <MenuButton icon = {icons.marker} Text={'NOTATKI'} navigate={navigation} route={'Notes'}  />
-       <MenuButton icon = {icons.profile} Text={'PROFIL'} navigate={navigation} route={'Profile'}  />
+       <MenuButton icon = {iconProfileAvatar} Text={'PROFIL'} navigate={navigation} route={'Profile'}  />
        <MenuButton icon = {icons.settings} Text={'USTAWIENIA'} navigate={navigation} route={'Settings'} />
       </ScrollView>
     </View>

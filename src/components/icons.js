@@ -14,6 +14,7 @@ export const icons = {
     pen: require('../icons/gui/pen.png'),
     plus: require('../icons/gui/plus.png'),
     profile: require('../icons/gui/profile.png'),
+    reset: require('../icons/gui/reset.png'),
     rangeLow: require('../icons/gui/rangeLow.png'),
     rangeMin: require('../icons/gui/rangeMid.png'),
     rangeMax: require('../icons/gui/rangeMax.png'),

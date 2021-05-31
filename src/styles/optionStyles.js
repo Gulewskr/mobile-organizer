@@ -32,6 +32,17 @@ const styles = StyleSheet.create({
     icon:{
         height: "100%",
         aspectRatio: 1
+    },
+    iconMenu:{
+        width: "28%",
+        margin: 5,
+        borderWidth: 2,
+        borderRadius: 100,
+        aspectRatio: 1,
+    },
+    line:{
+        width: "100%",
+        borderWidth: 1
     }
 });
 
