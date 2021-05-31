@@ -64,7 +64,7 @@ const ThisMonthTasks = (props) => {
             );
           });
     }else{
-        value = <Text>Brak zadań</Text>
+        value = <Text style={{color: themeID.colorText2}}>Brak zadań</Text>
     }
 
     return(

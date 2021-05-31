@@ -9,7 +9,7 @@ import DeadlineChanger from '../components/deadlineChanger';
 import { NavbarBack } from '../components/navbar';
 import TaskOptions from '../components/taskOptions';
 import Task from '../components/task';
-import AddTaskMenu from '../components/addingTask';
+import AddingMenu from '../components/addingMenuTask';
 import SortTaskMenu from '../components/sortingTask';
 import DeleteMenu from '../components/deleteMenu';
 import {ConnectedNotesTask} from '../components/lists/connectedNotes';
@@ -68,7 +68,7 @@ export default TaskSpec = ({navigation, route}) => {
 
     var value = null;
   
-    if(removeMenu == false)
+    if(removeMenu == false && tasks != undefined)
     try{
         value = tasks.map((data, index) => {
           return(
@@ -113,7 +113,7 @@ export default TaskSpec = ({navigation, route}) => {
           <View style={[styles2.headerContainer2, {height: "35%", backgroundColor: themeID.colorHeader3}]}>
             <Text style={[styles2.headerText, {color: themeID.colorText1}]}>Deadline </Text>
             {
-              task.deadline ?
+              task != undefined && task.deadline ?
               <Text style={[styles2.deadlineText]}>{dataString(task._day, task._month, task._year)}</Text>
               :
               <Text style={[styles2.deadlineText]}>brak</Text>
@@ -132,6 +132,7 @@ export default TaskSpec = ({navigation, route}) => {
           <DeleteMenu id={route.params.id} close={() => {setRemoveMenu(false)}}/>
           : 
           <ScrollView style={{zIndex: 1, width: "100%"}}>
+            <View style={{height: 10}}/>
             {value} 
             <ConnectedNotesTask id={route.params.id} navigation={navigation} />
             <View style={{marginBottom: 200}}/>
@@ -148,7 +149,7 @@ export default TaskSpec = ({navigation, route}) => {
             <TouchableOpacity style={styles.fillRect} onPress={() => setOVisibility(false)}/>
             </>
           }
-          { addMenu && <AddTaskMenu id={task.id} eID={0} close={() => setAddMenu(false)}/>}
+          { addMenu && <AddingMenu id={task.id} mode={0} close={() => setAddMenu(false)}/>}
           { sortMenu && <SortTaskMenu id={task.id} close={() => setSortMenu(false)} />}
           <TouchableOpacity activeOpacity={1} style={[styles2.addButton,{backgroundColor: themeID.colorButton1}]} onPress={()=> {setActiveMenu(1)}}>
             <Image source={icons.plus} style={styles2.buttonIcon} />

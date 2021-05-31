@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {View, ScrollView, Text, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import { icons } from '../components/icons';
-import {NavbarBack} from '../components/navbar';
+import {NavbarSettings} from '../components/navbar';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/optionStyles';
@@ -35,19 +35,19 @@ export default Settings = ({navigation}) => {
         <Text style={[styles2.font, {color: themeID.colorText1}]}>{profileName}</Text>
       </TouchableOpacity>
       {edit &&
-      <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
-          <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Zmiana nazwy użytkownika</Text>
-          <TextInput multiline={true} editable={true} style={[styles2.optionsText, {color: themeID.colorTextInput, padding: 5, width: "80%", textAlign: "center", backgroundColor: themeID.colorTextInputBackground}]} onChangeText={setName} value={ name } />
-          <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
-              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
-                  <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Zapisz</Text>
-              </TouchableOpacity>
-              <View style={{width: "15%"}}></View>
-              <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(false)}>
-                  <Text style={[styles.ConfirmButtonText, { color: "#FE1010"}]} >Anuluj</Text>
-              </TouchableOpacity>
-          </View>
-      </View>
+        <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+            <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Zmiana nazwy użytkownika</Text>
+            <TextInput multiline={true} editable={true} style={[styles2.optionsText, {color: themeID.colorTextInput, padding: 5, width: "80%", textAlign: "center", backgroundColor: themeID.colorTextInputBackground}]} onChangeText={setName} value={ name } />
+            <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
+                <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
+                    <Text style={[styles.ConfirmButtonText, { color: "#129403"}]} >Zapisz</Text>
+                </TouchableOpacity>
+                <View style={{width: "15%"}}></View>
+                <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(false)}>
+                    <Text style={[styles.ConfirmButtonText, { color: "#FE1010"}]} >Anuluj</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
       }
       </>
     );
@@ -64,7 +64,7 @@ export default Settings = ({navigation}) => {
       var t = null;
       t = profileIcons.map((icon, index) => {
         return(
-          <TouchableOpacity key={index} style={styles2.iconMenu} onPress ={ () => setProfileIcon(index)}>
+          <TouchableOpacity key={index} style={styles2.iconMenu} onPress ={ () => {setProfileIcon(index); setMenu(false)}}>
             <Image style={styles2.icon} source={icon} />
           </TouchableOpacity>
         );
@@ -76,7 +76,7 @@ export default Settings = ({navigation}) => {
 
     return(
       <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
-        <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(true)}}>
+        <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(!menu)}}>
           <View style={styles2.sectorL}>
             <Text style={[styles2.font, {color: themeID.colorText1}]}>AVATAR</Text>
           </View>
@@ -180,7 +180,7 @@ export default Settings = ({navigation}) => {
     <View style={[styles2.optionContainer, {backgroundColor: themeID.colorContainer}]}>
       <TouchableOpacity style={{flexDirection: "row"}} onPress={()=>{setMenu(true)}}>
         <View style={styles2.sectorL}>
-          <Text style={[styles2.font, {color: themeID.colorText1}]}>Usuń dane</Text>
+          <Text style={[styles2.font, {color: themeID.colorText1}]}>Zresetuj statystyki</Text>
         </View>
         <View style={styles2.sectorR}>
           <View style={styles2.iconButton}>
@@ -250,7 +250,7 @@ export default Settings = ({navigation}) => {
 
   return (
       <View style={[styles.container, {backgroundColor: themeID.colorBackground}]}>
-        <NavbarBack napis={'Ustawienia'} navigate={navigation} />
+        <NavbarSettings napis={'Ustawienia'} navigate={navigation} />
         <ScrollView style={{width:"100%", paddingTop: 10}}>
           <ProfileName />
           <AvatarMenu />

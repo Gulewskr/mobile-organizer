@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native'
 
-import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
 import {DeadlineChooser} from './deadlineChanger';
 import {DataContext} from '../data/DataContext';
+import {getProfileSettings} from '../data/ProfileContext';
 import styles from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
@@ -11,6 +11,7 @@ import { icons } from '../components/icons';
 const AddTaskMenu = (props) => {
 
     const { addNewTask } = useContext(DataContext);
+    const { notEndedTasks, setNotEndedTasks } = getProfileSettings();
     const { themeID } = useTheme();
 
     const [ name, setName ] = useState("nazwa zadania");
@@ -21,11 +22,6 @@ const AddTaskMenu = (props) => {
     const [ month, setMonth ] = useState(currentTime.getMonth());
     const [ year, setYear ] = useState(currentTime.getFullYear());
 
-    /*
-    Dodanie do zmieniania deadlineu
-    można wykorzystać elementy z deadlineChanger
-    const 
-    */
     return(
         <View style={[styles.container, {backgroundColor: themeID.colorContainer}, haveDeadline ? {top: "30%"} : {top: "40%"}]}>
             <View style={styles.header}>
@@ -51,8 +47,8 @@ const AddTaskMenu = (props) => {
             }
             <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
             onPress={() => {
-                 //addItemTask(props.ids, name, haveDeadline, day, month, year); props.close() 
-                 addNewTask(name, haveDeadline, day, month + 1, year, props.id, props.eID); props.close()
+                setNotEndedTasks(notEndedTasks + 1);
+                addNewTask(name, haveDeadline, day, month + 1, year, props.id, props.eID); props.close()
                 }}
             >
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz</Text>

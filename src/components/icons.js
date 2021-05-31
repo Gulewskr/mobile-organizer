@@ -7,10 +7,12 @@ export const icons = {
     brush: require('../icons/gui/brush.png'),
     cake: require('../icons/gui/birthdayCake.png'),
     calendar: require('../icons/gui/calendar.png'),
+    checked: require('../icons/gui/checked.png'),
     checkmark: require('../icons/gui/checkmark.png'),
     cross: require('../icons/gui/cross.png'),
     dots: require('../icons/gui/dots.png'),
     marker: require('../icons/gui/marker.png'),
+    menu: require('../icons/gui/menu.png'),
     pen: require('../icons/gui/pen.png'),
     plus: require('../icons/gui/plus.png'),
     profile: require('../icons/gui/profile.png'),
@@ -25,4 +27,5 @@ export const icons = {
     task: require('../icons/gui/tasks.png'),
     tag: require('../icons/gui/tag.png'),
     trash: require('../icons/gui/trash.png'),
+    unchecked: require('../icons/gui/unchecked.png'),
 }

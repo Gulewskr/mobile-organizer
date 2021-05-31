@@ -106,8 +106,11 @@ export const DataContextProvider = ({children}) => {
   
   const changeNoteConnection = async(eID, tID, noteID) => {
     try{
-      await database.changeNoteConnection(eID, tID, noteID, refreshNotes);
-    } catch (e) {
+      if(tID == 0)
+        await database.changeNoteConnectionE(eID, noteID, refreshNotes);
+      if(eID == 0)
+        await database.changeNoteConnectionT(tID, noteID, refreshNotes);
+      } catch (e) {
       console.warn(e);
     }
   }

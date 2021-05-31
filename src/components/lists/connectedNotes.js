@@ -57,7 +57,7 @@ const ConnectedNotesTask = (props) => {
             );
         })
     }else{
-        value = <Text>Brak powiązanych notatek</Text>
+        value = <Text style={{color: themeID.colorText2}}>Brak powiązanych notatek</Text>
     }
 
     return(

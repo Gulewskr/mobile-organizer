@@ -22,6 +22,7 @@ const Home = ({navigation}) => {
        <MenuButton icon = {icons.marker} Text={'NOTATKI'} navigate={navigation} route={'Notes'}  />
        <MenuButton icon = {iconProfileAvatar} Text={'PROFIL'} navigate={navigation} route={'Profile'}  />
        <MenuButton icon = {icons.settings} Text={'USTAWIENIA'} navigate={navigation} route={'Settings'} />
+       <View style={{height: 100}} />
       </ScrollView>
     </View>
   );

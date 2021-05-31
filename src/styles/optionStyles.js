@@ -13,6 +13,15 @@ const styles = StyleSheet.create({
     font:{
         fontSize: 18
     },
+    font2:{
+        fontSize: 20,
+        fontWeight: "bold",
+        marginTop: 5,
+    },
+    nameFont:{
+        fontSize: 28,
+        margin: 5,
+    },
     sectorL:{
         width:"70%", 
         alignItems: "center",
@@ -44,6 +53,28 @@ const styles = StyleSheet.create({
     line:{
         width: "100%",
         borderWidth: 1
+    },
+    profileBackground:{
+        width: "100%",
+        alignItems: "center",
+        padding: 10,
+        borderBottomWidth: 1,
+    },
+    ProfileAvatar:{
+        width: "50%",
+        aspectRatio: 1,
+        borderRadius: 200, 
+        borderWidth: 2,
+    },  
+    profileContainer:{
+        width: "94%",
+        alignSelf: "center",
+        overflow: "hidden",
+        borderWidth: 1,
+        alignItems: "center",
+        marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 10,
     }
 });
 

@@ -5,6 +5,7 @@ import {Picker} from '@react-native-community/picker'
 import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
 import {DeadlineChooser} from './deadlineChanger';
 import {DataContext} from '../data/DataContext';
+import {getProfileSettings} from '../data/ProfileContext';
 import styles from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
@@ -12,6 +13,7 @@ import { icons } from '../components/icons';
 const AddingNoteMenu = (props) => {
 
     const { addCatalog, addTag, getCatalogs, addNoteFromPanel } = useContext(DataContext);
+    const { noteNumber, setNoteNumber } = getProfileSettings();
     const { themeID } = useTheme();
 
     //nazwa
@@ -158,6 +160,7 @@ const AddingNoteMenu = (props) => {
                     <TagAddMenu />
                     <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
                     onPress={() => { 
+                        setNoteNumber(noteNumber + 1);
                         addNoteFromPanel(name, catalog, tags, props.taskID, props.eventID);
                         props.close() }}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>

@@ -32,12 +32,12 @@ const ThisMonthEvents = (props) => {
             );
           });
     }else{
-        value = <Text>Brak zadań</Text>
+        value = <Text style={{color: themeID.colorText2}}>Brak wydarzeń</Text>
     }
 
     return(
         <>
-            <SectorMenu name={"Zadania " + nameOfMonths[props.month]}/>
+            <SectorMenu name={"Wydarzenia " + nameOfMonths[props.month]}/>
             {value}
         </>
     );

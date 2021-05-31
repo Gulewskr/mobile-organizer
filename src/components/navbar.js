@@ -55,6 +55,23 @@ const NavbarProfile = (props) => {
     );
 };
 
+const NavbarSettings = (props) => {
+    const { themeID } = useTheme();
+    const { iconProfileAvatar } = getProfileSettings();
+    return (
+        <View style = {[styles.navbar, styles.navbar2,  {backgroundColor: themeID.colorHeader2}]}>
+         <TouchableOpacity style = {styles.navbar_icon_continer} onPress={() => props.navigate.navigate("Profile") }>
+          <Image style = {styles.navbar_icon} source={iconProfileAvatar} />
+         </TouchableOpacity>
+         <View style = {styles.navbar_text_Container}>
+         <Text style = {[styles.navbar_text, styles.navbar_text2]}>{props.napis}</Text>
+         </View>
+         <TouchableOpacity style = {[styles.navbar_button, {backgroundColor: themeID.colorButton1}]} onPress={() => props.navigate.navigate("Home") } >
+            <Image style = {styles.navbar_button_icon} source={icons.menu} />
+         </TouchableOpacity>
+        </View>
+    );
+};
 
-export { NavbarProfile, NavbarBack, NavbarMenu };
+export { NavbarProfile, NavbarBack, NavbarMenu, NavbarSettings};
 export default NavbarMenu;

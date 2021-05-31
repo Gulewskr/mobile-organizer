@@ -117,20 +117,22 @@ export default Callendar = ({navigation}) => {
         value = row.map( (value, index) => {
           if(value == 1){ color = !color; back = false;}
           if(color)
+            //<TouchableOpacity  key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayA}]} onPress={()=> setDayNumber(value)}>
             return (
-              <TouchableOpacity  key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayA}]} onPress={()=> setDayNumber(value)}>
+              <View  key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayA}]}>
                 <Text style={{color: themeID.colorTextDayA}}>
                   {value}
                 </Text>
-              </TouchableOpacity>
+              </View>
             );
           else
-            return (
-              <TouchableOpacity key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayN}]} onPress={()=> { setDayNumber(value); if(value > 20) changeMonth(month - 1); else changeMonth(month + 1); }}>
+              //<TouchableOpacity key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayN}]} onPress={()=> { setDayNumber(value); if(value > 20) changeMonth(month - 1); else changeMonth(month + 1); }}>
+              return (
+              <View key={id * index} style={[styles2.singleDay, {backgroundColor: themeID.colorCallendarDayN}]}>
                 <Text style={{color: themeID.colorTextDayN}}>
                   {value}
                 </Text>
-              </TouchableOpacity>
+              </View>
             );
         });
       }

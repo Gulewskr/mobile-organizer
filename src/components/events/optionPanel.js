@@ -95,17 +95,21 @@ const EventOptions = (props) => {
             }
         }
         return(
-            <View>
-                <Text>Czy chcesz usunąć wydarzenie?</Text>
-                <View>
-                    <TouchableOpacity onPress = {() => confirm(true)}>
-                        <Text>Tak</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress = {() => confirm(false)}>
-                        <Text>Nie</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <>
+             <View style={[styles2.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+                  <Text style={[styles2.ConfirmButtonText, {color: themeID.colorText1}]}>Czy chcesz usunąć wydarzenie?</Text>
+                  <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
+                      <TouchableOpacity style={[styles2.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => {confirm(true)}}>
+                          <Text style={[styles2.ConfirmButtonText, { color: "#129403"}]} >Tak</Text>
+                      </TouchableOpacity>
+                      <View style={{width: "15%"}}></View>
+                      <TouchableOpacity style={[styles2.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => {confirm(false)}}>
+                          <Text style={[styles2.ConfirmButtonText, { color: "#FE1010"}]} >Nie</Text>
+                      </TouchableOpacity>
+                  </View>
+              </View>
+            <TouchableOpacity style={styles2.fillRect} onPress={() => {confirm(false)}}/>
+            </>
         );
     }
 

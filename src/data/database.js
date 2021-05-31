@@ -72,7 +72,7 @@ const deleteData = async() => {
           "DELETE FROM notes;"
         );
         tx.executeSql(
-          "DELETE FROM catalogs;"
+          "DELETE FROM catalogs Where id IS NOT 1;"
         );
         tx.executeSql(
           "DELETE FROM tasks;"
@@ -520,12 +520,26 @@ const changeNoteCatalog = async(noteID, newCatalogID) => {
   });
 }
 
-const changeNoteConnection = async(eID, tID, noteID, refreshFunc) => {
+const changeNoteConnectionT = async(tID, noteID, refreshFunc) => {
   return await new Promise((resolve, reject) => {
     db.transaction( 
       tx => {
-        tx.executeSql( "UPDATE notes Set connectedEvent = ?, connectedTask = ? WHERE id = ?;",
-        [eID, tID, noteID]
+        tx.executeSql( "UPDATE notes Set connectedTask = ? WHERE id = ?;",
+        [tID, noteID]
+        );
+      },
+      (t, error) => { console.log("ERROR: changing note connection"); reject(null)},
+      (t, success) => { console.log("changed note connection"); refreshFunc(); resolve(success)}
+    );
+  });
+}
+
+const changeNoteConnectionE = async(eID, noteID, refreshFunc) => {
+  return await new Promise((resolve, reject) => {
+    db.transaction( 
+      tx => {
+        tx.executeSql( "UPDATE notes Set connectedEvent = ? WHERE id = ?;",
+        [eID, noteID]
         );
       },
       (t, error) => { console.log("ERROR: changing note connection"); reject(null)},
@@ -744,7 +758,8 @@ export const database = {
   changeEventDays,
   changeEventIcon,
   changeNoteName,
-  changeNoteConnection,
+  changeNoteConnectionT,
+  changeNoteConnectionE,
   changeTaskConnection,
   changeNoteCatalog,
   deleteCatalog,

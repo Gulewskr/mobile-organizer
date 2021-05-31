@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { View, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 
 import { DataContext } from '../data/DataContext';
+import {getProfileSettings} from '../data/ProfileContext';
 
 import styles from '../styles/styles';
 import styles2 from '../styles/stylesTask';
@@ -14,6 +15,7 @@ const TaskOptions = (props) => {
 
     //const { changeName, save, changeTaskProgress, removeTaskItem, getItemsTasks} = useContext(DataContext);
     const { changeName, changeStatus, deleteTask} = useContext(DataContext);
+    const { endedTasks, setEndedTasks, notEndedTasks, setNotEndedTasks } = getProfileSettings();
     const { themeID } = useTheme();
   
     // Zmiana deadline
@@ -58,6 +60,13 @@ const TaskOptions = (props) => {
             const ConfirmButton = () => {
                 const confirm = (bool) => {
                         if(bool){
+                            if(props.task.ended){
+                                setNotEndedTasks(notEndedTasks + 1);
+                                setEndedTasks(endedTasks - 1);
+                            }else{
+                                setNotEndedTasks(notEndedTasks - 1);
+                                setEndedTasks(endedTasks + 1);
+                            }
                             changeStatus(props.id, !props.task.ended, props.task.connectedTask);
                         }
                         setV(false);

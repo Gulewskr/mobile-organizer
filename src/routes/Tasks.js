@@ -47,7 +47,7 @@ export default Tasks = ({navigation}) => {
 
   var value = null;
   
-  if(removeMenu == false)
+  if(removeMenu == false && tasks != undefined)
   try{
       value = tasks.map((data, index) => {
         return(
@@ -68,6 +68,7 @@ export default Tasks = ({navigation}) => {
       <DeleteMenu id={0} close={() => {setRemoveMenu(false)}}/>
       : 
       <ScrollView style={{zIndex: 1, width: "100%"}}>
+        <View style={{height: 10}}/>
         {value} 
         <View style={{marginBottom: 200}}/>
       </ScrollView>
