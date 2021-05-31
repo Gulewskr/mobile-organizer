@@ -38,7 +38,7 @@ const Task = (props) => {
                     </View>
                 }
             </View>
-            <TouchableOpacity style={[styles.iconContainer, {backgroundColor: themeID.colorButton1}]} onPress = {() => {props.press()}} >
+            <TouchableOpacity style={[styles.iconContainer, {backgroundColor: themeID.colorButton2}]} onPress = {() => {props.press()}} >
                 <Image style={styles.icon} source={icons.arrowRight} />
             </TouchableOpacity>
         </View >

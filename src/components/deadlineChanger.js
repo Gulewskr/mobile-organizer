@@ -90,7 +90,7 @@ const DeadlineChanger = (props) => {
     const ValueChanger = (props) => {
         return (
             <View style={styles.scrollChoose}>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickNext()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.clickNext()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowUp} />
                 </TouchableOpacity>
                 <View style={styles.scrollList}>
@@ -98,7 +98,7 @@ const DeadlineChanger = (props) => {
                     <View style={[styles.scrollChooseCell, {backgroundColor: themeID.colorHeader3}]}><Text style={{color: themeID.textCellText}}>{props.value}</Text></View>
                     <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.prev}</Text></View>
                 </View>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.clickPrev()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowDown} />
                 </TouchableOpacity>
             </View>
@@ -107,13 +107,14 @@ const DeadlineChanger = (props) => {
 
     return(
         <View style={[styles.changerContainer, {backgroundColor: themeID.colorContainer}]}>
+            <View style={{height: 20}} />
             <Text style={[styles.changerText,{color: themeID.colorText1}]}>Wybierz deadline</Text>
-            <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => {props.close()}}>
+            <TouchableOpacity style={[styles2.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => {props.close()}}>
                 <Image style={styles2.exitButtonIcon} source={icons.cross} />
             </TouchableOpacity>
             <View style={{flexDirection: "row", alignItems: "center"}}>
                 <Text style={[styles3.font2, {color: themeID.colorText1}]}>Deadline</Text>
-                <TouchableOpacity style={[styles3.buttonIconMain,haveD ? {backgroundColor: themeID.colorButton1} : {backgroundColor: themeID.colorButtonUnchecked1}]}
+                <TouchableOpacity style={[styles3.buttonIconMain,haveD ? {backgroundColor: themeID.colorButton2} : {backgroundColor: themeID.colorButtonUnchecked1}]}
                 onPress={() => deadline(!haveD) }
                 >
                     <Image style={[styles3.buttonIcon, haveD?{opacity:1}:{opacity:0.2}]} source={icons.checkmark} />
@@ -121,15 +122,14 @@ const DeadlineChanger = (props) => {
             </View>
             { 
             haveD ?
-            <View style={{flexDirection: "row"}}>
-                {/* tablica se zrob elementy które będą potem jako menu i se będziesz tak chop siup góra dół */}
+            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                 <ValueChanger value={day}  next={nextDay()} prev={prevDay()} clickPrev={setPrevDay} clickNext={setNextDay}/>
                 <ValueChanger value={nameOfMonths[month]}  next={nameOfMonths[nextMonth()]} prev={nameOfMonths[prevMonth()]} clickPrev={setPrevMonth} clickNext={setNextMonth}/>
                 <ValueChanger value={year}  next={year + 1} prev={year - 1} clickPrev={setPrevYear} clickNext={setNextYear}/>
             </View>
             : null
             }
-            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton1}]} onPress={() => saveValue()}>
+            <TouchableOpacity style={[styles.changerButton, {backgroundColor: themeID.colorButton2}]} onPress={() => saveValue()}>
                 <Text style={{color: themeID.colorText1}}>Potwierdź</Text>
             </TouchableOpacity>
         </View>
@@ -138,7 +138,6 @@ const DeadlineChanger = (props) => {
 
 const DeadlineChooser = (props) => {
 
-    const { changeDate } = useContext(DataContext);
     const { themeID } = useTheme();
     const [ day, setDay ] = useState(props.day);
     const [ month, setMonth ] = useState(props.month);
@@ -236,7 +235,7 @@ const DeadlineChooser = (props) => {
     const ValueChanger = (props) => {
         return (
             <View style={styles.scrollChoose}>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickPrev()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.clickPrev()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowUp} />
                 </TouchableOpacity>
                 <View style={styles.scrollList}>
@@ -244,7 +243,7 @@ const DeadlineChooser = (props) => {
                     <View style={[styles.scrollChooseCell, {backgroundColor: themeID.colorHeader3}]}><Text style={{color: themeID.textCellText}}>{props.value}</Text></View>
                     <View style={[styles.scrollChooseCell, {backgroundColor: themeID.textCellBack}]}><Text style={{color: themeID.textCellText}}>{props.next}</Text></View>
                 </View>
-                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.clickNext()}>
+                <TouchableOpacity style={[styles.scrollChooseButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.clickNext()}>
                     <Image style={styles.scrollChooseButtonIcon} source={icons.arrowDown} />
                 </TouchableOpacity>
             </View>

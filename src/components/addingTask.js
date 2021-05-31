@@ -26,7 +26,7 @@ const AddTaskMenu = (props) => {
         <View style={[styles.container, {backgroundColor: themeID.colorContainer}, haveDeadline ? {top: "30%"} : {top: "40%"}]}>
             <View style={styles.header}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj zadanie</Text>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>
@@ -36,7 +36,7 @@ const AddTaskMenu = (props) => {
             {/* dodać zmianę tła przycisku od haveDeadline */}
             <View style={{flexDirection: "row", alignItems: "center"}}>
                 <Text style={[styles.font2, {color: themeID.colorText1}]}>Deadline</Text>
-                <TouchableOpacity style={[styles.buttonIconMain,haveDeadline ? {backgroundColor: themeID.colorButton1} : {backgroundColor: themeID.colorButtonUnchecked1}]}
+                <TouchableOpacity style={[styles.buttonIconMain,haveDeadline ? {backgroundColor: themeID.colorButton2} : {backgroundColor: themeID.colorButtonUnchecked1}]}
                 onPress={() => setHaveDeadline(!haveDeadline) }
                 >
                     <Image style={[styles.buttonIcon, haveDeadline?{opacity:1}:{opacity:0.2}]} source={icons.checkmark} />
@@ -45,7 +45,7 @@ const AddTaskMenu = (props) => {
             {
                 haveDeadline && <DeadlineChooser day={day} setDay={setDay} month={month} setMonth={setMonth} year={year} setYear={setYear} />
             }
-            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
             onPress={() => {
                 setNotEndedTasks(notEndedTasks + 1);
                 addNewTask(name, haveDeadline, day, month + 1, year, props.id, props.eID); props.close()

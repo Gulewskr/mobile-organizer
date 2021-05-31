@@ -46,7 +46,7 @@ const AddingNoteMenu = (props) => {
     const Header = () =>{
         return(
             <View style={styles.header}>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>
@@ -81,14 +81,14 @@ const AddingNoteMenu = (props) => {
                 {
                     tags.map((data, index) => {
                         return(
-                            <View style={[styles.tagItem, {backgroundColor: themeID.colorButton1}]} key={index} ><Text>{data}</Text>
+                            <View style={[styles.tagItem, {backgroundColor: themeID.colorButton2}]} key={index} ><Text>{data}</Text>
                             <TouchableOpacity onPress={()=>{removeTag(data)}}><Image style={styles.tagItemIcon} source={icons.cross}/></TouchableOpacity></View>
                         );
                 })
                 }</ScrollView>
                 <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                     <TextInput maxLength={25} multiline={false} onChangeText={setTagName} value={tagName} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
-                    <TouchableOpacity style={[styles.tagButton, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.tagButton, {backgroundColor: themeID.colorButton2}]}
                         onPress={()=>{addTagToTags(tagName); setTagName("tag");}}>
                         <Image style={styles.tagIconButton} source={icons.plus} />
                     </TouchableOpacity>
@@ -128,11 +128,11 @@ const AddingNoteMenu = (props) => {
             return(
                 <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header />
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMenu(1)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz katalog</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMenu(2)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
                     </TouchableOpacity>
@@ -144,7 +144,7 @@ const AddingNoteMenu = (props) => {
                 <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header />
                     <TextInput multiline={true} onChangeText={setName} value={name} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => { addCatalog(name); props.close() }}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz katalog</Text>
                     </TouchableOpacity>
@@ -158,7 +158,7 @@ const AddingNoteMenu = (props) => {
                     <TextInput multiline={true} onChangeText={setName} value={name} style={[styles.textNameInput, {backgroundColor: themeID.colorTextInputBackground, color: themeID.colorTextInput}]} />
                     <RMPicker />
                     <TagAddMenu />
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => { 
                         setNoteNumber(noteNumber + 1);
                         addNoteFromPanel(name, catalog, tags, props.taskID, props.eventID);
@@ -172,11 +172,11 @@ const AddingNoteMenu = (props) => {
             return(
                 <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
                     <Header />
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMenu(1)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz katalog</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMenu(2)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
                     </TouchableOpacity>

@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     scrollList:{
         borderWidth: 1,
         marginTop: 5,
-        marginBottom: 5
+        marginBottom: 5,
     },
     scrollChoose:{
-        marginRight: "3%",
+        margin: 3,
         marginBottom: "5%",
-        width: "31.5%",
+        width: "30%",
     },
     scrollChooseCell:{
         alignItems: "center"

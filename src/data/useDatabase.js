@@ -8,7 +8,7 @@ export default function useDatabase() {
   useEffect(() => {
     async function loadDataAsync() {
       try {
-        await database.dropTablesAsync();
+        //await database.dropTablesAsync();
         await database.setupDatabaseAsync();
         await database.addCatalog('Notatki',()=>{console.log("dodano podstawowy katalog");})
 

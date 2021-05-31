@@ -21,7 +21,7 @@ const AddingMenu = (props) => {
     const Header = (props) => {
         return(
             <View style={styles.header}>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>
@@ -31,27 +31,20 @@ const AddingMenu = (props) => {
     const addNote = () => {
 
     }
-    /*
-    mode:
-        -0 wybór
-        -1 utwórz zadanie
-        -2 dodaj notatka
-        -3 utwórz notatke
-    */
 
     const Menu0 = () => {
         return(
             <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "30%"}]}>
                     <Header close={()=>{props.close()}} />
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMode(1)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz zadanie</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMode(2)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj istniejącą notatkę</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
                     onPress={() => {setMode(3)}}>
                         <Text style={[styles.font1, {color: themeID.colorText1}]}>Utwórz notatkę</Text>
                     </TouchableOpacity>

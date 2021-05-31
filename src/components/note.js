@@ -13,7 +13,7 @@ const Note = (props) => {
     return(
         <View style={[styles2.taskContainer, {backgroundColor: themeID.colorContainer}]}>
           <Text style={{fontSize: 20, color: themeID.colorText1, width:"80%"}}>{props.data.name}</Text>
-          <TouchableOpacity style={[styles2.iconContainer2, {backgroundColor: themeID.colorButton1}]} 
+          <TouchableOpacity style={[styles2.iconContainer2, {backgroundColor: themeID.colorButton2}]} 
           onPress={() => props.press()}>
             <Image source={icons.arrowRight} style={styles2.icon} />
           </TouchableOpacity>

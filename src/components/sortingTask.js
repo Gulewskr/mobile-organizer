@@ -1,9 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
-import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
-import {DeadlineChooser} from './deadlineChanger';
 import {DataContext} from '../data/DataContext';
 import styles from '../styles/styleSortPanel';
 import { useTheme } from '../data/colors';
@@ -24,15 +22,6 @@ const SortTaskMenu = (props) => {
     const [o4T,setO4T] = useState(1);
 
     const sortItems = () => {
-        /*przypadki:
-            0 - wszystkie zadania
-            1 - zadania z deadlinem
-            2 - zadania bez deadline'u
-         wartość 2 i 3:
-            0 - bez sortowania
-            1 - sortowanie malejaco
-            2 - sortowanie rosnaco 
-        */
         var option1 = 0, option2 = 0, option3 = 0; 
         if(o1) option1 = 1;
         if(o2) option1 = 2;
@@ -62,11 +51,11 @@ const SortTaskMenu = (props) => {
         <View style={[styles.container, {backgroundColor: themeID.colorContainer}]}>
             <View style={styles.header}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Filtr</Text>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity activeOpacity={1} style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity activeOpacity={1} style={[styles.button, {backgroundColor: themeID.colorButton2}]}
             onPress={()=>{setO1(!o1); if(!o1)setO2(false)}}
             >
                 <Text style={[styles.buttonText, {color: themeID.colorText1}]} >{"Wyświetl tylko zadania \n z deadlinem"}</Text>
@@ -74,7 +63,7 @@ const SortTaskMenu = (props) => {
                     <Image source={icons.checkmark} style={[styles.checkmark, o1 ? {}:{opacity: 0.2} ]} />
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1} style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity activeOpacity={1} style={[styles.button, {backgroundColor: themeID.colorButton2}]}
             onPress={()=>{setO2(!o2); if(!o2)setO1(false)}}
             >
                 <Text style={[styles.buttonText, {color: themeID.colorText1}]} >{"Wyświetl tylko zadania \n bez deadline'u"}</Text>
@@ -82,7 +71,7 @@ const SortTaskMenu = (props) => {
                     <Image source={icons.checkmark} style={[styles.checkmark, o2 ? {}:{opacity: 0.2} ]} />
                 </View>
             </TouchableOpacity>
-            <View style={[styles.sortContainer, {backgroundColor: themeID.colorButton1}]}>
+            <View style={[styles.sortContainer, {backgroundColor: themeID.colorButton2}]}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Sortuj</Text>
                 <View style={styles.sortRow}>
                     <Text style={[styles.font2, {color: themeID.colorText1}]}>nazwa</Text>
@@ -103,7 +92,7 @@ const SortTaskMenu = (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={[styles.acceptButton, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity style={[styles.acceptButton, {backgroundColor: themeID.colorButton2}]}
                 onPress={() => sortItems()}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Zastosuj</Text>
             </TouchableOpacity>

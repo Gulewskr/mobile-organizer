@@ -147,10 +147,10 @@ const SortNoteMenu = (props) => {
                     </ScrollView>
                 </View>
                 <View style={styles2.tagFilterButtonContainer}>
-                    <TouchableOpacity style={[styles2.tagFilterButton, tagSort? {backgroundColor: themeID.colorButton1} : {backgroundColor: themeID.colorButtonUnchecked1}]} onPress={()=>{setTagSort(!tagSort)}}>
+                    <TouchableOpacity style={[styles2.tagFilterButton, tagSort? {backgroundColor: themeID.colorButton2} : {backgroundColor: themeID.colorButtonUnchecked1}]} onPress={()=>{setTagSort(!tagSort)}}>
                         <Image style={[styles2.cross, tagSort? {opacity: 1}: {opacity: 0.2}]} source={icons.checkmark} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles2.tagFilterButton, {backgroundColor: themeID.colorButton1}]}
+                    <TouchableOpacity style={[styles2.tagFilterButton, {backgroundColor: themeID.colorButton2}]}
                         onPress={() => setRemove(!remove)}>
                         <Image style={styles2.cross} source={remove ? icons.cross : icons.trash} />
                     </TouchableOpacity>
@@ -164,13 +164,13 @@ const SortNoteMenu = (props) => {
         <View style={[styles.container, {backgroundColor: themeID.colorContainer}]}>
             <View style={styles.header}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Filtr</Text>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>
             <AlphabeticalSort />
             <TagSort />
-            <TouchableOpacity style={[styles.acceptButton, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity style={[styles.acceptButton, {backgroundColor: themeID.colorButton2}]}
                 onPress={() => {setFilter(); props.close()}}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Zastosuj</Text>
             </TouchableOpacity>

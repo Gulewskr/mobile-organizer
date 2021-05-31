@@ -1,10 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native'
-import {Picker} from '@react-native-community/picker'
 
-import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
-import {DeadlineChooser} from './deadlineChanger';
-import {DataContext} from '../data/DataContext';
 import styles from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
@@ -31,14 +27,6 @@ const AddingMenu = (props) => {
     const addNote = () => {
 
     }
-    /*
-    mode:
-        -0 wybór zadanie / notatka / 
-        -1 dodaj zadanie
-        -2 dodaj notatka
-        -3 utwórz zadanie
-        -4 utwórz notatke
-    */
 
     const Menu0 = () => {
         return(

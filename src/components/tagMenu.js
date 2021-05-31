@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import {View, Text, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native'
 import {Picker} from '@react-native-community/picker'
 
-import {nameOfMonths, nameOfDays, numberOfDays} from '../data/calendar';
-import {DeadlineChooser} from './deadlineChanger';
 import {DataContext} from '../data/DataContext';
 import styles from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
@@ -55,7 +53,7 @@ const NoteOptions = (props) => {
     const Header = () => {
         return(
             <View style={styles.header}>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
                     <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
             </View>

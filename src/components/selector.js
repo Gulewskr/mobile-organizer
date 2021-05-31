@@ -9,13 +9,24 @@ import styles from '../styles/styleAddPanel';
 import { useTheme } from '../data/colors';
 import { icons } from '../components/icons';
 
+const Header = (props) =>{
+    const { themeID } = useTheme();
+    return(
+        <View style={styles.header}>
+            <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => props.close()}>
+                <Image style={styles.exitButtonIcon} source={icons.cross} />
+            </TouchableOpacity>
+        </View>
+    );
+}
+
 const NoteSelector = (props) => {
     //props.eID props.tID
     const { notes, changeNoteConnection } = useContext(DataContext);
     const { themeID } = useTheme();
 
-    if(!Array.isArray(notes) || notes.length < 1) props.close();
-    const [noteID, setNoteID] = useState(notes == undefined ? 0 : notes[0].id);
+    if(notes == undefined || !Array.isArray(notes) || notes.length < 1) props.close();
+    const [noteID, setNoteID] = useState((notes == undefined || notes[0] == undefined)? 0: notes[0].id );
 
     const eID = props.eID;
     const tID = props.tID;
@@ -23,16 +34,6 @@ const NoteSelector = (props) => {
     const addNote = () => {
         changeNoteConnection(eID, tID, noteID);
         props.close();
-    }
-
-    const Header = () =>{
-        return(
-            <View style={styles.header}>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
-                    <Image style={styles.exitButtonIcon} source={icons.cross} />
-                </TouchableOpacity>
-            </View>
-        );
     }
 
     const RMPicker = () => 
@@ -63,9 +64,9 @@ const NoteSelector = (props) => {
 
     return(
         <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
-            <Header />
+            <Header close={()=>{props.close()}}/>
             <RMPicker />
-            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
             onPress={() => {addNote()}}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
             </TouchableOpacity>
@@ -78,24 +79,14 @@ const TaskSelector = (props) => {
     const { allTasks, changeTaskConnection } = useContext(DataContext);
     const { themeID } = useTheme();
 
-    if(!Array.isArray(allTasks) || allTasks.length < 1) props.close();
-    const [taskID, setTaskID] = useState(allTasks == undefined ? 0 : allTasks[0].id);
+    if(allTasks == undefined || !Array.isArray(allTasks) || allTasks.length < 1) props.close();
+    const [taskID, setTaskID] = useState((allTasks == undefined || allTasks[0] == undefined)? 0 : allTasks[0].id);
 
     const eID = props.eID;
 
     const addNote = () => {
         changeTaskConnection(eID, taskID);
         props.close();
-    }
-
-    const Header = () =>{
-        return(
-            <View style={styles.header}>
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => props.close()}>
-                    <Image style={styles.exitButtonIcon} source={icons.cross} />
-                </TouchableOpacity>
-            </View>
-        );
     }
 
     const RMPicker = () => 
@@ -126,9 +117,9 @@ const TaskSelector = (props) => {
 
     return(
         <View style={[styles.container, {backgroundColor: themeID.colorContainer, top: "40%"}]}>
-            <Header />
+            <Header close={()=>{props.close()}}/>
             <RMPicker />
-            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton1}]}
+            <TouchableOpacity style={[styles.button, {backgroundColor: themeID.colorButton2}]}
             onPress={() => {addNote()}}>
                 <Text style={[styles.font1, {color: themeID.colorText1}]}>Dodaj notatkę</Text>
             </TouchableOpacity>

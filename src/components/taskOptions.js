@@ -75,7 +75,7 @@ const TaskOptions = (props) => {
                 if(v){
                     return (
                     <TouchableOpacity style={styles.fillRect} onPress={()=>setV(false)}>
-                    <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+                    <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorButton2}]}>
                         <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>{props.task.ended ? "Czy chcesz kontynuować zadanie?" : "Czy chcesz zakończyć zadanie?"}</Text>
                     <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
                         <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
@@ -95,7 +95,7 @@ const TaskOptions = (props) => {
             };
          return (
             <>
-            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setV(true)}>
+            <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton2}]} onPress={() => setV(true)}>
             <Text style={{fontSize: 16, color: "#129403", alignSelf: "center"}}>{ props.task.ended ? "Kontynuuj zadanie" : "Zakończ zadanie" }</Text>
             </TouchableOpacity>
             <ConfirmButton />
@@ -118,7 +118,7 @@ const TaskOptions = (props) => {
                 if(v){
                     return (
                     <TouchableOpacity style={styles.fillRect} onPress={()=>setV(false)}>
-                    <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorContainer}]}>
+                    <View style={[styles.ConfirmButton, {backgroundColor: themeID.colorButton2}]}>
                         <Text style={[styles.ConfirmButtonText, {color: themeID.colorText1}]}>Czy chcesz usunąć zadanie?</Text>
                     <View style={{flexDirection:"row", alignContent:"center", marginTop: 10}}>
                         <TouchableOpacity style={[styles.ConfirmButtonButton, {backgroundColor: themeID.colorButton1}]} onPress = {() => confirm(true)}>
@@ -139,7 +139,7 @@ const TaskOptions = (props) => {
 
             return (
                 <>
-                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setV(true)}>
+                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton2}]} onPress={() => setV(true)}>
                     <Text style={{fontSize: 16, color: "#FC0E0E", alignSelf: "center"}}>Usuń zadanie</Text>
                 </TouchableOpacity>
                 <ConfirmButton />
@@ -171,15 +171,15 @@ const TaskOptions = (props) => {
                 }
                 </View>
                 {/* Przycisk exit */}
-                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton1}]} onPress={() => close()}>
+                <TouchableOpacity style={[styles.exitButton, {backgroundColor: themeID.colorButton2}]} onPress={() => close()}>
                 <Image style={styles.exitButtonIcon} source={icons.cross} />
                 </TouchableOpacity>
                 {/* Edycja deadline */}
-                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => setDVisibility(true)}>
+                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton2}]} onPress={() => setDVisibility(true)}>
                 <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Edytuj deadline</Text>
                 </TouchableOpacity>
                 {/* Przejście do szczegółów */}
-                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton1}]} onPress={() => {props.close(); props.navigation();}}>
+                <TouchableOpacity style={[styles2.optionButtons,{backgroundColor: themeID.colorButton2}]} onPress={() => {props.close(); props.navigation();}}>
                 <Text style={{fontSize: 16, color: themeID.colorText1, alignSelf: "center"}}>Wyświetl szczegóły</Text>
                 </TouchableOpacity>
                 {/* Przycisk zakończ/kontynuuj zadanie */}

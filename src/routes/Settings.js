@@ -232,7 +232,7 @@ export default Settings = ({navigation}) => {
           <Text style={[styles2.font, {color: themeID.colorText1}]}>Usuń dane</Text>
         </View>
         <View style={styles2.sectorR}>
-          <View style={styles2.iconButton}>
+          <View style={[styles2.iconButton,{backgroundColor: themeID.colorButton2}]}>
             <Image style={[styles2.icon, {height: "80%", alignSelf: "center"}]} source={icons.trash} />
           </View>
         </View>
